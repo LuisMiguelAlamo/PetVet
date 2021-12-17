@@ -31,6 +31,7 @@ public class Login extends javax.swing.JFrame {
 
         fondoPanel = new javax.swing.JPanel();
         sidePanel = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -48,15 +49,23 @@ public class Login extends javax.swing.JFrame {
 
         sidePanel.setBackground(new java.awt.Color(0, 102, 255));
 
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/account-multiple-outline.png"))); // NOI18N
+
         javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 240, Short.MAX_VALUE)
+            .addGroup(sidePanelLayout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addComponent(jLabel6)
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 390, Short.MAX_VALUE)
+            .addGroup(sidePanelLayout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(jLabel6)
+                .addContainerGap(276, Short.MAX_VALUE))
         );
 
         fondoPanel.add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 390));
@@ -158,6 +167,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JPanel sidePanel;
