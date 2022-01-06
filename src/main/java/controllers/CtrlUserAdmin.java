@@ -5,24 +5,23 @@
  */
 package controllers;
 
-import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 import views.ClientePanel;
 import views.ConsultasPanel;
-import views.FrmPrincipal;
+import views.FrmAdmin;
 import views.MascotasPanel;
 
 /**
  *
  * @author Luis Miguel
  */
-public class CtrlPrincipal implements MouseListener{
-    FrmPrincipal frm;
+public class CtrlUserAdmin implements MouseListener{
+    FrmAdmin frm;
 
-    public CtrlPrincipal() {
-        frm = new FrmPrincipal();
+    public CtrlUserAdmin() {
+        frm = new FrmAdmin();
         this.frm.getBtnClientes().addMouseListener(this);
         this.frm.getBtnMascotas().addMouseListener(this);
         this.frm.getBtnConsultas().addMouseListener(this);
@@ -42,11 +41,11 @@ public class CtrlPrincipal implements MouseListener{
         }
         if (e.getSource().equals(this.frm.getBtnClientes())) {
             ClientePanel cp = new ClientePanel();
-            CtrlClientes cli = new CtrlClientes(frm, cp);
+//            CtrlClientes cli = new CtrlClientes(frm, cp);
         }
         if (e.getSource().equals(this.frm.getBtnMascotas())) {
             MascotasPanel mp = new MascotasPanel();
-            CtrlMascotas mascotas = new CtrlMascotas(frm, mp);
+//            CtrlMascotas mascotas = new CtrlMascotas(frm, mp);
         }
         if (e.getSource().equals(this.frm.getBtnConsultas())) {
             ConsultasPanel cop = new ConsultasPanel();

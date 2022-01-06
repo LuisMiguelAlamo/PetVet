@@ -9,11 +9,13 @@ import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Clientes;
 import querys.QuerysClientes;
 import views.ClientePanel;
-import views.FrmPrincipal;
+import views.FrmVeterinario;
+import views.RegistroClientePanel;
 
 /**
  *
@@ -21,15 +23,16 @@ import views.FrmPrincipal;
  */
 public class CtrlClientes implements MouseListener{
     
-    FrmPrincipal frm;
+    FrmVeterinario frm;
     ClientePanel panel;
     Clientes cliente;
     String titulos[] = {"Id", "Nombre", "Dirección", "Localidad", "Teléfono", "Email", "CP"};
     String info[][];
+    boolean isSelected;
 
-    public CtrlClientes(FrmPrincipal frm, ClientePanel p) {
+    public CtrlClientes(FrmVeterinario frm, ClientePanel p) {
         this.frm = frm;
-        p.setSize(630, 440);
+        p.setSize(790, 480);
         p.setLocation(0, 0);
         this.panel = p;
         this.frm.getContentPanel().removeAll();
@@ -37,9 +40,13 @@ public class CtrlClientes implements MouseListener{
         this.frm.getContentPanel().revalidate();
         this.frm.getContentPanel().repaint();
         
+        this.panel.getBtnNuevo().addMouseListener(this);
+        this.panel.getBtnEditar().addMouseListener(this);
+        this.panel.getBtnEliminar().addMouseListener(this);
+        this.panel.getTablaClientes().addMouseListener(this);
         
-        info = obtieneMatriz();
-        panel.getTablaClientes().setModel(new DefaultTableModel(info, titulos));
+        isSelected = false;
+        actualizarTabla();
     }
     
     private void actualizarTabla() {
@@ -84,11 +91,53 @@ public class CtrlClientes implements MouseListener{
 
         return informacion;
     }
+    
+    private Clientes llenaCampos() {
+        int id = Integer.parseInt(String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 0)));
+        String nombre = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 1));
+        String direccion = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 2));
+        String localidad = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 3));
+        String telefono = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 4));
+        String email = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 5));
+        int CP = Integer.parseInt(String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 6)));
+
+        cliente = new Clientes(id, nombre, direccion, localidad, telefono, email, CP);
+        return cliente;
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.panel.getBtnBuscar())) {
             
+        }
+        if (e.getSource().equals(this.panel.getBtnNuevo())) {
+            RegistroClientePanel registro = new RegistroClientePanel();                        
+            CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.cliente, false);
+        }
+        
+        if (e.getSource().equals(this.panel.getBtnEditar())) {
+            if (isSelected) {
+                RegistroClientePanel registro = new RegistroClientePanel();
+                CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.cliente, true);
+            }else{
+                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+            }
+        }
+        
+        if (e.getSource().equals(this.panel.getBtnEliminar())) {
+            if (isSelected) {
+                int id = Integer.parseInt(String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 0)));
+                System.out.println(id);
+                QuerysClientes.eliminar(id);
+                this.actualizarTabla();
+            }else{
+                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+            }
+        }
+        
+        if (e.getSource().equals(this.panel.getTablaClientes())) {
+            isSelected = true;
+           this.cliente = llenaCampos();
         }
     }
 

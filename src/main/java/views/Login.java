@@ -5,7 +5,11 @@
  */
 package views;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -18,6 +22,12 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    
+    public Image getIconImage(){
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/bulldog-frances.png"));
+        return retValue;
     }
 
     /**
@@ -32,8 +42,11 @@ public class Login extends javax.swing.JFrame {
         fondoPanel = new javax.swing.JPanel();
         sidePanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        headerPanel = new javax.swing.JPanel();
+        exitPanel = new javax.swing.JPanel();
+        btnX = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JPanel();
@@ -41,57 +54,108 @@ public class Login extends javax.swing.JFrame {
         btnAceptar = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
+        setUndecorated(true);
+        setResizable(false);
 
         fondoPanel.setBackground(new java.awt.Color(255, 255, 255));
         fondoPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        sidePanel.setBackground(new java.awt.Color(0, 102, 255));
+        sidePanel.setBackground(new java.awt.Color(102, 0, 153));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/account-multiple-outline.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/gato.png"))); // NOI18N
 
         javax.swing.GroupLayout sidePanelLayout = new javax.swing.GroupLayout(sidePanel);
         sidePanel.setLayout(sidePanelLayout);
         sidePanelLayout.setHorizontalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidePanelLayout.createSequentialGroup()
-                .addGap(69, 69, 69)
+                .addGap(54, 54, 54)
                 .addComponent(jLabel6)
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         sidePanelLayout.setVerticalGroup(
             sidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sidePanelLayout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(jLabel6)
-                .addContainerGap(276, Short.MAX_VALUE))
+                .addGap(87, 87, 87)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(166, Short.MAX_VALUE))
         );
 
         fondoPanel.add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 390));
 
-        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField1.setText("Introduzca el usuario");
-        fondoPanel.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, 180, 30));
+        headerPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField2.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField2.setText("Introduzca la contraseña");
-        fondoPanel.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 210, 180, 30));
+        exitPanel.setBackground(new java.awt.Color(255, 255, 255));
+        exitPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnX.setFont(new java.awt.Font("Roboto Light", 0, 18)); // NOI18N
+        btnX.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnX.setText("X");
+        btnX.setPreferredSize(new java.awt.Dimension(30, 30));
+
+        javax.swing.GroupLayout exitPanelLayout = new javax.swing.GroupLayout(exitPanel);
+        exitPanel.setLayout(exitPanelLayout);
+        exitPanelLayout.setHorizontalGroup(
+            exitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnX, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        exitPanelLayout.setVerticalGroup(
+            exitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, exitPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnX, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        javax.swing.GroupLayout headerPanelLayout = new javax.swing.GroupLayout(headerPanel);
+        headerPanel.setLayout(headerPanelLayout);
+        headerPanelLayout.setHorizontalGroup(
+            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerPanelLayout.createSequentialGroup()
+                .addContainerGap(505, Short.MAX_VALUE)
+                .addComponent(exitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        headerPanelLayout.setVerticalGroup(
+            headerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(exitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        fondoPanel.add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        txtUsuario.setForeground(new java.awt.Color(204, 204, 204));
+        txtUsuario.setText("Ingrese su nombre de usuario");
+        txtUsuario.setBorder(null);
+        fondoPanel.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 180, 30));
+
+        txtPassword.setForeground(new java.awt.Color(204, 204, 204));
+        txtPassword.setText("*****");
+        txtPassword.setBorder(null);
+        fondoPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, 180, 30));
+
+        jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel1.setText("Usuario:");
-        fondoPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, -1, -1));
+        fondoPanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel2.setText("Contraseña:");
-        fondoPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, -1, -1));
+        fondoPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, -1, -1));
 
         btnCancelar.setBackground(new java.awt.Color(0, 204, 102));
+        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelar.setEnabled(false);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Cancelar");
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout btnCancelarLayout = new javax.swing.GroupLayout(btnCancelar);
         btnCancelar.setLayout(btnCancelarLayout);
@@ -106,14 +170,16 @@ public class Login extends javax.swing.JFrame {
             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        fondoPanel.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, -1, 30));
+        fondoPanel.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, -1, 30));
 
         btnAceptar.setBackground(new java.awt.Color(0, 204, 102));
+        btnAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAceptar.setEnabled(false);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Aceptar");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout btnAceptarLayout = new javax.swing.GroupLayout(btnAceptar);
         btnAceptar.setLayout(btnAceptarLayout);
@@ -128,10 +194,12 @@ public class Login extends javax.swing.JFrame {
             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        fondoPanel.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, -1, 30));
+        fondoPanel.add(btnAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 330, -1, 30));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/account-multiple-outline.png"))); // NOI18N
-        fondoPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 20, -1, 70));
+        fondoPanel.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, 70));
+        fondoPanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, 180, 10));
+        fondoPanel.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 270, 180, 10));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,6 +215,23 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public JTextField getTxtPassword() {
+        return txtPassword;
+    }
+
+    public void setTxtPassword(JTextField txtPassword) {
+        this.txtPassword = txtPassword;
+    }
+
+    public JTextField getTxtUsuario() {
+        return txtUsuario;
+    }
+
+    public void setTxtUsuario(JTextField txtUsuario) {
+        this.txtUsuario = txtUsuario;
+    }
+
+    
 
     public JPanel getBtnAceptar() {
         return btnAceptar;
@@ -155,21 +240,40 @@ public class Login extends javax.swing.JFrame {
     public JPanel getBtnCancelar() {
         return btnCancelar;
     }
+
+    public JLabel getBtnX() {
+        return btnX;
+    }
+
+    public JPanel getHeaderPanel() {
+        return headerPanel;
+    }
+
+    public JPanel getExitPanel() {
+        return exitPanel;
+    }
+    
+    
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnAceptar;
     private javax.swing.JPanel btnCancelar;
+    private javax.swing.JLabel btnX;
+    private javax.swing.JPanel exitPanel;
     private javax.swing.JPanel fondoPanel;
+    private javax.swing.JPanel headerPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel sidePanel;
+    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -72,11 +72,18 @@ public class QuerysClientes {
         return lista;
     }
 
-    public static void insertar(Clientes cliente) {
+    public static void crear(Clientes cliente) {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                smnt.executeUpdate("INSERT INTO clientes VALUES (null,'" + cliente.getNombre() + "','" + cliente.getTelefono() + "');");
+                System.out.println(cliente.getNombre() + cliente.getDireccion()+
+                cliente.getLocalidad());
+                smnt.executeUpdate("INSERT INTO clientes VALUES (null,'" + cliente.getNombre() + "','" 
+                        + cliente.getDireccion() + "','" 
+                        + cliente.getLocalidad() + "','"
+                        + cliente.getTelefono() + "','" 
+                        + cliente.getEmail()+ "','" 
+                        + cliente.getCp() + "');");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en la consulta");
@@ -87,21 +94,27 @@ public class QuerysClientes {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                smnt.executeUpdate("UPDATE  clientes SET nombre = '" + cliente.getNombre() + "', telefono = '" + cliente.getTelefono() + "' WHERE codCliente = '" + cliente.getId() + "';");
+                smnt.executeUpdate("UPDATE  clientes SET nombre = '" + cliente.getNombre()
+                        + "', direccion = '" + cliente.getDireccion()
+                        + "', localidad = '" + cliente.getLocalidad()
+                        + "', telefono = '" + cliente.getTelefono()
+                        + "', email = '" + cliente.getEmail()
+                        + "', CP = '" + cliente.getCp()
+                        + "' WHERE id = '" + cliente.getId() + "';");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en la consulta");
         }
     }
 
-    public static void eliminar(String codigo) {
+    public static void eliminar(int id) {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                smnt.executeUpdate("DELETE FROM clientes WHERE codCliente = " + codigo);
+                smnt.executeUpdate("DELETE FROM clientes WHERE id = '" + id + "';");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la consulta");
+            JOptionPane.showMessageDialog(null, "Error al eliminar el cliente");
         }
     }
 }

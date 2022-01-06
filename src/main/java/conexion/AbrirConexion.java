@@ -29,9 +29,9 @@ public class AbrirConexion {
             return true;
         }
         try {
-            String url = "jdbc:mysql://localhost:3306/test" + "?useServerPrepStmts=true";
+            String url = "jdbc:mysql://localhost:3306/petVet" + "?useServerPrepStmts=true";
             cone = DriverManager.getConnection(url, "root", "");
-            System.out.println("Conectado a test");
+            System.out.println("Conectado a petVet");
             return true;
 
         } catch (SQLException ex) {

@@ -9,6 +9,9 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import javax.swing.JPanel;
 import views.ClientePanel;
 import views.ConsultasPanel;
@@ -22,6 +25,8 @@ import views.MascotasPanel;
 public class CtrlUserVet implements MouseListener, MouseMotionListener{
     FrmVeterinario frm;
     int xMouse, yMouse;
+    Date date; 
+    SimpleDateFormat fecha = new SimpleDateFormat("dddd/mmmm/yyyy");
 
     public CtrlUserVet() {
         frm = new FrmVeterinario();
@@ -31,6 +36,8 @@ public class CtrlUserVet implements MouseListener, MouseMotionListener{
         this.frm.getHeaderPanel().addMouseMotionListener(this);
         this.frm.getExitPanel().addMouseListener(this);
         this.frm.getExitLabel().addMouseListener(this);
+        
+        this.frm.getLabelFecha().setText(String.valueOf(fecha));
         frm.setVisible(true);
     }
     
