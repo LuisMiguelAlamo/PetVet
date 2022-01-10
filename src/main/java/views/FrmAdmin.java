@@ -81,7 +81,7 @@ public class FrmAdmin extends javax.swing.JFrame {
         fondoPanel.setBackground(new java.awt.Color(255, 255, 255));
         fondoPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        sidePanel.setBackground(new java.awt.Color(0, 102, 255));
+        sidePanel.setBackground(new java.awt.Color(0, 51, 51));
 
         btnClientes.setBackground(new java.awt.Color(0, 102, 255));
 
@@ -320,7 +320,7 @@ public class FrmAdmin extends javax.swing.JFrame {
 
         fondoPanel.add(contentPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 780, 480));
 
-        topPanel.setBackground(new java.awt.Color(0, 153, 255));
+        topPanel.setBackground(new java.awt.Color(0, 102, 102));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));

@@ -14,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import models.Clientes;
 import querys.QuerysClientes;
 import views.ClientePanel;
-import views.FrmVeterinario;
+import views.FrmPrincipal;
 import views.RegistroClientePanel;
 
 /**
@@ -23,22 +23,17 @@ import views.RegistroClientePanel;
  */
 public class CtrlClientes implements MouseListener{
     
-    FrmVeterinario frm;
+    FrmPrincipal frm;
     ClientePanel panel;
     Clientes cliente;
     String titulos[] = {"Id", "Nombre", "Dirección", "Localidad", "Teléfono", "Email", "CP"};
     String info[][];
     boolean isSelected;
 
-    public CtrlClientes(FrmVeterinario frm, ClientePanel p) {
+    public CtrlClientes(FrmPrincipal frm, ClientePanel p) {
         this.frm = frm;
-        p.setSize(790, 480);
-        p.setLocation(0, 0);
         this.panel = p;
-        this.frm.getContentPanel().removeAll();
-        this.frm.getContentPanel().add(p, BorderLayout.CENTER);
-        this.frm.getContentPanel().revalidate();
-        this.frm.getContentPanel().repaint();
+        CtrlPrincipal.showContentPanel(frm, p);
         
         this.panel.getBtnNuevo().addMouseListener(this);
         this.panel.getBtnEditar().addMouseListener(this);

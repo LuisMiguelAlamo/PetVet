@@ -7,7 +7,7 @@ package interfaces;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-import views.FrmVeterinario;
+import views.FrmPrincipal;
 
 /**
  *
@@ -15,7 +15,7 @@ import views.FrmVeterinario;
  */
 public interface CargaPaneles {
     
-     private void cargarPanel( FrmVeterinario frm, JPanel p){
+     private void cargarPanel( FrmPrincipal frm, JPanel p){
         p.setSize(630, 440);
         p.setLocation(0, 0);
         frm.getContentPanel().removeAll();

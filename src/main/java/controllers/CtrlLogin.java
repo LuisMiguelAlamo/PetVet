@@ -9,15 +9,25 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import models.Acceso;
+import models.Roles;
+import querys.QuerysRol;
+import querys.QuerysAcceso;
 import views.Login;
 
 /**
  *
  * @author Luis Miguel
  */
-public class CtrlLogin implements MouseListener, MouseMotionListener{
+public class CtrlLogin implements MouseListener, MouseMotionListener {
+
     Login log;
     int xMouse, yMouse;
+    ArrayList<Acceso> acceso;
+    ArrayList<Roles> rol;
+    boolean admin;
 
     public CtrlLogin() {
         this.log = new Login();
@@ -29,13 +39,39 @@ public class CtrlLogin implements MouseListener, MouseMotionListener{
         this.log.getExitPanel().addMouseListener(this);
         this.log.getBtnX().addMouseListener(this);
         this.log.setVisible(true);
+        admin = false;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource().equals(this.log.getBtnAceptar())) {
-            CtrlUserVet ctrlPri = new CtrlUserVet();
-            this.log.setVisible(false);
+        if (e.getSource().equals(this.log.getBtnAceptar())) {            
+            
+            if (this.log.getTxtUsuario().getText().isEmpty() 
+                    || this.log.getTxtPassword().getText().isEmpty()
+                    || this.log.getTxtUsuario().getText().equals("Ingrese su nombre de usuario")
+                    || this.log.getTxtPassword().equals("*****")) {
+                JOptionPane.showMessageDialog(null, "Debe introducir un usuario y contraseña");
+            }else{
+                String usuario = this.log.getTxtUsuario().getText();
+                String password = this.log.getTxtPassword().getText();
+                this.acceso = QuerysAcceso.consultaGeneral();
+                this.rol = QuerysRol.consultaGeneral();
+                
+                for (Acceso a : acceso) {
+                    if (a.getUsuario().equals(usuario) && a.getPassword().equals(password)) {
+                        if (a.getRol() == 1) {
+                            CtrlPrincipal ctrlPri = new CtrlPrincipal(false);
+                            this.log.dispose();
+                        } else {
+                            CtrlPrincipal ctrlPri = new CtrlPrincipal(true);
+                            this.log.dispose();
+                        }
+
+                    }
+                }          
+            }
+
+
         }
         if (e.getSource().equals(this.log.getBtnCancelar())) {
             System.exit(0);
@@ -59,7 +95,7 @@ public class CtrlLogin implements MouseListener, MouseMotionListener{
         }
         if (e.getSource().equals(this.log.getTxtPassword())) {
             if (String.valueOf(this.log.getTxtPassword().getText()).equals("*****")) {
-                this.log.getTxtPassword().setText("");    
+                this.log.getTxtPassword().setText("");
                 this.log.getTxtPassword().setForeground(Color.black);
             }
             if (this.log.getTxtUsuario().getText().isEmpty()) {
@@ -67,7 +103,7 @@ public class CtrlLogin implements MouseListener, MouseMotionListener{
                 this.log.getTxtUsuario().setForeground(Color.gray);
             }
         }
-        
+
         if (e.getSource().equals(this.log.getHeaderPanel())) {
             this.xMouse = e.getX();
             this.yMouse = e.getY();
@@ -76,7 +112,7 @@ public class CtrlLogin implements MouseListener, MouseMotionListener{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+
     }
 
     @Override
@@ -107,6 +143,5 @@ public class CtrlLogin implements MouseListener, MouseMotionListener{
     @Override
     public void mouseMoved(MouseEvent e) {
     }
-    
-    
+
 }

@@ -5,52 +5,95 @@
  */
 package controllers;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.swing.JPanel;
 import views.ClientePanel;
 import views.ConsultasPanel;
-import views.FrmVeterinario;
+import views.FrmPrincipal;
 import views.MascotasPanel;
 
 /**
  *
  * @author Luis Miguel
  */
-public class CtrlUserVet implements MouseListener, MouseMotionListener{
-    FrmVeterinario frm;
+public class CtrlPrincipal implements MouseListener, MouseMotionListener{
+    FrmPrincipal frm;
     int xMouse, yMouse;
-    Date date; 
-    SimpleDateFormat fecha = new SimpleDateFormat("dddd/mmmm/yyyy");
+    boolean condicion;
+    LocalDateTime dateTime = LocalDateTime.now();
+    String fecha = "Hoy es "+dateTime.getDayOfWeek()+" "+ dateTime.getDayOfMonth() + " de "+ dateTime.getMonth() + " del "+ dateTime.getYear();
 
-    public CtrlUserVet() {
-        frm = new FrmVeterinario();
+    public CtrlPrincipal(boolean condicion) {
+        frm = new FrmPrincipal();
         this.frm.getBtnClientes().addMouseListener(this);
         this.frm.getBtnMascotas().addMouseListener(this);
         this.frm.getBtnConsultas().addMouseListener(this);
+        this.frm.getBtnCitas().addMouseListener(this);
+        this.frm.getBtnFacturas().addMouseListener(this);
+        this.frm.getBtnMedicamentos().addMouseListener(this);
+        this.frm.getBtnVeterinarios().addMouseListener(this);
+        this.frm.getBtnProveedores().addMouseListener(this);
+        this.frm.getBtnUsuarios().addMouseListener(this);
         this.frm.getHeaderPanel().addMouseMotionListener(this);
         this.frm.getExitPanel().addMouseListener(this);
         this.frm.getExitLabel().addMouseListener(this);
+        
+        this.condicion = condicion;
+        if (condicion) {
+            cargaAdmin();
+        }else{
+            this.frm.getBtnMedicamentos().setVisible(false);
+            this.frm.getBtnVeterinarios().setVisible(false);
+            this.frm.getBtnProveedores().setVisible(false);
+            this.frm.getBtnUsuarios().setVisible(false);           
+        }
+        
         
         this.frm.getLabelFecha().setText(String.valueOf(fecha));
         frm.setVisible(true);
     }
     
     
-    public static void showContentPanel(JPanel p){
-                       
+    public static void showContentPanel(FrmPrincipal frm,JPanel p){
+        p.setSize(790, 480);
+        p.setLocation(0, 0);
+        frm.getContentPanel().removeAll();
+        frm.getContentPanel().add(p, BorderLayout.CENTER);
+        frm.getContentPanel().revalidate();
+        frm.getContentPanel().repaint();
+    }
+    
+    
+    private  void cargaAdmin(){
+        this.frm.getTopPanel().setBackground(new Color(0, 102, 102));
+        this.frm.getSidePanel().setBackground(new Color(0, 51, 51));
+        this.frm.getBtnPrincipal().setBackground(new Color(0, 51, 51));
+        this.frm.getBtnClientes().setBackground(new Color(0, 51, 51));
+        this.frm.getBtnMascotas().setBackground(new Color(0, 51, 51));
+        this.frm.getBtnConsultas().setBackground(new Color(0, 51, 51));
+        this.frm.getBtnCitas().setBackground(new Color(0, 51, 51));
+        this.frm.getBtnFacturas().setBackground(new Color(0, 51, 51));
+        this.frm.getBtnMedicamentos().setBackground(new Color(0, 51, 51));
+        this.frm.getBtnMedicamentos().setBackground(new Color(0, 51, 51));
+        this.frm.getBtnVeterinarios().setBackground(new Color(0, 51, 51));
+        this.frm.getBtnProveedores().setBackground(new Color(0, 51, 51));
+        this.frm.getBtnUsuarios().setBackground(new Color(0, 51, 51));
+        
+        this.frm.getBtnMedicamentos().setVisible(true);
+        this.frm.getBtnProveedores().setVisible(true);
+        this.frm.getBtnUsuarios().setVisible(true);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.frm.getBtnPrincipal())) {
             ClientePanel cp = new ClientePanel();
-            showContentPanel(cp);
+            showContentPanel(this.frm,cp);
         }
         if (e.getSource().equals(this.frm.getBtnClientes())) {
             ClientePanel cp = new ClientePanel();
@@ -62,7 +105,7 @@ public class CtrlUserVet implements MouseListener, MouseMotionListener{
         }
         if (e.getSource().equals(this.frm.getBtnConsultas())) {
             ConsultasPanel cop = new ConsultasPanel();
-            showContentPanel(cop);
+            showContentPanel(this.frm ,cop);
         }
         if (e.getSource().equals(this.frm.getExitLabel())) {
             System.exit(0);

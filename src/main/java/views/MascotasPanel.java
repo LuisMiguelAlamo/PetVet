@@ -7,6 +7,7 @@ package views;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -21,21 +22,40 @@ public class MascotasPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+
+    public JTable getTablaMascotas() {
+        return tablaMascotas;
+    }
+
+    public void setTablaMascotas(JTable tablaClientes) {
+        this.tablaMascotas = tablaClientes;
+    }
+
+    public JTextField getCampoBuscar() {
+        return campoBuscar;
+    }
+
+    public void setCampoBuscar(JTextField campoBuscar) {
+        this.campoBuscar = campoBuscar;
+    }
+
     public JPanel getBtnBuscar() {
         return btnBuscar;
     }
-
-    public void setBtnBuscar(JPanel btnBuscar) {
-        this.btnBuscar = btnBuscar;
+    
+    public JPanel getBtnEditar() {
+        return btnEditar;
     }
 
-    public JTable getTablaClientes() {
-        return tablaClientes;
+    public JPanel getBtnEliminar() {
+        return btnEliminar;
     }
 
-    public void setTablaClientes(JTable tablaClientes) {
-        this.tablaClientes = tablaClientes;
+    public JPanel getBtnNuevo() {
+        return btnNuevo;
     }
+    
+    
     
     
 
@@ -54,7 +74,7 @@ public class MascotasPanel extends javax.swing.JPanel {
         btnBuscar = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaClientes = new javax.swing.JTable();
+        tablaMascotas = new javax.swing.JTable();
         btnNuevo = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnEditar = new javax.swing.JPanel();
@@ -90,7 +110,7 @@ public class MascotasPanel extends javax.swing.JPanel {
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tablaMascotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -101,7 +121,7 @@ public class MascotasPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tablaClientes);
+        jScrollPane1.setViewportView(tablaMascotas);
 
         btnNuevo.setBackground(new java.awt.Color(153, 0, 153));
 
@@ -228,6 +248,6 @@ public class MascotasPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaClientes;
+    private javax.swing.JTable tablaMascotas;
     // End of variables declaration//GEN-END:variables
 }

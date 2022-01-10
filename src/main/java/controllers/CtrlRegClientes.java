@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import models.Clientes;
 import querys.QuerysClientes;
 import views.ClientePanel;
-import views.FrmVeterinario;
+import views.FrmPrincipal;
 import views.RegistroClientePanel;
 
 /**
@@ -24,13 +24,13 @@ import views.RegistroClientePanel;
 public class CtrlRegClientes implements MouseListener {
 
     Clientes cliente;
-    FrmVeterinario frm;
+    FrmPrincipal frm;
     RegistroClientePanel registro;
     boolean opcion;
     Pattern p = Pattern.compile("[0-9]{5}");
     Matcher m;
 
-    public CtrlRegClientes(FrmVeterinario frm, RegistroClientePanel r, Clientes c, boolean opcion) {
+    public CtrlRegClientes(FrmPrincipal frm, RegistroClientePanel r, Clientes c, boolean opcion) {
         this.frm = frm;
         this.registro = r;
         this.opcion = opcion;
