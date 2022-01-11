@@ -12,10 +12,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.time.LocalDateTime;
 import javax.swing.JPanel;
+import views.CitasPanel;
 import views.ClientePanel;
 import views.ConsultasPanel;
+import views.FacturasPanel;
 import views.FrmPrincipal;
 import views.MascotasPanel;
+import views.MedicamentosPanel;
+import views.ProveedoresPanel;
+import views.VeterinariosPanel;
 
 /**
  *
@@ -92,8 +97,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.frm.getBtnPrincipal())) {
-            ClientePanel cp = new ClientePanel();
-            showContentPanel(this.frm,cp);
+            
         }
         if (e.getSource().equals(this.frm.getBtnClientes())) {
             ClientePanel cp = new ClientePanel();
@@ -104,8 +108,28 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
             CtrlMascotas mascotas = new CtrlMascotas(frm, mp);
         }
         if (e.getSource().equals(this.frm.getBtnConsultas())) {
-            ConsultasPanel cop = new ConsultasPanel();
-            showContentPanel(this.frm ,cop);
+            ConsultasPanel consPan = new ConsultasPanel();
+            CtrlConsultas consultas = new CtrlConsultas(frm, consPan);
+        }
+        if (e.getSource().equals(this.frm.getBtnCitas())) {
+            CitasPanel cpa = new CitasPanel();
+            CtrlCitas citas = new CtrlCitas(frm, cpa);
+        }
+        if (e.getSource().equals(this.frm.getBtnFacturas())) {
+            FacturasPanel facPan = new FacturasPanel();
+            CtrlFacturas facturas = new CtrlFacturas(frm, facPan);
+        }
+        if (e.getSource().equals(this.frm.getBtnMedicamentos())) {
+            MedicamentosPanel medPan = new MedicamentosPanel();
+            CtrlMedicamentos medicamentos = new CtrlMedicamentos(frm, medPan);
+        }
+        if (e.getSource().equals(this.frm.getBtnVeterinarios())) {
+            VeterinariosPanel vetPan = new VeterinariosPanel();
+            CtrlVeterinarios veterinarios = new CtrlVeterinarios(frm, vetPan);
+        }
+        if (e.getSource().equals(this.frm.getBtnProveedores())) {
+            ProveedoresPanel proPan = new ProveedoresPanel();
+            CtrlProveedores proveedores = new CtrlProveedores(frm, proPan);
         }
         if (e.getSource().equals(this.frm.getExitLabel())) {
             System.exit(0);

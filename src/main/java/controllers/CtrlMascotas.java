@@ -31,6 +31,7 @@ public class CtrlMascotas implements MouseListener {
     String titulos[] = {"Id", "Nombre", "Especie", "Color", "Sexo", "Enfermedades", "Anotaciones", "Vacunas", "Chip", "Dueño"};
     String info[][];
     boolean isSelected;
+    ArrayList<Mascotas> miLista;
     ArrayList<Clientes> cliList;
 
     public CtrlMascotas(FrmPrincipal frm, MascotasPanel p) {
@@ -56,9 +57,8 @@ public class CtrlMascotas implements MouseListener {
 
     private String[][] obtieneMatriz() {
 
-        ArrayList<Mascotas> miLista = QuerysMascotas.consultaGeneral();
+         miLista = QuerysMascotas.consultaGeneral();
          cliList = QuerysClientes.consultaGeneral();
-        int id;
 
         String informacion[][] = new String[miLista.size()][10];
 
@@ -92,7 +92,7 @@ public class CtrlMascotas implements MouseListener {
 
     private String[][] obtieneFiltro() {
 
-        ArrayList<Mascotas> miLista = QuerysMascotas.consultaFiltro(this.panel.getCampoBuscar().getText());
+        miLista = QuerysMascotas.consultaFiltro(this.panel.getCampoBuscar().getText());
 
         String informacion[][] = new String[miLista.size()][8];
 
@@ -121,7 +121,8 @@ public class CtrlMascotas implements MouseListener {
         String anotaciones = String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 6));
         String vacunas = String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 7));
         boolean chip = Boolean.parseBoolean(String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 8)));
-        int codigoCliente = Integer.parseInt(String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 0)));
+        int codigoCliente = QuerysMascotas.leerCliente(id);
+        
 
         mascota = new Mascotas(id, nombre, especie, color, sexo, enfermedades, anotaciones, vacunas, chip, codigoCliente);
 

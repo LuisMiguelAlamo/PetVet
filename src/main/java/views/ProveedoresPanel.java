@@ -13,12 +13,12 @@ import javax.swing.JTextField;
  *
  * @author Luis Miguel
  */
-public class ConsultasPanel extends javax.swing.JPanel {
+public class ProveedoresPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ClientePanel
      */
-    public ConsultasPanel() {
+    public ProveedoresPanel() {
         initComponents();
     }
 
@@ -39,12 +39,12 @@ public class ConsultasPanel extends javax.swing.JPanel {
     }
      
     
-    public JTable getTablaConsultas() {
-        return tablaConsultas;
+    public JTable getTablaProveedores() {
+        return tablaProveedores;
     }
 
-    public void setTablaConsultas(JTable tablaConsultas) {
-        this.tablaConsultas = tablaConsultas;
+    public void setTablaProveedores(JTable tablaProveedores) {
+        this.tablaProveedores = tablaProveedores;
     }
 
     public JTextField getCampoBuscar() {
@@ -73,7 +73,7 @@ public class ConsultasPanel extends javax.swing.JPanel {
         btnBuscar = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaConsultas = new javax.swing.JTable();
+        tablaProveedores = new javax.swing.JTable();
         btnNuevo = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnEditar = new javax.swing.JPanel();
@@ -86,7 +86,7 @@ public class ConsultasPanel extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
-        jLabel1.setText("Consultas");
+        jLabel1.setText("Proveedores");
 
         campoBuscar.setForeground(new java.awt.Color(204, 204, 204));
         campoBuscar.setText("Buscar cliente");
@@ -110,7 +110,7 @@ public class ConsultasPanel extends javax.swing.JPanel {
             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        tablaConsultas.setModel(new javax.swing.table.DefaultTableModel(
+        tablaProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -121,7 +121,7 @@ public class ConsultasPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tablaConsultas);
+        jScrollPane1.setViewportView(tablaProveedores);
 
         btnNuevo.setBackground(new java.awt.Color(153, 0, 153));
         btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -251,6 +251,6 @@ public class ConsultasPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tablaConsultas;
+    private javax.swing.JTable tablaProveedores;
     // End of variables declaration//GEN-END:variables
 }

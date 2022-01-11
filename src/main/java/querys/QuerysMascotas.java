@@ -48,22 +48,22 @@ public class QuerysMascotas {
         return lista;
 
     }
-    public static String leerCliente(int cli) {
-        String nombre = "";
+    public static int leerCliente(int cli) {
+        int codCliente = 0;
         
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT nombre FROM clientes WHERE  id = "+ cli);
+                rs = smnt.executeQuery("SELECT codigoCliente FROM mascotas WHERE  id = "+ cli);
                 while (rs.next()) {
-                    nombre = rs.getString("nombre");
+                    codCliente = rs.getInt("nombre");
                     
                 }
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
         }
-        return nombre;
+        return codCliente;
 
     }
 

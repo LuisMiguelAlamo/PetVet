@@ -26,7 +26,7 @@ public class QuerysConsultas {
             if (AbrirConexion.abrirConect()) {
                 System.out.println("metodo consultaGeneral");
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM clientes");
+                rs = smnt.executeQuery("SELECT * FROM consultas");
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     Timestamp fecha = rs.getTimestamp("fecha");
@@ -52,7 +52,7 @@ public class QuerysConsultas {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM clientes WHERE fecha LIKE '%" + campo + "%'"
+                rs = smnt.executeQuery("SELECT * FROM consultas WHERE fecha LIKE '%" + campo + "%'"
                         + " OR codigoMedicamento LIKE '%" + campo + "%'"
                         + " OR codigoMascota LIKE '%" + campo + "%'");
                 while (rs.next()) {

@@ -8,28 +8,29 @@ package controllers;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.sql.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import models.Clientes;
-import querys.QuerysClientes;
-import views.ClientePanel;
+import models.Proveedores;
+import querys.QuerysProveedores;
+import views.ProveedoresPanel;
 import views.FrmPrincipal;
-import views.RegistroClientePanel;
+//import views.RegistroClientePanel;
 
 /**
  *
  * @author Luis Miguel
  */
-public class CtrlClientes implements MouseListener{
+public class CtrlProveedores implements MouseListener{
     
     FrmPrincipal frm;
-    ClientePanel panel;
-    Clientes cliente;
-    String titulos[] = {"Id", "Nombre", "Dirección", "Localidad", "Teléfono", "Email", "CP"};
+    ProveedoresPanel panel;
+    Proveedores proveedor;
+    String titulos[] = {"Id", "Nombre", "Dirección", "Localidad", "Teléfono", "Email", "CP", "Antiguedad"};
     String info[][];
     boolean isSelected;
 
-    public CtrlClientes(FrmPrincipal frm, ClientePanel p) {
+    public CtrlProveedores(FrmPrincipal frm, ProveedoresPanel p) {
         this.frm = frm;
         this.panel = p;
         CtrlPrincipal.showContentPanel(frm, p);
@@ -37,7 +38,7 @@ public class CtrlClientes implements MouseListener{
         this.panel.getBtnNuevo().addMouseListener(this);
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
-        this.panel.getTablaClientes().addMouseListener(this);
+        this.panel.getTablaProveedores().addMouseListener(this);
         
         isSelected = false;
         actualizarTabla();
@@ -45,14 +46,14 @@ public class CtrlClientes implements MouseListener{
     
     private void actualizarTabla() {
         info = obtieneMatriz();
-        this.panel.getTablaClientes().setModel(new DefaultTableModel(info, titulos));
+        this.panel.getTablaProveedores().setModel(new DefaultTableModel(info, titulos));
     }
     
     private String[][] obtieneMatriz() {
 
-        ArrayList<Clientes> miLista = QuerysClientes.consultaGeneral();
+        ArrayList<Proveedores> miLista = QuerysProveedores.consultaGeneral();
 
-        String informacion[][] = new String[miLista.size()][7];
+        String informacion[][] = new String[miLista.size()][8];
 
         for (int x = 0; x < informacion.length; x++) {
             informacion[x][0] = miLista.get(x).getId() + "";
@@ -61,7 +62,8 @@ public class CtrlClientes implements MouseListener{
             informacion[x][3] = miLista.get(x).getLocalidad()+ "";
             informacion[x][4] = miLista.get(x).getTelefono()+ "";
             informacion[x][5] = miLista.get(x).getEmail()+ "";
-            informacion[x][6] = miLista.get(x).getCp()+ "";
+            informacion[x][6] = miLista.get(x).getCP()+ "";
+            informacion[x][7] = miLista.get(x).getFecha()+ "";
         }
 
         return informacion;
@@ -69,9 +71,9 @@ public class CtrlClientes implements MouseListener{
 
     private String[][] obtieneFiltro() {
 
-        ArrayList<Clientes> miLista = QuerysClientes.consultaFiltro(this.panel.getCampoBuscar().getText());
+        ArrayList<Proveedores> miLista = QuerysProveedores.consultaFiltro(this.panel.getCampoBuscar().getText());
 
-        String informacion[][] = new String[miLista.size()][7];
+        String informacion[][] = new String[miLista.size()][8];
 
         for (int x = 0; x < informacion.length; x++) {
             informacion[x][0] = miLista.get(x).getId() + "";
@@ -80,23 +82,25 @@ public class CtrlClientes implements MouseListener{
             informacion[x][3] = miLista.get(x).getLocalidad()+ "";
             informacion[x][4] = miLista.get(x).getTelefono()+ "";
             informacion[x][5] = miLista.get(x).getEmail()+ "";
-            informacion[x][6] = miLista.get(x).getCp()+ "";
+            informacion[x][6] = miLista.get(x).getCP()+ "";
+            informacion[x][7] = miLista.get(x).getFecha()+ "";
         }
 
         return informacion;
     }
     
-    private Clientes llenaCampos() {
-        int id = Integer.parseInt(String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 0)));
-        String nombre = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 1));
-        String direccion = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 2));
-        String localidad = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 3));
-        String telefono = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 4));
-        String email = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 5));
-        int CP = Integer.parseInt(String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 6)));
+    private Proveedores llenaCampos() {
+        int id = Integer.parseInt(String.valueOf(this.panel.getTablaProveedores().getValueAt(this.panel.getTablaProveedores().getSelectedRow(), 0)));
+        String nombre = String.valueOf(this.panel.getTablaProveedores().getValueAt(this.panel.getTablaProveedores().getSelectedRow(), 1));
+        String direccion = String.valueOf(this.panel.getTablaProveedores().getValueAt(this.panel.getTablaProveedores().getSelectedRow(), 2));
+        String localidad = String.valueOf(this.panel.getTablaProveedores().getValueAt(this.panel.getTablaProveedores().getSelectedRow(), 3));
+        String telefono = String.valueOf(this.panel.getTablaProveedores().getValueAt(this.panel.getTablaProveedores().getSelectedRow(), 4));
+        String email = String.valueOf(this.panel.getTablaProveedores().getValueAt(this.panel.getTablaProveedores().getSelectedRow(), 5));
+        int CP = Integer.parseInt(String.valueOf(this.panel.getTablaProveedores().getValueAt(this.panel.getTablaProveedores().getSelectedRow(), 6)));
+        Date fecha = Date.valueOf(String.valueOf(this.panel.getTablaProveedores().getValueAt(this.panel.getTablaProveedores().getSelectedRow(), 6)));
 
-        cliente = new Clientes(id, nombre, direccion, localidad, telefono, email, CP);
-        return cliente;
+        proveedor = new Proveedores(id, nombre, direccion, localidad, telefono, email, CP, fecha);
+        return proveedor;
     }
 
     @Override
@@ -105,14 +109,14 @@ public class CtrlClientes implements MouseListener{
             
         }
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
-            RegistroClientePanel registro = new RegistroClientePanel();                        
-            CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.cliente, false);
+//            RegistroClientePanel registro = new RegistroClientePanel();                        
+//            CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.proveedor, false);
         }
         
         if (e.getSource().equals(this.panel.getBtnEditar())) {
             if (isSelected) {
-                RegistroClientePanel registro = new RegistroClientePanel();
-                CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.cliente, true);
+//                RegistroClientePanel registro = new RegistroClientePanel();
+//                CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.proveedor, true);
             }else{
                 JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
             }
@@ -120,18 +124,18 @@ public class CtrlClientes implements MouseListener{
         
         if (e.getSource().equals(this.panel.getBtnEliminar())) {
             if (isSelected) {
-                int id = Integer.parseInt(String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 0)));
+                int id = Integer.parseInt(String.valueOf(this.panel.getTablaProveedores().getValueAt(this.panel.getTablaProveedores().getSelectedRow(), 0)));
                 System.out.println(id);
-                QuerysClientes.eliminar(id);
+                QuerysProveedores.eliminar(id);
                 this.actualizarTabla();
             }else{
                 JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
             }
         }
         
-        if (e.getSource().equals(this.panel.getTablaClientes())) {
+        if (e.getSource().equals(this.panel.getTablaProveedores())) {
             isSelected = true;
-           this.cliente = llenaCampos();
+           this.proveedor = llenaCampos();
         }
     }
 

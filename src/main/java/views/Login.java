@@ -150,7 +150,6 @@ public class Login extends javax.swing.JFrame {
 
         btnCancelar.setBackground(new java.awt.Color(0, 204, 102));
         btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCancelar.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -174,7 +173,6 @@ public class Login extends javax.swing.JFrame {
 
         btnAceptar.setBackground(new java.awt.Color(0, 204, 102));
         btnAceptar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAceptar.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

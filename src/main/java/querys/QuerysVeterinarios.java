@@ -23,7 +23,6 @@ public class QuerysVeterinarios {
         ArrayList<Veterinarios> lista = new ArrayList<>();
         try {
             if (AbrirConexion.abrirConect()) {
-                System.out.println("metodo consultaGeneral");
                 smnt = AbrirConexion.getCone().createStatement();
                 rs = smnt.executeQuery("SELECT * FROM veterinarios");
                 while (rs.next()) {
@@ -99,9 +98,11 @@ public class QuerysVeterinarios {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
                 smnt.executeUpdate("DELETE FROM veterinarios WHERE id = '" + id + "';");
+                System.out.println("Ejecutó método eliminar");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar el veterinario");
+//            JOptionPane.showMessageDialog(null, "Error al eliminar el veterinario");
+            System.out.println(ex.getMessage());
         }
     }
 }
