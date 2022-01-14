@@ -40,6 +40,26 @@ public class QuerysAcceso {
         return lista;
 
     }
+    public static Acceso consultaGeneral(int id) {
+        Acceso acceso = null;
+        try {
+            if (AbrirConexion.abrirConect()) {
+                smnt = AbrirConexion.getCone().createStatement();
+                rs = smnt.executeQuery("SELECT * FROM acceso");
+                while (rs.next()) {
+                    int rol = rs.getInt("rol");
+                    String usuario = rs.getString("usuario");
+                    String password = rs.getString("password");
+                    int codigoVeterinario = rs.getInt("codigoVeterinario");
+                    acceso = new Acceso(id, rol, usuario, password, codigoVeterinario);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en la consulta general de acceso");
+        }
+        return acceso;
+
+    }
 
     public static ArrayList<Acceso> consultaFiltro(String campo) {
         Acceso acceso;

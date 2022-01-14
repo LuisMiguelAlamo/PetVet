@@ -48,24 +48,60 @@ public class QuerysMascotas {
         return lista;
 
     }
-    public static int leerCliente(int cli) {
-        int codCliente = 0;
+    
+    
+    public static Mascotas consultaGeneral(int id) {
+        Mascotas mascota = null;
         
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT codigoCliente FROM mascotas WHERE  id = "+ cli);
+                rs = smnt.executeQuery("SELECT * FROM mascotas WHERE  id = "+ id);
                 while (rs.next()) {
-                    codCliente = rs.getInt("nombre");
-                    
+                    String nombre = rs.getString("nombre");
+                    String especie = rs.getString("especie");
+                    String color = rs.getString("color");
+                    String sexo = rs.getString("sexo");
+                    String enfermedades = rs.getString("enfermedades");
+                    String anotaciones = rs.getString("anotaciones");
+                    String vacunas = rs.getString("vacunas");
+                    boolean chip = rs.getBoolean("chip");
+                    int codCliente = rs.getInt("codigoCliente");
+                    mascota = new Mascotas(id, nombre, especie, color, sexo, enfermedades, anotaciones, vacunas, chip, codCliente);
                 }
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
         }
-        return codCliente;
+        return mascota;
+    }
+    
+    
+    public static Clientes leerCliente(int id) {
+        Clientes cliente = null;
+        
+        try {
+            if (AbrirConexion.abrirConect()) {
+                smnt = AbrirConexion.getCone().createStatement();
+                rs = smnt.executeQuery("SELECT * FROM clientes WHERE  id = "+ id);
+                while (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    String direccion = rs.getString("direccion");
+                    String localidad = rs.getString("localidad");
+                    String telefono = rs.getString("telefono");
+                    String email = rs.getString("email");
+                    int cp = rs.getInt("CP");
+                    cliente = new Clientes(id, nombre, direccion, localidad, telefono, email, cp);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+        }
+        return cliente;
 
     }
+    
+    
 
     public static ArrayList<Mascotas> consultaFiltro(String campo) {
         Mascotas mascota;

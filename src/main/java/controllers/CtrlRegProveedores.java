@@ -5,32 +5,32 @@
  */
 package controllers;
 
-import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
-import models.Clientes;
-import querys.QuerysClientes;
-import views.ClientePanel;
+import models.Proveedores;
+import querys.QuerysProveedores;
+import views.ProveedoresPanel;
 import views.FrmPrincipal;
-import views.RegistroClientePanel;
+import views.RegistroProveedoresPanel;
 
 /**
  *
  * @author Luis Miguel
  */
-public class CtrlRegClientes implements MouseListener {
+public class CtrlRegProveedores implements MouseListener {
 
-    Clientes cliente;
+    Proveedores proveedor;
     FrmPrincipal frm;
-    RegistroClientePanel registro;
+    RegistroProveedoresPanel registro;
     boolean opcion;
     Pattern p = Pattern.compile("[0-9]{5}");
     Matcher m;
 
-    public CtrlRegClientes(FrmPrincipal frm, RegistroClientePanel r, Clientes c, boolean opcion) {
+    public CtrlRegProveedores(FrmPrincipal frm, RegistroProveedoresPanel r, Proveedores p, boolean opcion) {
         this.frm = frm;
         this.registro = r;
         this.opcion = opcion;
@@ -41,18 +41,19 @@ public class CtrlRegClientes implements MouseListener {
         this.registro.getBtnGuardar().addMouseListener(this);
 
         if (opcion) {
-            this.cliente = c;
-            this.registro.getTxtNombre().setText(c.getNombre());
-            this.registro.getTxtDireccion().setText(c.getDireccion());
-            this.registro.getTxtLocalidad().setText(c.getLocalidad());
-            this.registro.getTxtTelefono().setText(c.getTelefono());
-            this.registro.getTxtEmail().setText(c.getEmail());
-            this.registro.getTxtCP().setText(String.valueOf(c.getCp()));
+            this.proveedor = p;
+            this.registro.getTxtNombre().setText(p.getNombre());
+            this.registro.getTxtDireccion().setText(p.getDireccion());
+            this.registro.getTxtLocalidad().setText(p.getLocalidad());
+            this.registro.getTxtTelefono().setText(p.getTelefono());
+            this.registro.getTxtEmail().setText(p.getEmail());
+            this.registro.getTxtCP().setText(String.valueOf(p.getCP()));
+            this.registro.getTxtDesde().setText(String.valueOf(p.getFecha()));
         }
 
     }
 
-    public Clientes llenaCliente() {
+    public Proveedores llenaProveedor() {
         int id = 0;
         String nombre = this.registro.getTxtNombre().getText();
         String direccion = this.registro.getTxtDireccion().getText();
@@ -60,8 +61,9 @@ public class CtrlRegClientes implements MouseListener {
         String telefono = this.registro.getTxtTelefono().getText();
         String email = this.registro.getTxtEmail().getText();
         int CP = Integer.parseInt(this.registro.getTxtCP().getText());
-        this.cliente = new Clientes(id, nombre, direccion, localidad, telefono, email, CP);
-        return cliente;
+        Date fecha = Date.valueOf(this.registro.getTxtDesde().getText());
+        this.proveedor = new Proveedores(id, nombre, direccion, localidad, telefono, email, CP, fecha);
+        return proveedor;
     }
 
     @Override
@@ -72,27 +74,29 @@ public class CtrlRegClientes implements MouseListener {
                     || this.registro.getTxtLocalidad().getText().isEmpty()
                     || this.registro.getTxtTelefono().getText().isEmpty()
                     || this.registro.getTxtEmail().getText().isEmpty()
-                    || this.registro.getTxtCP().getText().isEmpty()) {
+                    || this.registro.getTxtCP().getText().isEmpty()
+                    || this.registro.getTxtDesde().getText().isEmpty()) {
 
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
 
                 if (opcion) {
-                    this.cliente.setNombre(this.registro.getTxtNombre().getText());
-                    this.cliente.setDireccion(this.registro.getTxtDireccion().getText());
-                    this.cliente.setLocalidad(this.registro.getTxtLocalidad().getText());
-                    this.cliente.setTelefono(this.registro.getTxtTelefono().getText());
-                    this.cliente.setEmail(this.registro.getTxtEmail().getText());
-                    this.cliente.setCp(Integer.parseInt(this.registro.getTxtCP().getText()));
-                    QuerysClientes.actualizar(this.cliente);
+                    this.proveedor.setNombre(this.registro.getTxtNombre().getText());
+                    this.proveedor.setDireccion(this.registro.getTxtDireccion().getText());
+                    this.proveedor.setLocalidad(this.registro.getTxtLocalidad().getText());
+                    this.proveedor.setTelefono(this.registro.getTxtTelefono().getText());
+                    this.proveedor.setEmail(this.registro.getTxtEmail().getText());
+                    this.proveedor.setCP(Integer.parseInt(this.registro.getTxtCP().getText()));
+                    this.proveedor.setFecha(Date.valueOf(this.registro.getTxtDesde().getText()));
+                    QuerysProveedores.actualizar(this.proveedor);
                 } else {
-                    this.cliente = llenaCliente();
-                    QuerysClientes.crear(this.cliente);
+                    this.proveedor = llenaProveedor();
+                    QuerysProveedores.crear(this.proveedor);
                 }
 
-                ClientePanel cp = new ClientePanel();
-                CtrlClientes cli = new CtrlClientes(frm, cp, opcion);
+                ProveedoresPanel pp = new ProveedoresPanel();
+                CtrlProveedores pro = new CtrlProveedores(frm, pp, opcion);
             }
         }
     }

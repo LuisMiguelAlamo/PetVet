@@ -43,7 +43,29 @@ public class QuerysConsultas {
             JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
         }
         return lista;
-
+    }
+    
+    public static Consultas consultaGeneral(int id) {
+        Consultas consulta = null;
+        try {
+            if (AbrirConexion.abrirConect()) {
+                System.out.println("metodo consultaGeneral");
+                smnt = AbrirConexion.getCone().createStatement();
+                rs = smnt.executeQuery("SELECT * FROM consultas");
+                while (rs.next()) {
+                    Timestamp fecha = rs.getTimestamp("fecha");
+                    String diagnostico = rs.getString("diagnostico");
+                    String tratamiento = rs.getString("tratamiento");
+                    int codMedicamento = rs.getInt("codigoMedicamento");
+                    int codVeterinario = rs.getInt("codigoVeterinario");
+                    int codMascota = rs.getInt("codigoMascota");
+                    consulta = new Consultas(id, fecha, diagnostico, tratamiento, codMedicamento, codVeterinario, codMascota);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+        }
+        return consulta;
     }
 
     public static ArrayList<Consultas> consultaFiltro(String campo) {

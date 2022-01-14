@@ -41,6 +41,26 @@ public class QuerysMedicamentos {
         return lista;
 
     }
+    public static Medicamentos consultaGeneral(int id) {
+        Medicamentos medicamento = null;
+        try {
+            if (AbrirConexion.abrirConect()) {
+                System.out.println("metodo consultaGeneral");
+                smnt = AbrirConexion.getCone().createStatement();
+                rs = smnt.executeQuery("SELECT * FROM medicamentos  WHERE id = "+ id);
+                while (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    double precio = rs.getDouble("precio");
+                    int codProveedor = rs.getInt("codigoProveedor");
+                    medicamento = new Medicamentos(id, nombre, precio, codProveedor);                    
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+        }
+        return medicamento;
+
+    }
 
     public static ArrayList<Medicamentos> consultaFiltro(String campo) {
         Medicamentos medicamento;

@@ -42,6 +42,26 @@ public class QuerysCitas {
         return lista;
 
     }
+    public static Citas consultaGeneral(int id) {
+        Citas cita = null;
+        try {
+            if (AbrirConexion.abrirConect()) {
+                System.out.println("metodo consultaGeneral");
+                smnt = AbrirConexion.getCone().createStatement();
+                rs = smnt.executeQuery("SELECT * FROM citas");
+                while (rs.next()) {
+                    Timestamp fecha = rs.getTimestamp("fecha");
+                    int codVeterinario = rs.getInt("codigoVeterinario");
+                    int codMascota = rs.getInt("codigoMascota");
+                    cita = new Citas(id, fecha, codVeterinario, codMascota);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+        }
+        return cita;
+
+    }
 
     public static ArrayList<Citas> consultaFiltro(String campo) {
         Citas cita;

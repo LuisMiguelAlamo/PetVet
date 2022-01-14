@@ -11,10 +11,12 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Medicamentos;
+import models.Proveedores;
 import querys.QuerysMedicamentos;
+import querys.QuerysProveedores;
 import views.MedicamentosPanel;
 import views.FrmPrincipal;
-//import views.RegistroClientePanel;
+import views.RegistroMedicamentosPanel;
 
 /**
  *
@@ -25,7 +27,9 @@ public class CtrlMedicamentos implements MouseListener{
     FrmPrincipal frm;
     MedicamentosPanel panel;
     Medicamentos medicamento;
-    String titulos[] = {"Id", "Nombre", "Precio", "CodProveedor"};
+    ArrayList<Medicamentos> miLista;
+    ArrayList<Proveedores> proList;
+    String titulos[] = {"Id", "Nombre", "Precio", "Proveedor"};
     String info[][];
     boolean isSelected;
 
@@ -50,7 +54,8 @@ public class CtrlMedicamentos implements MouseListener{
     
     private String[][] obtieneMatriz() {
 
-        ArrayList<Medicamentos> miLista = QuerysMedicamentos.consultaGeneral();
+        miLista = QuerysMedicamentos.consultaGeneral();
+        proList = QuerysProveedores.consultaGeneral();
 
         String informacion[][] = new String[miLista.size()][4];
 
@@ -58,10 +63,22 @@ public class CtrlMedicamentos implements MouseListener{
             informacion[x][0] = miLista.get(x).getId() + "";
             informacion[x][1] = miLista.get(x).getNombre() + "";
             informacion[x][2] = miLista.get(x).getPrecio()+ "";
-            informacion[x][3] = miLista.get(x).getCodProveedor()+ "";
+            int cp = miLista.get(x).getCodProveedor();
+            String proveedor = leerProveedor(cp);
+            informacion[x][3] = proveedor;
         }
 
         return informacion;
+    }
+    
+    private String leerProveedor(int cp) {
+        String nombre = "";
+        for (Proveedores p : proList) {
+            if (p.getId() == cp) {
+                nombre = p.getNombre();
+            }
+        }
+        return nombre;
     }
 
     private String[][] obtieneFiltro() {
@@ -81,12 +98,8 @@ public class CtrlMedicamentos implements MouseListener{
     }
     
     private Medicamentos llenaCampos() {
-        int id = Integer.parseInt(String.valueOf(this.panel.getTablaMedicamentos().getValueAt(this.panel.getTablaMedicamentos().getSelectedRow(), 0)));
-        String nombre = String.valueOf(this.panel.getTablaMedicamentos().getValueAt(this.panel.getTablaMedicamentos().getSelectedRow(), 1));
-        double precio = Double.parseDouble(String.valueOf(this.panel.getTablaMedicamentos().getValueAt(this.panel.getTablaMedicamentos().getSelectedRow(), 2)));
-        int codProveedor = Integer.parseInt(String.valueOf(this.panel.getTablaMedicamentos().getValueAt(this.panel.getTablaMedicamentos().getSelectedRow(), 3)));
-
-        medicamento = new Medicamentos(id, nombre, precio, codProveedor);
+        int id = Integer.parseInt(String.valueOf(this.panel.getTablaMedicamentos().getValueAt(this.panel.getTablaMedicamentos().getSelectedRow(), 0)));        
+        medicamento = QuerysMedicamentos.consultaGeneral(id);
         return medicamento;
     }
 
@@ -96,27 +109,26 @@ public class CtrlMedicamentos implements MouseListener{
             
         }
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
-//            RegistroClientePanel registro = new RegistroClientePanel();                        
-//            CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.medicamento, false);
+            RegistroMedicamentosPanel registro = new RegistroMedicamentosPanel();                        
+            CtrlRegMedicamentos rc = new CtrlRegMedicamentos(frm, registro, this.medicamento, false);
         }
         
         if (e.getSource().equals(this.panel.getBtnEditar())) {
             if (isSelected) {
-//                RegistroClientePanel registro = new RegistroClientePanel();
-//                CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.medicamento, true);
+                RegistroMedicamentosPanel registro = new RegistroMedicamentosPanel();
+                CtrlRegMedicamentos rc = new CtrlRegMedicamentos(this.frm, registro, this.medicamento, true);
             }else{
-                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+                JOptionPane.showMessageDialog(null, "No ha seleccionado un medicamento");
             }
         }
         
         if (e.getSource().equals(this.panel.getBtnEliminar())) {
             if (isSelected) {
                 int id = Integer.parseInt(String.valueOf(this.panel.getTablaMedicamentos().getValueAt(this.panel.getTablaMedicamentos().getSelectedRow(), 0)));
-                System.out.println(id);
                 QuerysMedicamentos.eliminar(id);
                 this.actualizarTabla();
             }else{
-                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+                JOptionPane.showMessageDialog(null, "No ha seleccionado un medicamento");
             }
         }
         

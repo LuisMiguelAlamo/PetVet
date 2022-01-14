@@ -42,7 +42,29 @@ public class QuerysClientes {
             JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
         }
         return lista;
-
+    }
+    
+    public static Clientes consultaGeneral(int id) {
+        Clientes cliente = null;
+        try {
+            if (AbrirConexion.abrirConect()) {
+                System.out.println("metodo consultaGeneral");
+                smnt = AbrirConexion.getCone().createStatement();
+                rs = smnt.executeQuery("SELECT * FROM clientes");
+                while (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    String direccion = rs.getString("direccion");
+                    String localidad = rs.getString("localidad");
+                    String telefono = rs.getString("telefono");
+                    String email = rs.getString("email");
+                    int cp = rs.getInt("cp");
+                    cliente = new Clientes(id, nombre, direccion, localidad, telefono, email, cp);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+        }
+        return cliente;
     }
 
     public static ArrayList<Clientes> consultaFiltro(String campo) {

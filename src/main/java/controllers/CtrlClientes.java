@@ -15,6 +15,7 @@ import querys.QuerysClientes;
 import views.ClientePanel;
 import views.FrmPrincipal;
 import views.RegistroClientePanel;
+import views.RegistroMascotasPanel;
 
 /**
  *
@@ -28,16 +29,24 @@ public class CtrlClientes implements MouseListener{
     String titulos[] = {"Id", "Nombre", "Dirección", "Localidad", "Teléfono", "Email", "CP"};
     String info[][];
     boolean isSelected;
+    boolean condicion;
 
-    public CtrlClientes(FrmPrincipal frm, ClientePanel p) {
+    public CtrlClientes(FrmPrincipal frm, ClientePanel p, boolean condicion) {
         this.frm = frm;
         this.panel = p;
+        this.condicion = condicion;
         CtrlPrincipal.showContentPanel(frm, p);
         
         this.panel.getBtnNuevo().addMouseListener(this);
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
         this.panel.getTablaClientes().addMouseListener(this);
+        
+        if (condicion) {
+            this.panel.getBtnEditar().setVisible(false);
+            this.panel.getBtnEliminar().setVisible(false);
+            this.panel.getNuevoLabel().setText("Seleccionar");
+        }
         
         isSelected = false;
         actualizarTabla();
@@ -105,8 +114,14 @@ public class CtrlClientes implements MouseListener{
             
         }
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
-            RegistroClientePanel registro = new RegistroClientePanel();                        
-            CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.cliente, false);
+            if (condicion) {
+                int id = this.cliente.getId();
+                RegistroMascotasPanel mp = new RegistroMascotasPanel();
+                CtrlRegMascotas mas = new CtrlRegMascotas(frm, mp, false, id);
+            }else {
+                RegistroClientePanel registro = new RegistroClientePanel();
+                CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.cliente, false);
+            }
         }
         
         if (e.getSource().equals(this.panel.getBtnEditar())) {

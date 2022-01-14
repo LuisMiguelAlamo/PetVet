@@ -101,7 +101,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         }
         if (e.getSource().equals(this.frm.getBtnClientes())) {
             ClientePanel cp = new ClientePanel();
-            CtrlClientes cli = new CtrlClientes(frm, cp);
+            CtrlClientes cli = new CtrlClientes(frm, cp, false);
         }
         if (e.getSource().equals(this.frm.getBtnMascotas())) {
             MascotasPanel mp = new MascotasPanel();
@@ -129,7 +129,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         }
         if (e.getSource().equals(this.frm.getBtnProveedores())) {
             ProveedoresPanel proPan = new ProveedoresPanel();
-            CtrlProveedores proveedores = new CtrlProveedores(frm, proPan);
+            CtrlProveedores proveedores = new CtrlProveedores(frm, proPan, false);
         }
         if (e.getSource().equals(this.frm.getExitLabel())) {
             System.exit(0);

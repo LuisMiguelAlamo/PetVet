@@ -5,7 +5,6 @@
  */
 package controllers;
 
-import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -111,20 +110,9 @@ public class CtrlMascotas implements MouseListener {
         return informacion;
     }
 
-    private Mascotas llenaCampos() {
+    private Mascotas llenaCampos() {        
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 0)));
-        String nombre = String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 1));
-        String especie = String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 2));
-        String color = String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 3));
-        String sexo = String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 4));
-        String enfermedades = String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 5));
-        String anotaciones = String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 6));
-        String vacunas = String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 7));
-        boolean chip = Boolean.parseBoolean(String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 8)));
-        int codigoCliente = QuerysMascotas.leerCliente(id);
-        
-
-        mascota = new Mascotas(id, nombre, especie, color, sexo, enfermedades, anotaciones, vacunas, chip, codigoCliente);
+        mascota = QuerysMascotas.consultaGeneral(id);
 
         return mascota;
     }

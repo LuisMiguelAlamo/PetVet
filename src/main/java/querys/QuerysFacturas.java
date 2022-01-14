@@ -40,7 +40,28 @@ public class QuerysFacturas {
             JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
         }
         return lista;
-
+    }
+    
+    
+    public static Facturas consultaGeneral(int id) {
+        Facturas factura = null;
+        try {
+            if (AbrirConexion.abrirConect()) {
+                System.out.println("metodo consultaGeneral");
+                smnt = AbrirConexion.getCone().createStatement();
+                rs = smnt.executeQuery("SELECT * FROM facturas");
+                while (rs.next()) {
+                    double total = rs.getDouble("total");
+                    double IGIC = rs.getDouble("IGIC");
+                    double totalConIGIC = rs.getDouble("totalConIGIC");
+                    int codConsulta = rs.getInt("codigoConsulta");
+                    factura = new Facturas(id, total, IGIC, totalConIGIC, codConsulta);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+        }
+        return factura;
     }
 
     public static ArrayList<Facturas> consultaFiltro(String campo) {

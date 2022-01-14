@@ -46,6 +46,31 @@ public class QuerysProveedores {
         return lista;
 
     }
+    
+    public static Proveedores consultaGeneral(int id) {
+        Proveedores proveedor = null;
+        try {
+            if (AbrirConexion.abrirConect()) {
+                System.out.println("metodo consultaGeneral");
+                smnt = AbrirConexion.getCone().createStatement();
+                rs = smnt.executeQuery("SELECT * FROM proveedores WHERE id = "+ id);
+                while (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    String direccion = rs.getString("direccion");
+                    String localidad = rs.getString("localidad");
+                    String telefono = rs.getString("telefono");
+                    String email = rs.getString("email");
+                    int cp = rs.getInt("CP");
+                    Date alta = rs.getDate("alta");
+                    proveedor = new Proveedores(id, nombre, direccion, localidad, telefono, email, cp, alta);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+        }
+        return proveedor;
+
+    }
 
     public static ArrayList<Proveedores> consultaFiltro(String campo) {
         Proveedores proveedor;

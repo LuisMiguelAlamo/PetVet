@@ -5,18 +5,16 @@
  */
 package controllers;
 
-import java.awt.BorderLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
-import models.Clientes;
 import models.Mascotas;
-import querys.QuerysClientes;
 import querys.QuerysMascotas;
 import views.ClientePanel;
 import views.FrmPrincipal;
+import views.MascotasPanel;
 import views.RegistroMascotasPanel;
 
 /**
@@ -40,6 +38,7 @@ public class CtrlRegMascotas implements MouseListener {
         CtrlPrincipal.showContentPanel(frm, r);
 
         this.registro.getBtnGuardar().addMouseListener(this);
+        this.registro.getBtnSeleccionar().addMouseListener(this);
 
         if (opcion) {
             this.mascota = m;
@@ -50,8 +49,22 @@ public class CtrlRegMascotas implements MouseListener {
             this.registro.getTxtAnotaciones().setText(m.getAnotaciones());
             this.registro.getTxtVacunas().setText(m.getVacunas());
         }
-
     }
+
+    public CtrlRegMascotas(FrmPrincipal frm, RegistroMascotasPanel registro, boolean opcion, int idCliente) {
+        this.frm = frm;
+        this.registro = registro;
+        this.opcion = opcion;
+        
+        CtrlPrincipal.showContentPanel(frm, registro);
+        
+        this.registro.getBtnGuardar().addMouseListener(this);
+        this.registro.getBtnSeleccionar().addMouseListener(this);
+//        this.registro.getTxtProveedor().setText(String.valueOf(idProveedor));        
+    }
+    
+    
+    
 
     public Mascotas llenaMascota() {
         int id = 0;
@@ -93,9 +106,13 @@ public class CtrlRegMascotas implements MouseListener {
                     QuerysMascotas.crear(this.mascota);
                 }
 
-                ClientePanel cp = new ClientePanel();
-                CtrlClientes cli = new CtrlClientes(frm, cp);
+                MascotasPanel mp = new MascotasPanel();
+                CtrlMascotas mas = new CtrlMascotas(frm, mp);
             }
+        }
+        if (e.getSource().equals(this.registro.getBtnSeleccionar())) {
+            ClientePanel cp = new ClientePanel();
+            CtrlClientes cli = new CtrlClientes(frm, cp, true);
         }
     }
 

@@ -34,6 +34,8 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
         this.log.getBtnAceptar().addMouseListener(this);
         this.log.getBtnCancelar().addMouseListener(this);
         this.log.getTxtUsuario().addMouseListener(this);
+        this.log.getTxtUsuario().setEnabled (false);
+        this.log.getTxtPassword().setEnabled(false);
         this.log.getTxtPassword().addMouseListener(this);
         this.log.getHeaderPanel().addMouseMotionListener(this);
         this.log.getExitPanel().addMouseListener(this);
@@ -84,6 +86,8 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getSource().equals(this.log.getTxtUsuario())) {
+            this.log.getTxtUsuario().setEnabled(true);
+            this.log.getTxtPassword().setEnabled(true);
             if (this.log.getTxtUsuario().getText().equals("Ingrese su nombre de usuario")) {
                 this.log.getTxtUsuario().setText("");
                 this.log.getTxtUsuario().setForeground(Color.black);
