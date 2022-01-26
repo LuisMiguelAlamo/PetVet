@@ -5,6 +5,7 @@
  */
 package views;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -54,6 +55,10 @@ public class VeterinariosPanel extends javax.swing.JPanel {
     public void setCampoBuscar(JTextField campoBuscar) {
         this.campoBuscar = campoBuscar;
     }
+
+    public JLabel getNuevoLabel() {
+        return nuevoLabel;
+    }
     
     
     
@@ -75,7 +80,7 @@ public class VeterinariosPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaVeterinarios = new javax.swing.JTable();
         btnNuevo = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        nuevoLabel = new javax.swing.JLabel();
         btnEditar = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JPanel();
@@ -126,20 +131,20 @@ public class VeterinariosPanel extends javax.swing.JPanel {
         btnNuevo.setBackground(new java.awt.Color(153, 0, 153));
         btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Nuevo");
+        nuevoLabel.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        nuevoLabel.setForeground(new java.awt.Color(255, 255, 255));
+        nuevoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nuevoLabel.setText("Nuevo");
 
         javax.swing.GroupLayout btnNuevoLayout = new javax.swing.GroupLayout(btnNuevo);
         btnNuevo.setLayout(btnNuevoLayout);
         btnNuevoLayout.setHorizontalGroup(
             btnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+            .addComponent(nuevoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
         );
         btnNuevoLayout.setVerticalGroup(
             btnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+            .addComponent(nuevoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
         );
 
         btnEditar.setBackground(new java.awt.Color(153, 0, 153));
@@ -246,11 +251,11 @@ public class VeterinariosPanel extends javax.swing.JPanel {
     private javax.swing.JTextField campoBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel nuevoLabel;
     private javax.swing.JTable tablaVeterinarios;
     // End of variables declaration//GEN-END:variables
 }

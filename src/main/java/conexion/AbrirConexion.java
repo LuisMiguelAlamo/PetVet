@@ -29,7 +29,7 @@ public class AbrirConexion {
             return true;
         }
         try {
-            String url = "jdbc:mysql://localhost:3306/petVet" + "?useServerPrepStmts=true";
+            String url = "jdbc:mysql://localhost:3306/veterinaria" + "?useServerPrepStmts=true";
             cone = DriverManager.getConnection(url, "root", "");
             System.out.println("Conectado a petVet");
             return true;

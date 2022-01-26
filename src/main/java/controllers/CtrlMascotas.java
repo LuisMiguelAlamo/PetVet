@@ -16,6 +16,7 @@ import querys.QuerysClientes;
 import querys.QuerysMascotas;
 import views.FrmPrincipal;
 import views.MascotasPanel;
+import views.RegistroCitasPanel;
 import views.RegistroMascotasPanel;
 
 /**
@@ -30,12 +31,15 @@ public class CtrlMascotas implements MouseListener {
     String titulos[] = {"Id", "Nombre", "Especie", "Color", "Sexo", "Enfermedades", "Anotaciones", "Vacunas", "Chip", "Dueño"};
     String info[][];
     boolean isSelected;
+    boolean condicion;
     ArrayList<Mascotas> miLista;
     ArrayList<Clientes> cliList;
+    int idVeterninario;
 
-    public CtrlMascotas(FrmPrincipal frm, MascotasPanel p) {
+    public CtrlMascotas(FrmPrincipal frm, MascotasPanel p, boolean condicion) {
         this.frm = frm;
         this.panel = p;
+        this.condicion = condicion;
         
         CtrlPrincipal.showContentPanel(frm, p);
         
@@ -44,10 +48,17 @@ public class CtrlMascotas implements MouseListener {
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
         this.panel.getTablaMascotas().addMouseListener(this);
-
+        
+        if (condicion) {
+            this.panel.getBtnEditar().setVisible(false);
+            this.panel.getBtnEliminar().setVisible(false);
+            this.panel.getNuevoLabel().setText("Seleccionar");
+        }
+        
         isSelected = false;
         actualizarTabla();
     }
+    
 
     private void actualizarTabla() {
         info = obtieneMatriz();
@@ -110,10 +121,9 @@ public class CtrlMascotas implements MouseListener {
         return informacion;
     }
 
-    private Mascotas llenaCampos() {        
+    private Mascotas getMascota() {        
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 0)));
         mascota = QuerysMascotas.consultaGeneral(id);
-
         return mascota;
     }
 
@@ -123,14 +133,28 @@ public class CtrlMascotas implements MouseListener {
 
         }
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
-            RegistroMascotasPanel registro = new RegistroMascotasPanel();
-            CtrlRegMascotas rc = new CtrlRegMascotas(frm, registro, this.mascota, false);
+            if (condicion) {
+                if (isSelected) {
+                    CtrlPrincipal.mascota = getMascota();
+                    RegistroCitasPanel rc = new RegistroCitasPanel();
+                    CtrlRegCitas cit = new CtrlRegCitas(frm, rc, true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No ha seleccionado una mascota");
+                }
+            } else {
+                RegistroMascotasPanel mp = new RegistroMascotasPanel();
+                CtrlRegMascotas mas = new CtrlRegMascotas(frm, mp, false);
+            }
         }
 
         if (e.getSource().equals(this.panel.getBtnEditar())) {
             if (isSelected) {
+                CtrlPrincipal.isNew = false;
+                CtrlPrincipal.mascota = getMascota();
+                this.mascota = getMascota();
+                CtrlPrincipal.cliente = QuerysClientes.consultaGeneral(this.mascota.getCodCliente());
                 RegistroMascotasPanel registro = new RegistroMascotasPanel();
-                CtrlRegMascotas rc = new CtrlRegMascotas(frm, registro, this.mascota, true);
+                CtrlRegMascotas rc = new CtrlRegMascotas(frm, registro, true);
             } else {
                 JOptionPane.showMessageDialog(null, "No ha seleccionado una mascota");
             }
@@ -139,7 +163,6 @@ public class CtrlMascotas implements MouseListener {
         if (e.getSource().equals(this.panel.getBtnEliminar())) {
             if (isSelected) {
                 int id = Integer.parseInt(String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 0)));
-                System.out.println(id);
                 QuerysMascotas.eliminar(id);
                 this.actualizarTabla();
             } else {
@@ -149,7 +172,7 @@ public class CtrlMascotas implements MouseListener {
 
         if (e.getSource().equals(this.panel.getTablaMascotas())) {
             isSelected = true;
-            this.mascota = llenaCampos();
+            this.mascota = getMascota();
         }
     }
 

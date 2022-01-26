@@ -97,7 +97,7 @@ public class CtrlMedicamentos implements MouseListener{
         return informacion;
     }
     
-    private Medicamentos llenaCampos() {
+    private Medicamentos getMedicamento() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaMedicamentos().getValueAt(this.panel.getTablaMedicamentos().getSelectedRow(), 0)));        
         medicamento = QuerysMedicamentos.consultaGeneral(id);
         return medicamento;
@@ -109,14 +109,20 @@ public class CtrlMedicamentos implements MouseListener{
             
         }
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
+            CtrlPrincipal.isNew = true;
+            CtrlPrincipal.medicamento = null;
             RegistroMedicamentosPanel registro = new RegistroMedicamentosPanel();                        
-            CtrlRegMedicamentos rc = new CtrlRegMedicamentos(frm, registro, this.medicamento, false);
+            CtrlRegMedicamentos rc = new CtrlRegMedicamentos(this.frm, registro, false);
         }
         
         if (e.getSource().equals(this.panel.getBtnEditar())) {
             if (isSelected) {
+                CtrlPrincipal.isNew = false;
+                CtrlPrincipal.medicamento = getMedicamento();
+                this.medicamento = getMedicamento();
+                CtrlPrincipal.proveedor = QuerysProveedores.consultaGeneral(this.medicamento.getCodProveedor());
                 RegistroMedicamentosPanel registro = new RegistroMedicamentosPanel();
-                CtrlRegMedicamentos rc = new CtrlRegMedicamentos(this.frm, registro, this.medicamento, true);
+                CtrlRegMedicamentos rm = new CtrlRegMedicamentos(this.frm, registro, true);
             }else{
                 JOptionPane.showMessageDialog(null, "No ha seleccionado un medicamento");
             }
@@ -134,7 +140,7 @@ public class CtrlMedicamentos implements MouseListener{
         
         if (e.getSource().equals(this.panel.getTablaMedicamentos())) {
            isSelected = true;
-           this.medicamento = llenaCampos();
+           this.medicamento = getMedicamento();
         }
     }
 

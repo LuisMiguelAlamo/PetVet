@@ -48,32 +48,32 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.log.getBtnAceptar())) {            
             
-            if (this.log.getTxtUsuario().getText().isEmpty() 
-                    || this.log.getTxtPassword().getText().isEmpty()
-                    || this.log.getTxtUsuario().getText().equals("Ingrese su nombre de usuario")
-                    || this.log.getTxtPassword().equals("*****")) {
-                JOptionPane.showMessageDialog(null, "Debe introducir un usuario y contraseña");
-            }else{
-                String usuario = this.log.getTxtUsuario().getText();
-                String password = this.log.getTxtPassword().getText();
-                this.acceso = QuerysAcceso.consultaGeneral();
-                this.rol = QuerysRol.consultaGeneral();
-                
-                for (Acceso a : acceso) {
-                    if (a.getUsuario().equals(usuario) && a.getPassword().equals(password)) {
-                        if (a.getRol() == 1) {
-                            CtrlPrincipal ctrlPri = new CtrlPrincipal(false);
-                            this.log.dispose();
-                        } else {
-                            CtrlPrincipal ctrlPri = new CtrlPrincipal(true);
-                            this.log.dispose();
-                        }
-
-                    }
-                }          
-            }
-
-
+//            if (this.log.getTxtUsuario().getText().isEmpty() 
+//                    || this.log.getTxtPassword().getText().isEmpty()
+//                    || this.log.getTxtUsuario().getText().equals("Ingrese su nombre de usuario")
+//                    || this.log.getTxtPassword().equals("*****")) {
+//                JOptionPane.showMessageDialog(null, "Debe introducir un usuario y contraseña");
+//            }else{
+//                String usuario = this.log.getTxtUsuario().getText();
+//                String password = this.log.getTxtPassword().getText();
+//                this.acceso = QuerysAcceso.consultaGeneral();
+//                this.rol = QuerysRol.consultaGeneral();
+//                
+//                for (Acceso a : acceso) {
+//                    if (a.getUsuario().equals(usuario) && a.getPassword().equals(password)) {
+//                        if (a.getRol() == 1) {
+//                            CtrlPrincipal ctrlPri = new CtrlPrincipal(false);
+//                            this.log.dispose();
+//                        } else {
+//                            CtrlPrincipal ctrlPri = new CtrlPrincipal(true);
+//                            this.log.dispose();
+//                        }
+//
+//                    }
+//                }          
+//            }
+            CtrlPrincipal ctrlPri = new CtrlPrincipal(true);
+            this.log.dispose();
         }
         if (e.getSource().equals(this.log.getBtnCancelar())) {
             System.exit(0);

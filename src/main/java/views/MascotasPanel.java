@@ -5,6 +5,7 @@
  */
 package views;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -42,7 +43,8 @@ public class MascotasPanel extends javax.swing.JPanel {
     public JPanel getBtnBuscar() {
         return btnBuscar;
     }
-    
+        
+
     public JPanel getBtnEditar() {
         return btnEditar;
     }
@@ -53,6 +55,11 @@ public class MascotasPanel extends javax.swing.JPanel {
 
     public JPanel getBtnNuevo() {
         return btnNuevo;
+    }
+    
+
+    public JLabel getNuevoLabel() {
+        return nuevoLabel;
     }
     
     
@@ -75,12 +82,12 @@ public class MascotasPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaMascotas = new javax.swing.JTable();
-        btnNuevo = new javax.swing.JPanel();
+        btnEliminar = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnEditar = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        btnEliminar = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        btnNuevo = new javax.swing.JPanel();
+        nuevoLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(790, 480));
 
@@ -123,21 +130,21 @@ public class MascotasPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablaMascotas);
 
-        btnNuevo.setBackground(new java.awt.Color(153, 0, 153));
+        btnEliminar.setBackground(new java.awt.Color(153, 0, 153));
 
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Nuevo");
+        jLabel4.setText("Eliminar");
 
-        javax.swing.GroupLayout btnNuevoLayout = new javax.swing.GroupLayout(btnNuevo);
-        btnNuevo.setLayout(btnNuevoLayout);
-        btnNuevoLayout.setHorizontalGroup(
-            btnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout btnEliminarLayout = new javax.swing.GroupLayout(btnEliminar);
+        btnEliminar.setLayout(btnEliminarLayout);
+        btnEliminarLayout.setHorizontalGroup(
+            btnEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
         );
-        btnNuevoLayout.setVerticalGroup(
-            btnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnEliminarLayout.setVerticalGroup(
+            btnEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
         );
 
@@ -159,22 +166,22 @@ public class MascotasPanel extends javax.swing.JPanel {
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
         );
 
-        btnEliminar.setBackground(new java.awt.Color(153, 0, 153));
+        btnNuevo.setBackground(new java.awt.Color(153, 0, 153));
 
-        jLabel6.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Eliminar");
+        nuevoLabel.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        nuevoLabel.setForeground(new java.awt.Color(255, 255, 255));
+        nuevoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nuevoLabel.setText("Nuevo");
 
-        javax.swing.GroupLayout btnEliminarLayout = new javax.swing.GroupLayout(btnEliminar);
-        btnEliminar.setLayout(btnEliminarLayout);
-        btnEliminarLayout.setHorizontalGroup(
-            btnEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+        javax.swing.GroupLayout btnNuevoLayout = new javax.swing.GroupLayout(btnNuevo);
+        btnNuevo.setLayout(btnNuevoLayout);
+        btnNuevoLayout.setHorizontalGroup(
+            btnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(nuevoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
         );
-        btnEliminarLayout.setVerticalGroup(
-            btnEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+        btnNuevoLayout.setVerticalGroup(
+            btnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(nuevoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout fondoPanelLayout = new javax.swing.GroupLayout(fondoPanel);
@@ -192,11 +199,11 @@ public class MascotasPanel extends javax.swing.JPanel {
                 .addContainerGap(206, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fondoPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
             .addGroup(fondoPanelLayout.createSequentialGroup()
                 .addContainerGap()
@@ -216,8 +223,8 @@ public class MascotasPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(fondoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -246,8 +253,8 @@ public class MascotasPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel nuevoLabel;
     private javax.swing.JTable tablaMascotas;
     // End of variables declaration//GEN-END:variables
 }

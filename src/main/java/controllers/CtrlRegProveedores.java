@@ -96,7 +96,7 @@ public class CtrlRegProveedores implements MouseListener {
                 }
 
                 ProveedoresPanel pp = new ProveedoresPanel();
-                CtrlProveedores pro = new CtrlProveedores(frm, pp, opcion);
+                CtrlProveedores pro = new CtrlProveedores(frm, pp, false);
             }
         }
     }

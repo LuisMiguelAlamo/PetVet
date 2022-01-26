@@ -12,6 +12,13 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.time.LocalDateTime;
 import javax.swing.JPanel;
+import models.Citas;
+import models.Clientes;
+import models.Facturas;
+import models.Mascotas;
+import models.Medicamentos;
+import models.Proveedores;
+import models.Veterinarios;
 import views.CitasPanel;
 import views.ClientePanel;
 import views.ConsultasPanel;
@@ -32,6 +39,16 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     boolean condicion;
     LocalDateTime dateTime = LocalDateTime.now();
     String fecha = "Hoy es "+dateTime.getDayOfWeek()+" "+ dateTime.getDayOfMonth() + " de "+ dateTime.getMonth() + " del "+ dateTime.getYear();
+    public static Clientes cliente;
+    public static Proveedores proveedor;
+    public static Veterinarios veterinario;
+    public static Medicamentos medicamento;
+    public static Mascotas mascota;
+    public static Citas cita;
+    public static Facturas factura;
+    public static boolean isNew;
+    public static boolean isMascota;
+    public static boolean isVet;
 
     public CtrlPrincipal(boolean condicion) {
         frm = new FrmPrincipal();
@@ -104,8 +121,8 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
             CtrlClientes cli = new CtrlClientes(frm, cp, false);
         }
         if (e.getSource().equals(this.frm.getBtnMascotas())) {
-            MascotasPanel mp = new MascotasPanel();
-            CtrlMascotas mascotas = new CtrlMascotas(frm, mp);
+            MascotasPanel masPan = new MascotasPanel();
+            CtrlMascotas mascotas = new CtrlMascotas(frm, masPan, false);
         }
         if (e.getSource().equals(this.frm.getBtnConsultas())) {
             ConsultasPanel consPan = new ConsultasPanel();
@@ -125,7 +142,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         }
         if (e.getSource().equals(this.frm.getBtnVeterinarios())) {
             VeterinariosPanel vetPan = new VeterinariosPanel();
-            CtrlVeterinarios veterinarios = new CtrlVeterinarios(frm, vetPan);
+            CtrlVeterinarios veterinarios = new CtrlVeterinarios(frm, vetPan, false);
         }
         if (e.getSource().equals(this.frm.getBtnProveedores())) {
             ProveedoresPanel proPan = new ProveedoresPanel();

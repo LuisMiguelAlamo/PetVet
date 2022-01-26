@@ -11,7 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import models.Medicamentos;
+import models.Proveedores;
 import querys.QuerysMedicamentos;
+import querys.QuerysProveedores;
 import views.MedicamentosPanel;
 import views.FrmPrincipal;
 import views.ProveedoresPanel;
@@ -30,7 +32,7 @@ public class CtrlRegMedicamentos implements MouseListener {
     Pattern p = Pattern.compile("[0-9]{5}");
     Matcher m;
 
-    public CtrlRegMedicamentos(FrmPrincipal frm, RegistroMedicamentosPanel r, Medicamentos m, boolean opcion) {
+    public CtrlRegMedicamentos(FrmPrincipal frm, RegistroMedicamentosPanel r, boolean opcion) {
         this.frm = frm;
         this.registro = r;
         this.opcion = opcion;
@@ -42,36 +44,18 @@ public class CtrlRegMedicamentos implements MouseListener {
         this.registro.getBtnSeleccionar().addMouseListener(this);
 
         if (opcion) {
-            this.medicamento = m;
-            this.registro.getTxtNombre().setText(m.getNombre());
-            this.registro.getTxtPrecio().setText(String.valueOf(m.getPrecio()));
-            this.registro.getTxtProveedor().setText(String.valueOf(m.getCodProveedor()));
+            this.registro.getTxtNombre().setText(CtrlPrincipal.medicamento.getNombre());
+            this.registro.getTxtPrecio().setText(String.valueOf(CtrlPrincipal.medicamento.getPrecio()));
+            this.registro.getTxtProveedor().setText(CtrlPrincipal.proveedor.getNombre());
         }
     }
 
-    public CtrlRegMedicamentos(FrmPrincipal frm, RegistroMedicamentosPanel registro, boolean opcion, int idProveedor) {
-        this.frm = frm;
-        this.registro = registro;
-        this.opcion = opcion;
-        
-        CtrlPrincipal.showContentPanel(frm, registro);
 
-        this.registro.getTxtNombre().addMouseListener(this);
-        this.registro.getBtnGuardar().addMouseListener(this);
-        this.registro.getBtnSeleccionar().addMouseListener(this);
-        this.registro.getTxtProveedor().setText(String.valueOf(idProveedor));
-    }
-    
-    
-
-    public Medicamentos llenaMedicamentos() {
-        int id = 0;
+    public void setMedicamento() {
         String nombre = this.registro.getTxtNombre().getText();
         double precio = Double.parseDouble(this.registro.getTxtPrecio().getText());
-        int proveedor = Integer.parseInt(this.registro.getTxtProveedor().getText());
-        
-        this.medicamento = new Medicamentos(id, nombre, precio, proveedor);
-        return medicamento;
+
+        this.medicamento = new Medicamentos(0, nombre, precio, 0);
     }
 
     @Override
@@ -84,15 +68,15 @@ public class CtrlRegMedicamentos implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
-
-                if (opcion) {
+                if (CtrlPrincipal.isNew) {
+                    CtrlPrincipal.medicamento.setCodProveedor(CtrlPrincipal.proveedor.getId());
+                    QuerysMedicamentos.crear(CtrlPrincipal.medicamento);
+                } else {                    
+                    this.medicamento = CtrlPrincipal.medicamento;
                     this.medicamento.setNombre(this.registro.getTxtNombre().getText());
                     this.medicamento.setPrecio(Double.parseDouble(this.registro.getTxtPrecio().getText()));
-                    this.medicamento.setCodProveedor(Integer.parseInt(this.registro.getTxtProveedor().getText()));
+                    this.medicamento.setCodProveedor(CtrlPrincipal.proveedor.getId());
                     QuerysMedicamentos.actualizar(this.medicamento);
-                } else {
-                    this.medicamento = llenaMedicamentos();
-                    QuerysMedicamentos.crear(this.medicamento);
                 }
 
                 MedicamentosPanel cp = new MedicamentosPanel();
@@ -100,8 +84,26 @@ public class CtrlRegMedicamentos implements MouseListener {
             }
         }
         if (e.getSource().equals(this.registro.getBtnSeleccionar())) {
-            ProveedoresPanel pp = new ProveedoresPanel();
-            CtrlProveedores pro = new CtrlProveedores(frm, pp, true);
+            if (this.registro.getTxtNombre().getText().isEmpty()
+                    && this.registro.getTxtPrecio().getText().isEmpty()
+                    && this.registro.getTxtProveedor().getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(null, "Debe llenar los campos antes de seleccionar el dueño");
+
+            }else {                
+                if (CtrlPrincipal.isNew) {
+                    CtrlPrincipal.medicamento = new Medicamentos(0, this.registro.getTxtNombre().getText(), Double.parseDouble(this.registro.getTxtPrecio().getText()), 0);
+                    
+                    ProveedoresPanel pp = new ProveedoresPanel();
+                    CtrlProveedores pro = new CtrlProveedores(frm, pp, true);
+                }else {
+                    CtrlPrincipal.medicamento.setNombre(this.registro.getTxtNombre().getText());
+                    CtrlPrincipal.medicamento.setPrecio(Double.parseDouble(this.registro.getTxtPrecio().getText()));
+                    ProveedoresPanel pp = new ProveedoresPanel();
+                    CtrlProveedores pro = new CtrlProveedores(frm, pp, true);
+                }
+                
+            }
         }
     }
 

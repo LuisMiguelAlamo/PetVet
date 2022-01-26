@@ -14,40 +14,53 @@ import models.Veterinarios;
 import querys.QuerysVeterinarios;
 import views.VeterinariosPanel;
 import views.FrmPrincipal;
+import views.RegistroCitasPanel;
+import views.RegistroVeterinariosPanel;
 //import views.RegistroClientePanel;
 
 /**
  *
  * @author Luis Miguel
  */
-public class CtrlVeterinarios implements MouseListener{
-    
+public class CtrlVeterinarios implements MouseListener {
+
     FrmPrincipal frm;
     VeterinariosPanel panel;
     Veterinarios veterinario;
     String titulos[] = {"Id", "Nombre", "Direccion", "Teléfono"};
     String info[][];
     boolean isSelected;
+    boolean condicion;
+    int idMascota;
 
-    public CtrlVeterinarios(FrmPrincipal frm, VeterinariosPanel p) {
+    public CtrlVeterinarios(FrmPrincipal frm, VeterinariosPanel p, boolean condicion) {
         this.frm = frm;
         this.panel = p;
+        this.condicion = condicion;
+
         CtrlPrincipal.showContentPanel(frm, p);
-        
+
         this.panel.getBtnNuevo().addMouseListener(this);
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
         this.panel.getTablaVeterinarios().addMouseListener(this);
-        
+
+        if (condicion) {
+            this.panel.getBtnEditar().setVisible(false);
+            this.panel.getBtnEliminar().setVisible(false);
+            this.panel.getNuevoLabel().setText("Seleccionar");
+        }
+
         isSelected = false;
         actualizarTabla();
     }
-    
+
+
     private void actualizarTabla() {
         info = obtieneMatriz();
         this.panel.getTablaVeterinarios().setModel(new DefaultTableModel(info, titulos));
     }
-    
+
     private String[][] obtieneMatriz() {
 
         ArrayList<Veterinarios> miLista = QuerysVeterinarios.consultaGeneral();
@@ -57,8 +70,8 @@ public class CtrlVeterinarios implements MouseListener{
         for (int x = 0; x < informacion.length; x++) {
             informacion[x][0] = miLista.get(x).getId() + "";
             informacion[x][1] = miLista.get(x).getNombre() + "";
-            informacion[x][2] = miLista.get(x).getDireccion()+ "";
-            informacion[x][3] = miLista.get(x).getTelefono()+ "";
+            informacion[x][2] = miLista.get(x).getDireccion() + "";
+            informacion[x][3] = miLista.get(x).getTelefono() + "";
         }
 
         return informacion;
@@ -73,57 +86,62 @@ public class CtrlVeterinarios implements MouseListener{
         for (int x = 0; x < informacion.length; x++) {
             informacion[x][0] = miLista.get(x).getId() + "";
             informacion[x][1] = miLista.get(x).getNombre() + "";
-            informacion[x][2] = miLista.get(x).getDireccion()+ "";
-            informacion[x][3] = miLista.get(x).getTelefono()+ "";
+            informacion[x][2] = miLista.get(x).getDireccion() + "";
+            informacion[x][3] = miLista.get(x).getTelefono() + "";
         }
 
         return informacion;
     }
-    
-    private Veterinarios llenaCampos() {
-        int id = Integer.parseInt(String.valueOf(this.panel.getTablaVeterinarios().getValueAt(this.panel.getTablaVeterinarios().getSelectedRow(), 0)));
-        String nombre = String.valueOf(this.panel.getTablaVeterinarios().getValueAt(this.panel.getTablaVeterinarios().getSelectedRow(), 1));
-        String direccion = String.valueOf(this.panel.getTablaVeterinarios().getValueAt(this.panel.getTablaVeterinarios().getSelectedRow(), 2));
-        String telefono = String.valueOf(this.panel.getTablaVeterinarios().getValueAt(this.panel.getTablaVeterinarios().getSelectedRow(), 3));
-        
 
-        veterinario = new Veterinarios(id, nombre, direccion, telefono);
+    private Veterinarios getVeterinario() {
+        int id = Integer.parseInt(String.valueOf(this.panel.getTablaVeterinarios().getValueAt(this.panel.getTablaVeterinarios().getSelectedRow(), 0)));
+        veterinario = QuerysVeterinarios.consultaGeneral(id);
         return veterinario;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.panel.getBtnBuscar())) {
-            
+
         }
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
-//            RegistroClientePanel registro = new RegistroClientePanel();                        
-//            CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.veterinario, false);
+            if (condicion) {
+                if (isSelected) {
+                    CtrlPrincipal.veterinario = getVeterinario();
+                    RegistroCitasPanel cp = new RegistroCitasPanel();
+                    CtrlRegCitas rc = new CtrlRegCitas(frm, cp, true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No ha seleccionado un veterinario");
+                }
+            } else {
+                RegistroVeterinariosPanel registro = new RegistroVeterinariosPanel();
+                CtrlRegVeterinarios rc = new CtrlRegVeterinarios(this.frm, registro, this.veterinario, false);
+            }
         }
-        
+
         if (e.getSource().equals(this.panel.getBtnEditar())) {
             if (isSelected) {
-//                RegistroClientePanel registro = new RegistroClientePanel();
-//                CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.veterinario, true);
-            }else{
+                RegistroVeterinariosPanel registro = new RegistroVeterinariosPanel();
+                CtrlRegVeterinarios rc = new CtrlRegVeterinarios(this.frm, registro, this.veterinario, true);
+            } else {
                 JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
             }
         }
-        
+
         if (e.getSource().equals(this.panel.getBtnEliminar())) {
             if (isSelected) {
                 int id = Integer.parseInt(String.valueOf(this.panel.getTablaVeterinarios().getValueAt(this.panel.getTablaVeterinarios().getSelectedRow(), 0)));
                 System.out.println(id);
                 QuerysVeterinarios.eliminar(id);
                 this.actualizarTabla();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
             }
         }
-        
+
         if (e.getSource().equals(this.panel.getTablaVeterinarios())) {
-           isSelected = true;
-           this.veterinario = llenaCampos();
+            isSelected = true;
+            this.veterinario = getVeterinario();
         }
     }
 
@@ -142,8 +160,5 @@ public class CtrlVeterinarios implements MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {
     }
-    
-    
-    
-    
+
 }

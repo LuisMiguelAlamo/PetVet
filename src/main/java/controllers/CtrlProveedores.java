@@ -10,6 +10,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import models.Medicamentos;
 import models.Proveedores;
 import querys.QuerysProveedores;
 import views.ProveedoresPanel;
@@ -26,6 +27,7 @@ public class CtrlProveedores implements MouseListener{
     FrmPrincipal frm;
     ProveedoresPanel panel;
     Proveedores proveedor;
+    Medicamentos medicamento;
     String titulos[] = {"Id", "Nombre", "Dirección", "Localidad", "Teléfono", "Email", "CP", "Antiguedad"};
     String info[][];
     boolean isSelected;
@@ -51,6 +53,7 @@ public class CtrlProveedores implements MouseListener{
         isSelected = false;
         actualizarTabla();
     }
+    
     
     private void actualizarTabla() {
         info = obtieneMatriz();
@@ -97,7 +100,7 @@ public class CtrlProveedores implements MouseListener{
         return informacion;
     }
     
-    private Proveedores llenaCampos() {
+    public Proveedores getProveedor() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaProveedores().getValueAt(this.panel.getTablaProveedores().getSelectedRow(), 0)));
         proveedor = QuerysProveedores.consultaGeneral(id);
         return proveedor;
@@ -110,9 +113,13 @@ public class CtrlProveedores implements MouseListener{
         }
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
             if (opcion) {
-                int id = this.proveedor.getId();
-                RegistroMedicamentosPanel mp = new RegistroMedicamentosPanel();
-                CtrlRegMedicamentos med = new CtrlRegMedicamentos(frm, mp, false,id);
+                if (isSelected) {
+                    CtrlPrincipal.proveedor = getProveedor();
+                    RegistroMedicamentosPanel rm = new RegistroMedicamentosPanel();
+                    CtrlRegMedicamentos med = new CtrlRegMedicamentos(frm, rm, true);
+                }else{
+                    JOptionPane.showMessageDialog(null, "No ha seleccionado un proveedor");
+                }
             }else{
                 RegistroProveedoresPanel pp = new RegistroProveedoresPanel();
                 CtrlRegProveedores pro = new CtrlRegProveedores(frm, pp, proveedor, false);
@@ -141,7 +148,7 @@ public class CtrlProveedores implements MouseListener{
         
         if (e.getSource().equals(this.panel.getTablaProveedores())) {
            isSelected = true;
-           this.proveedor = llenaCampos();
+           this.proveedor = getProveedor();
         }
     }
 

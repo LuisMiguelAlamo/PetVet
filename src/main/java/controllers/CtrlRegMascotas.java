@@ -30,7 +30,7 @@ public class CtrlRegMascotas implements MouseListener {
     Pattern p = Pattern.compile("[0-9]{5}");
     Matcher m;
 
-    public CtrlRegMascotas(FrmPrincipal frm, RegistroMascotasPanel r, Mascotas m, boolean opcion) {
+    public CtrlRegMascotas(FrmPrincipal frm, RegistroMascotasPanel r, boolean opcion) {
         this.frm = frm;
         this.registro = r;
         this.opcion = opcion;
@@ -41,32 +41,18 @@ public class CtrlRegMascotas implements MouseListener {
         this.registro.getBtnSeleccionar().addMouseListener(this);
 
         if (opcion) {
-            this.mascota = m;
-            this.registro.getTxtNombre().setText(m.getNombre());
-            this.registro.getTxtEspecie().setText(m.getEspecie());
-            this.registro.getTxtColor().setText(m.getColor());
-            this.registro.getTxtEnfermedades().setText(m.getEnfermedades());
-            this.registro.getTxtAnotaciones().setText(m.getAnotaciones());
-            this.registro.getTxtVacunas().setText(m.getVacunas());
+            this.registro.getTxtNombre().setText(CtrlPrincipal.mascota.getNombre());
+            this.registro.getTxtEspecie().setText(CtrlPrincipal.mascota.getEspecie());
+            this.registro.getTxtColor().setText(CtrlPrincipal.mascota.getColor());
+            this.registro.getTxtEnfermedades().setText(CtrlPrincipal.mascota.getEnfermedades());
+            this.registro.getTxtAnotaciones().setText(CtrlPrincipal.mascota.getAnotaciones());
+            this.registro.getTxtVacunas().setText(CtrlPrincipal.mascota.getVacunas());
+            this.registro.getTxtCliente().setText(CtrlPrincipal.cliente.getNombre());
         }
     }
-
-    public CtrlRegMascotas(FrmPrincipal frm, RegistroMascotasPanel registro, boolean opcion, int idCliente) {
-        this.frm = frm;
-        this.registro = registro;
-        this.opcion = opcion;
-        
-        CtrlPrincipal.showContentPanel(frm, registro);
-        
-        this.registro.getBtnGuardar().addMouseListener(this);
-        this.registro.getBtnSeleccionar().addMouseListener(this);
-//        this.registro.getTxtProveedor().setText(String.valueOf(idProveedor));        
-    }
-    
-    
     
 
-    public Mascotas llenaMascota() {
+    public Mascotas setMascota() {
         int id = 0;
         String nombre = this.registro.getTxtNombre().getText();
         String especie = this.registro.getTxtEspecie().getText();
@@ -76,7 +62,8 @@ public class CtrlRegMascotas implements MouseListener {
         String vacunas = this.registro.getTxtVacunas().getText();
 
         this.mascota = new Mascotas(id, nombre, especie, color, "hembra", enfermedades, anotaciones, vacunas, false, id);
-        return mascota;
+        
+        return this.mascota;
     }
 
     @Override
@@ -93,26 +80,45 @@ public class CtrlRegMascotas implements MouseListener {
 
             } else {
 
-                if (opcion) {
+                if (CtrlPrincipal.isNew) {
+                    CtrlPrincipal.mascota.setCodCliente(CtrlPrincipal.cliente.getId());
+                    QuerysMascotas.crear(CtrlPrincipal.mascota);
+                } else {
+                    this.mascota = CtrlPrincipal.mascota;
                     this.mascota.setNombre(this.registro.getTxtNombre().getText());
                     this.mascota.setEspecie(this.registro.getTxtEspecie().getText());
                     this.mascota.setColor(this.registro.getTxtColor().getText());
                     this.mascota.setEnfermedades(this.registro.getTxtEnfermedades().getText());
                     this.mascota.setAnotaciones(this.registro.getTxtAnotaciones().getText());
                     this.mascota.setVacunas(this.registro.getTxtVacunas().getText());
+                    this.mascota.setCodCliente(CtrlPrincipal.cliente.getId());
                     QuerysMascotas.actualizar(this.mascota);
-                } else {
-                    this.mascota = llenaMascota();
-                    QuerysMascotas.crear(this.mascota);
                 }
 
                 MascotasPanel mp = new MascotasPanel();
-                CtrlMascotas mas = new CtrlMascotas(frm, mp);
+                CtrlMascotas mas = new CtrlMascotas(frm, mp, false);
             }
         }
         if (e.getSource().equals(this.registro.getBtnSeleccionar())) {
-            ClientePanel cp = new ClientePanel();
-            CtrlClientes cli = new CtrlClientes(frm, cp, true);
+            if (this.registro.getTxtNombre().getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Debe llenar los campos antes de seleccionar el cliente");
+            }else {
+                CtrlPrincipal.isMascota = true;
+                if (CtrlPrincipal.isNew) {
+                    CtrlPrincipal.mascota = setMascota();
+                    ClientePanel cp = new ClientePanel();
+                    CtrlClientes cli = new CtrlClientes(frm, cp, true);
+                } else {
+                    CtrlPrincipal.mascota.setNombre(this.registro.getTxtNombre().getText());
+                    CtrlPrincipal.mascota.setEspecie(this.registro.getTxtEspecie().getText());
+                    CtrlPrincipal.mascota.setColor(this.registro.getTxtColor().getText());
+                    CtrlPrincipal.mascota.setEnfermedades(this.registro.getTxtEnfermedades().getText());
+                    CtrlPrincipal.mascota.setAnotaciones(this.registro.getTxtAnotaciones().getText());
+                    CtrlPrincipal.mascota.setVacunas(this.registro.getTxtVacunas().getText());
+                    ClientePanel cp = new ClientePanel();
+                    CtrlClientes cli = new CtrlClientes(frm, cp, true);
+                }
+            }            
         }
     }
 

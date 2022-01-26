@@ -50,7 +50,7 @@ public class QuerysClientes {
             if (AbrirConexion.abrirConect()) {
                 System.out.println("metodo consultaGeneral");
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM clientes");
+                rs = smnt.executeQuery("SELECT * FROM clientes WHERE id = " + id );
                 while (rs.next()) {
                     String nombre = rs.getString("nombre");
                     String direccion = rs.getString("direccion");

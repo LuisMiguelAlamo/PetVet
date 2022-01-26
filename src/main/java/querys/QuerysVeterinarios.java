@@ -46,7 +46,7 @@ public class QuerysVeterinarios {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM veterinarios");
+                rs = smnt.executeQuery("SELECT * FROM veterinarios WHERE id = " + id);
                 while (rs.next()) {
                     String nombre = rs.getString("nombre");
                     String direccion = rs.getString("direccion");

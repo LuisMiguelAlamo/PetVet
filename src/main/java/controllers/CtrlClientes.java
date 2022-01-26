@@ -95,17 +95,10 @@ public class CtrlClientes implements MouseListener{
         return informacion;
     }
     
-    private Clientes llenaCampos() {
-        int id = Integer.parseInt(String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 0)));
-        String nombre = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 1));
-        String direccion = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 2));
-        String localidad = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 3));
-        String telefono = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 4));
-        String email = String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 5));
-        int CP = Integer.parseInt(String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 6)));
-
-        cliente = new Clientes(id, nombre, direccion, localidad, telefono, email, CP);
-        return cliente;
+    private Clientes getCliente() {
+        int id = Integer.parseInt(String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 0)));        
+        this.cliente = QuerysClientes.consultaGeneral(id);
+        return this.cliente;
     }
 
     @Override
@@ -115,9 +108,17 @@ public class CtrlClientes implements MouseListener{
         }
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
             if (condicion) {
-                int id = this.cliente.getId();
-                RegistroMascotasPanel mp = new RegistroMascotasPanel();
-                CtrlRegMascotas mas = new CtrlRegMascotas(frm, mp, false, id);
+                if (isSelected) {
+                    if (CtrlPrincipal.isMascota) {
+                        CtrlPrincipal.cliente = getCliente();
+                        RegistroMascotasPanel mp = new RegistroMascotasPanel();
+                        CtrlRegMascotas mas = new CtrlRegMascotas(frm, mp, true);
+                    } else {
+
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+                }
             }else {
                 RegistroClientePanel registro = new RegistroClientePanel();
                 CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.cliente, false);
@@ -145,8 +146,8 @@ public class CtrlClientes implements MouseListener{
         }
         
         if (e.getSource().equals(this.panel.getTablaClientes())) {
-            isSelected = true;
-           this.cliente = llenaCampos();
+           isSelected = true;
+           this.cliente = getCliente();
         }
     }
 
