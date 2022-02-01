@@ -30,7 +30,7 @@ public class CtrlCitas implements MouseListener{
     FrmPrincipal frm;
     CitasPanel panel;
     Citas cita;
-    String titulos[] = {"Id", "Fecha", "Veterinario", "Mascota"};
+    String titulos[] = {"Id", "Fecha", "Hora","Veterinario", "Mascota"};
     String info[][];
     ArrayList<Citas> miLista;
     ArrayList<Mascotas> listaMascotas;
@@ -51,55 +51,64 @@ public class CtrlCitas implements MouseListener{
         actualizarTabla();
     }
     
+    //Método que actualiza la información de la tabla
     private void actualizarTabla() {
         info = obtieneMatriz();
         this.panel.getTablaCitas().setModel(new DefaultTableModel(info, titulos));
     }
     
+    
+    //Método que devuelve una matríz de String con los datos de cada fila y columna de la tabla
     private String[][] obtieneMatriz() {
 
         miLista = QuerysCitas.consultaGeneral();
         listaMascotas = QuerysMascotas.consultaGeneral();
         listaVet = QuerysVeterinarios.consultaGeneral();
 
-        String informacion[][] = new String[miLista.size()][4];
+        String informacion[][] = new String[miLista.size()][5];
 
         for (int x = 0; x < informacion.length; x++) {
             informacion[x][0] = miLista.get(x).getId() + "";
             informacion[x][1] = miLista.get(x).getFecha()+ "";
+            informacion[x][2] = miLista.get(x).getHora()+ "";
             int cv = miLista.get(x).getCodVeterinario();
             int cm = miLista.get(x).getCodMascota();
             String vet = leeVet(cv);
             String masc = leeMascota(cm);
-            informacion[x][2] = vet;
-            informacion[x][3] = masc;
+            informacion[x][3] = vet;
+            informacion[x][4] = masc;
         }
 
         return informacion;
     }
 
+    //Método que devuelve una matríz de String con los datos de cada fila y columna 
+    //mostrando solamente aquellos resultados que coinciden con la búsqueda
     private String[][] obtieneFiltro() {
 
         miLista = QuerysCitas.consultaFiltro(this.panel.getCampoBuscar().getText());
         listaMascotas = QuerysMascotas.consultaGeneral();
         listaVet = QuerysVeterinarios.consultaGeneral();
 
-        String informacion[][] = new String[miLista.size()][7];
+        String informacion[][] = new String[miLista.size()][5];
 
         for (int x = 0; x < informacion.length; x++) {
             informacion[x][0] = miLista.get(x).getId() + "";
             informacion[x][1] = miLista.get(x).getFecha()+ "";
+            informacion[x][2] = miLista.get(x).getFecha()+ "";
             int cv = miLista.get(x).getCodVeterinario();
             int cm = miLista.get(x).getCodMascota();
             String vet = leeVet(cv);
             String masc = leeMascota(cm);
-            informacion[x][2] = vet;
-            informacion[x][3] = masc;
+            informacion[x][3] = vet;
+            informacion[x][4] = masc;
         }
 
         return informacion;
     }
     
+    //Método que devuelve el nombre de la mascota para no tener que llenar la tabla
+    //con el número del id 
     private String leeMascota(int cm){
         String nombre = "";
         for (Mascotas m : listaMascotas) {
@@ -109,6 +118,11 @@ public class CtrlCitas implements MouseListener{
         }
         return nombre;
     }
+    
+    /*
+    Método que devuelve el nombre del veterinario para no tener que llenar la 
+    tabla con el número del id
+    */
     private String leeVet(int cv){
         String nombre = "";
         for (Veterinarios v : listaVet) {
@@ -119,6 +133,7 @@ public class CtrlCitas implements MouseListener{
         return nombre;
     }
     
+    //Método que devuelve la cita de la fila seleccionada en la tabla
     private Citas getCita() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaCitas().getValueAt(this.panel.getTablaCitas().getSelectedRow(), 0)));
         cita = QuerysCitas.consultaGeneral(id);
@@ -131,19 +146,27 @@ public class CtrlCitas implements MouseListener{
             
         }
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
+            //Si es una nueva cita se cargan a null las variables globales
             CtrlPrincipal.isNew = true;
             CtrlPrincipal.cita = null;
+            CtrlPrincipal.mascota = null;
+            CtrlPrincipal.veterinario = null;
+            
+            //Se abre el panel de registro de citas a false para crear una nueva
             RegistroCitasPanel registro = new RegistroCitasPanel();                        
             CtrlRegCitas rc = new CtrlRegCitas(frm, registro, false);
         }
         
         if (e.getSource().equals(this.panel.getBtnEditar())) {
             if (isSelected) {
+                //Si es una actualización de datos se carga la cita seleccionada
                 CtrlPrincipal.isNew = false;
                 CtrlPrincipal.cita = getCita();
                 this.cita = getCita();
                 CtrlPrincipal.mascota = QuerysMascotas.consultaGeneral(this.cita.getCodMascota());
                 CtrlPrincipal.veterinario = QuerysVeterinarios.consultaGeneral(this.cita.getCodVeterinario());
+                
+                //Se abre el panel de registro de citas a true para que cargue los datos 
                 RegistroCitasPanel registro = new RegistroCitasPanel();                        
                 CtrlRegCitas rc = new CtrlRegCitas(frm, registro, true);
             }else{
@@ -152,10 +175,10 @@ public class CtrlCitas implements MouseListener{
         }
         
         if (e.getSource().equals(this.panel.getBtnEliminar())) {
+            //Se comprueba que una fila de la tabla esté seleccionada
             if (isSelected) {
-                int id = Integer.parseInt(String.valueOf(this.panel.getTablaCitas().getValueAt(this.panel.getTablaCitas().getSelectedRow(), 0)));
-                System.out.println(id);
-                QuerysClientes.eliminar(id);
+                //Se llama a la clase de consultas para eliminar la cita con el id seleccionado
+                QuerysCitas.eliminar(this.cita.getId());
                 this.actualizarTabla();
             }else{
                 JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
@@ -163,6 +186,7 @@ public class CtrlCitas implements MouseListener{
         }
         
         if (e.getSource().equals(this.panel.getTablaCitas())) {
+            //Si está seleccionada una fila se carga la cita correspondiente
             isSelected = true;
             this.cita = getCita();
         }

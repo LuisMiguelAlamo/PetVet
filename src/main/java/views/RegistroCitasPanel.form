@@ -45,18 +45,24 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jSeparator1" min="-2" pref="14" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="labelFecha" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtFecha" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="labelVeterinario" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtVeterinario" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="labelMascota" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtMascota" alignment="0" min="-2" pref="246" max="-2" attributes="0"/>
+                          <EmptySpace min="78" pref="78" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="btnMascota" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnVeterinario" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="labelFecha" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelVeterinario" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtVeterinario" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="labelMascota" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txtMascota" alignment="0" min="-2" pref="246" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="txtHora" alignment="0" min="-2" pref="122" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="txtFecha" alignment="1" min="-2" pref="246" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnMascota" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnVeterinario" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                       </Group>
@@ -68,12 +74,17 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jSeparator1" min="-2" pref="394" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="labelFecha" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtFecha" min="-2" pref="25" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txtHora" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="labelVeterinario" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtVeterinario" min="-2" pref="25" max="-2" attributes="0"/>
@@ -85,8 +96,8 @@
                           <Component id="txtMascota" min="-2" pref="25" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnMascota" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jSeparator1" min="-2" pref="394" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="21" max="32767" attributes="0"/>
                   <Component id="btnGuardar" min="-2" max="-2" attributes="0"/>
@@ -138,7 +149,7 @@
             <Property name="text" type="java.lang.String" value="Fecha"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtFecha">
+        <Component class="javax.swing.JTextField" name="txtHora">
         </Component>
         <Component class="javax.swing.JLabel" name="labelVeterinario">
           <Properties>
@@ -233,6 +244,16 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="com.toedter.calendar.JDateChooser" name="txtFecha">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Roboto Medium" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Hora"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

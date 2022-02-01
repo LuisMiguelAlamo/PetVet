@@ -22,6 +22,7 @@ import views.RegistroMedicamentosPanel;
 /**
  *
  * @author Luis Miguel
+ * Esta clase se encarga de controlar el registro de Medicamentos
  */
 public class CtrlRegMedicamentos implements MouseListener {
 
@@ -43,6 +44,7 @@ public class CtrlRegMedicamentos implements MouseListener {
         this.registro.getBtnGuardar().addMouseListener(this);
         this.registro.getBtnSeleccionar().addMouseListener(this);
 
+        //Comprueba si hay que cargar los datos en los campos con los datos o si no 
         if (opcion) {
             this.registro.getTxtNombre().setText(CtrlPrincipal.medicamento.getNombre());
             this.registro.getTxtPrecio().setText(String.valueOf(CtrlPrincipal.medicamento.getPrecio()));
@@ -51,6 +53,7 @@ public class CtrlRegMedicamentos implements MouseListener {
     }
 
 
+    //Crea un nuevo medicamento vacío 
     public void setMedicamento() {
         String nombre = this.registro.getTxtNombre().getText();
         double precio = Double.parseDouble(this.registro.getTxtPrecio().getText());
@@ -61,6 +64,7 @@ public class CtrlRegMedicamentos implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.registro.getBtnGuardar())) {
+            //Comprobación de que los campos no están vacíos 
             if (this.registro.getTxtNombre().getText().isEmpty()
                     || this.registro.getTxtPrecio().getText().isEmpty()
                     || this.registro.getTxtProveedor().getText().isEmpty()) {

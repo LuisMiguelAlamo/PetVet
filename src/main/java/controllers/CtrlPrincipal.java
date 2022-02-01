@@ -49,6 +49,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     public static boolean isNew;
     public static boolean isMascota;
     public static boolean isVet;
+    public static int eleccion; //citas = 1, consultas = 2, 
 
     public CtrlPrincipal(boolean condicion) {
         frm = new FrmPrincipal();
