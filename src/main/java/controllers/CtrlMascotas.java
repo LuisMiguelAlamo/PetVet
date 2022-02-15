@@ -17,6 +17,7 @@ import querys.QuerysMascotas;
 import views.FrmPrincipal;
 import views.MascotasPanel;
 import views.RegistroCitasPanel;
+import views.RegistroConsultasPanel;
 import views.RegistroMascotasPanel;
 
 /**
@@ -81,7 +82,14 @@ public class CtrlMascotas implements MouseListener {
             informacion[x][5] = miLista.get(x).getEnfermedades() + "";
             informacion[x][6] = miLista.get(x).getAnotaciones() + "";
             informacion[x][7] = miLista.get(x).getVacunas() + "";
-            informacion[x][8] = miLista.get(x).isChip() + "";
+            int chip = miLista.get(x).getChip();
+            String siNo = "";
+            if (chip == 1) {
+                siNo = "Sí";
+            }else{
+                siNo = "No";
+            }
+            informacion[x][8] = siNo;
             int cc = miLista.get(x).getCodCliente();
             String cli = leerClientes(cc);
 
@@ -114,7 +122,7 @@ public class CtrlMascotas implements MouseListener {
             informacion[x][4] = miLista.get(x).getEnfermedades() + "";
             informacion[x][5] = miLista.get(x).getAnotaciones() + "";
             informacion[x][6] = miLista.get(x).getVacunas() + "";
-            informacion[x][7] = miLista.get(x).isChip() + "";
+            informacion[x][7] = miLista.get(x).getChip() + "";
             informacion[x][8] = miLista.get(x).getCodCliente() + "";
         }
 
@@ -136,12 +144,23 @@ public class CtrlMascotas implements MouseListener {
             if (condicion) {
                 if (isSelected) {
                     CtrlPrincipal.mascota = getMascota();
-                    RegistroCitasPanel rc = new RegistroCitasPanel();
-                    CtrlRegCitas cit = new CtrlRegCitas(frm, rc, true);
+                    switch (CtrlPrincipal.eleccion) {
+                        case 1:
+                            RegistroCitasPanel rc = new RegistroCitasPanel();
+                            CtrlRegCitas cit = new CtrlRegCitas(frm, rc, true);
+                            break;
+
+                        case 2:
+                            RegistroConsultasPanel rcon = new RegistroConsultasPanel();
+                            CtrlRegConsultas con = new CtrlRegConsultas(frm, rcon, true);
+                            break;
+                    }
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "No ha seleccionado una mascota");
                 }
             } else {
+                CtrlPrincipal.isNew = true;
                 RegistroMascotasPanel mp = new RegistroMascotasPanel();
                 CtrlRegMascotas mas = new CtrlRegMascotas(frm, mp, false);
             }

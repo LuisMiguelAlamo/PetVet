@@ -16,6 +16,7 @@ import querys.QuerysMedicamentos;
 import querys.QuerysProveedores;
 import views.MedicamentosPanel;
 import views.FrmPrincipal;
+import views.RegistroConsultasPanel;
 import views.RegistroMedicamentosPanel;
 
 /**
@@ -32,16 +33,24 @@ public class CtrlMedicamentos implements MouseListener{
     String titulos[] = {"Id", "Nombre", "Precio", "Proveedor"};
     String info[][];
     boolean isSelected;
+    boolean condicion;
 
-    public CtrlMedicamentos(FrmPrincipal frm, MedicamentosPanel p) {
+    public CtrlMedicamentos(FrmPrincipal frm, MedicamentosPanel p, boolean condicion) {
         this.frm = frm;
         this.panel = p;
+        this.condicion = condicion;
         CtrlPrincipal.showContentPanel(frm, p);
         
         this.panel.getBtnNuevo().addMouseListener(this);
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
         this.panel.getTablaMedicamentos().addMouseListener(this);
+        
+        if (condicion) {
+            this.panel.getBtnEditar().setVisible(false);
+            this.panel.getBtnEliminar().setVisible(false);
+            this.panel.getNuevoLabel().setText("Seleccionar");
+        }
         
         isSelected = false;
         actualizarTabla();
@@ -109,10 +118,20 @@ public class CtrlMedicamentos implements MouseListener{
             
         }
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
-            CtrlPrincipal.isNew = true;
-            CtrlPrincipal.medicamento = null;
-            RegistroMedicamentosPanel registro = new RegistroMedicamentosPanel();                        
-            CtrlRegMedicamentos rc = new CtrlRegMedicamentos(this.frm, registro, false);
+            if (condicion) {
+                if (isSelected) {
+                    CtrlPrincipal.medicamento = getMedicamento();
+                    RegistroConsultasPanel rc = new RegistroConsultasPanel();
+                    CtrlRegConsultas con = new CtrlRegConsultas(frm, rc, true);
+                }else{
+                    JOptionPane.showMessageDialog(null, "No ha seleccionado una medicamento");
+                }                
+            }else {
+                CtrlPrincipal.isNew = true;
+                CtrlPrincipal.medicamento = null;
+                RegistroMedicamentosPanel registro = new RegistroMedicamentosPanel();
+                CtrlRegMedicamentos rc = new CtrlRegMedicamentos(this.frm, registro, false);
+            }
         }
         
         if (e.getSource().equals(this.panel.getBtnEditar())) {

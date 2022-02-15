@@ -18,10 +18,10 @@ public class Mascotas {
     String enfermedades;
     String anotaciones;
     String vacunas;
-    boolean chip;
+    int chip;
     int codCliente;
 
-    public Mascotas(int id, String nombre, String especie, String color, String sexo, String enfermedades, String anotaciones, String vacunas, boolean chip, int codCliente) {
+    public Mascotas(int id, String nombre, String especie, String color, String sexo, String enfermedades, String anotaciones, String vacunas, int chip, int codCliente) {
         this.id = id;
         this.nombre = nombre;
         this.especie = especie;
@@ -98,11 +98,11 @@ public class Mascotas {
         this.vacunas = vacunas;
     }
 
-    public boolean isChip() {
+    public int getChip() {
         return chip;
     }
 
-    public void setChip(boolean chip) {
+    public void setChip(int chip) {
         this.chip = chip;
     }
 

@@ -107,8 +107,12 @@ public class RegistroCitasPanel extends javax.swing.JPanel {
         labelVeterinario.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         labelVeterinario.setText("Veterinario");
 
+        txtVeterinario.setEditable(false);
+
         labelMascota.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         labelMascota.setText("Mascota");
+
+        txtMascota.setEditable(false);
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 

@@ -15,6 +15,7 @@ import querys.QuerysVeterinarios;
 import views.VeterinariosPanel;
 import views.FrmPrincipal;
 import views.RegistroCitasPanel;
+import views.RegistroConsultasPanel;
 import views.RegistroVeterinariosPanel;
 //import views.RegistroClientePanel;
 
@@ -108,8 +109,18 @@ public class CtrlVeterinarios implements MouseListener {
             if (condicion) {
                 if (isSelected) {
                     CtrlPrincipal.veterinario = getVeterinario();
-                    RegistroCitasPanel cp = new RegistroCitasPanel();
-                    CtrlRegCitas rc = new CtrlRegCitas(frm, cp, true);
+                    switch (CtrlPrincipal.eleccion) {
+                        case 1:
+                            RegistroCitasPanel rc = new RegistroCitasPanel();
+                            CtrlRegCitas cit = new CtrlRegCitas(frm, rc, true);
+                            break;
+
+                        case 2:
+                            RegistroConsultasPanel rcon = new RegistroConsultasPanel();
+                            CtrlRegConsultas con = new CtrlRegConsultas(frm, rcon, true);
+                            break;
+                    }
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "No ha seleccionado un veterinario");
                 }

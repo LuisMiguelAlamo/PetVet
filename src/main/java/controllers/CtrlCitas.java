@@ -14,7 +14,6 @@ import models.Citas;
 import models.Mascotas;
 import models.Veterinarios;
 import querys.QuerysCitas;
-import querys.QuerysClientes;
 import querys.QuerysMascotas;
 import querys.QuerysVeterinarios;
 import views.CitasPanel;

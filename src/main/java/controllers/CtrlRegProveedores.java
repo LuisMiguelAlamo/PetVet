@@ -48,7 +48,7 @@ public class CtrlRegProveedores implements MouseListener {
             this.registro.getTxtTelefono().setText(p.getTelefono());
             this.registro.getTxtEmail().setText(p.getEmail());
             this.registro.getTxtCP().setText(String.valueOf(p.getCP()));
-            this.registro.getTxtDesde().setText(String.valueOf(p.getFecha()));
+            this.registro.getjDateChooser1().setDate(p.getFecha());
         }
 
     }
@@ -61,7 +61,8 @@ public class CtrlRegProveedores implements MouseListener {
         String telefono = this.registro.getTxtTelefono().getText();
         String email = this.registro.getTxtEmail().getText();
         int CP = Integer.parseInt(this.registro.getTxtCP().getText());
-        Date fecha = Date.valueOf(this.registro.getTxtDesde().getText());
+        long time = this.registro.getjDateChooser1().getDate().getTime();
+        Date fecha = new Date(time);
         this.proveedor = new Proveedores(id, nombre, direccion, localidad, telefono, email, CP, fecha);
         return proveedor;
     }
@@ -75,7 +76,7 @@ public class CtrlRegProveedores implements MouseListener {
                     || this.registro.getTxtTelefono().getText().isEmpty()
                     || this.registro.getTxtEmail().getText().isEmpty()
                     || this.registro.getTxtCP().getText().isEmpty()
-                    || this.registro.getTxtDesde().getText().isEmpty()) {
+                    || this.registro.getjDateChooser1().getDate() == null) {
 
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
@@ -88,7 +89,8 @@ public class CtrlRegProveedores implements MouseListener {
                     this.proveedor.setTelefono(this.registro.getTxtTelefono().getText());
                     this.proveedor.setEmail(this.registro.getTxtEmail().getText());
                     this.proveedor.setCP(Integer.parseInt(this.registro.getTxtCP().getText()));
-                    this.proveedor.setFecha(Date.valueOf(this.registro.getTxtDesde().getText()));
+                    long time = this.registro.getjDateChooser1().getDate().getTime();
+                    this.proveedor.setFecha(new Date(time));
                     QuerysProveedores.actualizar(this.proveedor);
                 } else {
                     this.proveedor = llenaProveedor();

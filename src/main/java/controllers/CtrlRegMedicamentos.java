@@ -84,7 +84,7 @@ public class CtrlRegMedicamentos implements MouseListener {
                 }
 
                 MedicamentosPanel cp = new MedicamentosPanel();
-                CtrlMedicamentos med = new CtrlMedicamentos(frm, cp);
+                CtrlMedicamentos med = new CtrlMedicamentos(frm, cp, false);
             }
         }
         if (e.getSource().equals(this.registro.getBtnSeleccionar())) {

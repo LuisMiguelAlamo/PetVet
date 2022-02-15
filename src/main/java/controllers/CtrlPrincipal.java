@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import javax.swing.JPanel;
 import models.Citas;
 import models.Clientes;
+import models.Consultas;
 import models.Facturas;
 import models.Mascotas;
 import models.Medicamentos;
@@ -45,11 +46,12 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     public static Medicamentos medicamento;
     public static Mascotas mascota;
     public static Citas cita;
+    public static Consultas consulta;
     public static Facturas factura;
     public static boolean isNew;
     public static boolean isMascota;
     public static boolean isVet;
-    public static int eleccion; //citas = 1, consultas = 2, 
+    public static int eleccion; //citas = 1, consultas = 2, mascotas = 3
 
     public CtrlPrincipal(boolean condicion) {
         frm = new FrmPrincipal();
@@ -139,7 +141,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         }
         if (e.getSource().equals(this.frm.getBtnMedicamentos())) {
             MedicamentosPanel medPan = new MedicamentosPanel();
-            CtrlMedicamentos medicamentos = new CtrlMedicamentos(frm, medPan);
+            CtrlMedicamentos medicamentos = new CtrlMedicamentos(frm, medPan, false);
         }
         if (e.getSource().equals(this.frm.getBtnVeterinarios())) {
             VeterinariosPanel vetPan = new VeterinariosPanel();

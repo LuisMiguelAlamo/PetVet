@@ -36,7 +36,7 @@ public class QuerysMascotas {
                     String enfermedades = rs.getString("enfermedades");
                     String anotaciones = rs.getString("anotaciones");
                     String vacunas = rs.getString("vacunas");
-                    boolean chip = rs.getBoolean("chip");
+                    int chip = rs.getInt("chip");
                     int codCliente = rs.getInt("codigoCliente");
                     mascota = new Mascotas(id, nombre, especie, color, sexo, enfermedades, anotaciones, vacunas, chip, codCliente);
                     lista.add(mascota);
@@ -65,7 +65,7 @@ public class QuerysMascotas {
                     String enfermedades = rs.getString("enfermedades");
                     String anotaciones = rs.getString("anotaciones");
                     String vacunas = rs.getString("vacunas");
-                    boolean chip = rs.getBoolean("chip");
+                    int chip = rs.getInt("chip");
                     int codCliente = rs.getInt("codigoCliente");
                     mascota = new Mascotas(id, nombre, especie, color, sexo, enfermedades, anotaciones, vacunas, chip, codCliente);
                 }
@@ -121,7 +121,7 @@ public class QuerysMascotas {
                     String enfermedades = rs.getString("enfermedades");
                     String anotaciones = rs.getString("anotaciones");
                     String vacunas = rs.getString("vacunas");
-                    boolean chip = rs.getBoolean("chip");
+                    int chip = rs.getInt("chip");
                     int codCliente = rs.getInt("codigoCliente");
                     mascota = new Mascotas(id, nombre, especie, color, sexo, enfermedades, anotaciones, vacunas, chip, codCliente);
                     lista.add(mascota);
@@ -145,7 +145,7 @@ public class QuerysMascotas {
                         + mascota.getEnfermedades()+ "','" 
                         + mascota.getAnotaciones()+ "','"
                         + mascota.getVacunas()+ "','"
-                        + mascota.isChip()+ "','"
+                        + mascota.getChip()+ "','"
                         + mascota.getCodCliente()+ "');");
             }
         } catch (SQLException ex) {
@@ -164,7 +164,8 @@ public class QuerysMascotas {
                         + "', enfermedades = '" + mascota.getEnfermedades()
                         + "', anotaciones = '" + mascota.getAnotaciones()
                         + "', vacunas = '" + mascota.getVacunas()
-                        + "', chip = '" + mascota.isChip()
+                        + "', chip = '" + mascota.getChip()
+                        + "', codigoCliente = '" + mascota.getCodCliente()
                         + "' WHERE id = '" + mascota.getId() + "';");
             }
         } catch (SQLException ex) {

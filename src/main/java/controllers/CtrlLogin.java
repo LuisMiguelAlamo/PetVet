@@ -52,7 +52,7 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
 //                    || this.log.getTxtPassword().getText().isEmpty()
 //                    || this.log.getTxtUsuario().getText().equals("Ingrese su nombre de usuario")
 //                    || this.log.getTxtPassword().equals("*****")) {
-//                JOptionPane.showMessageDialog(null, "Debe introducir un usuario y contraseña");
+//                JOptionPane.showMessageDialog(null, "Debe introducir un usuario y contraseña válidos");
 //            }else{
 //                String usuario = this.log.getTxtUsuario().getText();
 //                String password = this.log.getTxtPassword().getText();

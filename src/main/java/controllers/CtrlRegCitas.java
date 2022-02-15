@@ -8,7 +8,6 @@ package controllers;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -100,6 +99,7 @@ public class CtrlRegCitas implements MouseListener {
             } else {
                 //Se comprueba que sea una nueva cita
                 CtrlPrincipal.isMascota = true;
+                CtrlPrincipal.eleccion = 1;
                 if (CtrlPrincipal.isNew) {
                     //Se crea un objeto cita para almacenar la fecha y la hora
                     this.time = this.registro.getTxtFecha().getDate().getTime();
@@ -138,6 +138,7 @@ public class CtrlRegCitas implements MouseListener {
             } else {
                 //Se comprueba que sea una nueva cita
                 CtrlPrincipal.isVet = true;
+                CtrlPrincipal.eleccion = 1;
                 if (CtrlPrincipal.isNew) {
                     this.time = this.registro.getTxtFecha().getDate().getTime();
                     CtrlPrincipal.cita = new Citas(0, new Date(time), this.registro.getTxtHora().getText(), 0, 0);
@@ -147,7 +148,7 @@ public class CtrlRegCitas implements MouseListener {
                     para no perder lo datos cuando cargue el veterinario
                     */
                     if (CtrlPrincipal.mascota == null) {
-                        CtrlPrincipal.mascota = new Mascotas(0, "", "", "", "", "", "", "", false, 0);
+                        CtrlPrincipal.mascota = new Mascotas(0, "", "", "", "", "", "", "", 0, 0);
                     }
 
                     //Se abre el panel de veterinarios para seleccionar uno

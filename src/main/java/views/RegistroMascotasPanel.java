@@ -188,7 +188,7 @@ public class RegistroMascotasPanel extends javax.swing.JPanel {
         jLabel8.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
         jLabel8.setText("Vacunas");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "hembra", "macho" }));
 
         jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
         jRadioButton1.setText("Chip");
@@ -215,6 +215,8 @@ public class RegistroMascotasPanel extends javax.swing.JPanel {
 
         clienteLabel.setFont(new java.awt.Font("Roboto Black", 0, 14)); // NOI18N
         clienteLabel.setText("Dueño");
+
+        txtCliente.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

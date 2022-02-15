@@ -43,17 +43,24 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="labelNombre" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtNombre" alignment="0" pref="246" max="32767" attributes="0"/>
-                      <Component id="txtDireccion" alignment="0" max="32767" attributes="0"/>
-                      <Component id="labelDireccion" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelLocalidad" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtLocalidad" alignment="0" max="32767" attributes="0"/>
-                      <Component id="desdeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtDesde" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="labelNombre" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtNombre" alignment="0" pref="246" max="32767" attributes="0"/>
+                              <Component id="txtDireccion" alignment="0" max="32767" attributes="0"/>
+                              <Component id="labelDireccion" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelLocalidad" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtLocalidad" alignment="0" max="32767" attributes="0"/>
+                              <Component id="desdeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="jDateChooser1" min="-2" pref="140" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="14" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -88,7 +95,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="desdeLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtDesde" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="jDateChooser1" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
@@ -224,7 +231,7 @@
             <Property name="text" type="java.lang.String" value="Desde"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtDesde">
+        <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
         </Component>
       </SubComponents>
     </Container>

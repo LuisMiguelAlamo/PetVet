@@ -110,6 +110,8 @@ public class RegistroMedicamentosPanel extends javax.swing.JPanel {
         labelProveedor.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         labelProveedor.setText("Proveedor");
 
+        txtProveedor.setEditable(false);
+
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         btnSeleccionar.setBackground(new java.awt.Color(51, 204, 0));

@@ -5,6 +5,7 @@
  */
 package views;
 
+import com.toedter.calendar.JDateChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -67,19 +68,11 @@ public class RegistroProveedoresPanel extends javax.swing.JPanel {
 
     public void setTxtTelefono(JTextField txtTelefono) {
         this.txtTelefono = txtTelefono;
-    }
+    }   
 
-    public JTextField getTxtDesde() {
-        return txtDesde;
-    }
-
-    public void setTxtDesde(JTextField txtDesde) {
-        this.txtDesde = txtDesde;
-    }
-    
-    
-    
-    
+    public JDateChooser getjDateChooser1() {
+        return jDateChooser1;
+    }        
 
     public JPanel getBtnGuardar() {
         return btnGuardar;
@@ -115,7 +108,7 @@ public class RegistroProveedoresPanel extends javax.swing.JPanel {
         txtCP = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         desdeLabel = new javax.swing.JLabel();
-        txtDesde = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -170,16 +163,20 @@ public class RegistroProveedoresPanel extends javax.swing.JPanel {
                 .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labelNombre)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-                    .addComponent(txtDireccion)
-                    .addComponent(labelDireccion)
-                    .addComponent(labelLocalidad)
-                    .addComponent(txtLocalidad)
-                    .addComponent(desdeLabel)
-                    .addComponent(txtDesde))
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelNombre)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                            .addComponent(txtDireccion)
+                            .addComponent(labelDireccion)
+                            .addComponent(labelLocalidad)
+                            .addComponent(txtLocalidad)
+                            .addComponent(desdeLabel))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(78, 78, 78)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -211,7 +208,7 @@ public class RegistroProveedoresPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(desdeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addComponent(labelTelefono)
@@ -249,6 +246,7 @@ public class RegistroProveedoresPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnGuardar;
     private javax.swing.JLabel desdeLabel;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
@@ -259,7 +257,6 @@ public class RegistroProveedoresPanel extends javax.swing.JPanel {
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelTelefono;
     private javax.swing.JTextField txtCP;
-    private javax.swing.JTextField txtDesde;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtLocalidad;

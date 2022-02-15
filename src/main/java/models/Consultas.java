@@ -5,7 +5,7 @@
  */
 package models;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
  *
@@ -13,16 +13,18 @@ import java.sql.Timestamp;
  */
 public class Consultas {
     int id;
-    Timestamp fecha;
+    Date fecha;
+    String hora;
     String diagnostico;
     String tratamiento;
     int codMedicamento;
     int codVeterinario;
     int codMascota;
 
-    public Consultas(int id, Timestamp fecha, String diagnostico, String tratamiento, int codMedicamento, int codVeterinario, int codMascota) {
+    public Consultas(int id, Date fecha, String hora,String diagnostico, String tratamiento, int codMedicamento, int codVeterinario, int codMascota) {
         this.id = id;
         this.fecha = fecha;
+        this.hora = hora;
         this.diagnostico = diagnostico;
         this.tratamiento = tratamiento;
         this.codMedicamento = codMedicamento;
@@ -38,13 +40,22 @@ public class Consultas {
         this.id = id;
     }
 
-    public Timestamp getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Timestamp fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+        
 
     public String getDiagnostico() {
         return diagnostico;

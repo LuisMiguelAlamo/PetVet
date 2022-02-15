@@ -109,11 +109,11 @@ public class CtrlClientes implements MouseListener{
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
             if (condicion) {
                 if (isSelected) {
-                    if (CtrlPrincipal.isMascota) {
+                    if (CtrlPrincipal.eleccion == 3) {
                         CtrlPrincipal.cliente = getCliente();
                         RegistroMascotasPanel mp = new RegistroMascotasPanel();
                         CtrlRegMascotas mas = new CtrlRegMascotas(frm, mp, true);
-                    } else {
+                    } else if(CtrlPrincipal.eleccion == 2) {
 
                     }
                 }else{

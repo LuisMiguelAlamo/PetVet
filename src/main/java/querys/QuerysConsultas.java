@@ -4,7 +4,7 @@ import conexion.AbrirConexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import models.Consultas;
@@ -29,13 +29,14 @@ public class QuerysConsultas {
                 rs = smnt.executeQuery("SELECT * FROM consultas");
                 while (rs.next()) {
                     int id = rs.getInt("id");
-                    Timestamp fecha = rs.getTimestamp("fecha");
+                    Date fecha = rs.getDate("fecha");
+                    String hora = rs.getString("hora");
                     String diagnostico = rs.getString("diagnostico");
                     String tratamiento = rs.getString("tratamiento");
                     int codMedicamento = rs.getInt("codigoMedicamento");
                     int codVeterinario = rs.getInt("codigoVeterinario");
                     int codMascota = rs.getInt("codigoMascota");
-                    consulta = new Consultas(id, fecha, diagnostico, tratamiento, codMedicamento, codVeterinario, codMascota);
+                    consulta = new Consultas(id, fecha, hora,diagnostico, tratamiento, codMedicamento, codVeterinario, codMascota);
                     lista.add(consulta);
                 }
             }
@@ -53,13 +54,14 @@ public class QuerysConsultas {
                 smnt = AbrirConexion.getCone().createStatement();
                 rs = smnt.executeQuery("SELECT * FROM consultas");
                 while (rs.next()) {
-                    Timestamp fecha = rs.getTimestamp("fecha");
+                    Date fecha = rs.getDate("fecha");
+                    String hora = rs.getString("hora");
                     String diagnostico = rs.getString("diagnostico");
                     String tratamiento = rs.getString("tratamiento");
                     int codMedicamento = rs.getInt("codigoMedicamento");
                     int codVeterinario = rs.getInt("codigoVeterinario");
                     int codMascota = rs.getInt("codigoMascota");
-                    consulta = new Consultas(id, fecha, diagnostico, tratamiento, codMedicamento, codVeterinario, codMascota);
+                    consulta = new Consultas(id, fecha, hora,diagnostico, tratamiento, codMedicamento, codVeterinario, codMascota);
                 }
             }
         } catch (SQLException ex) {
@@ -79,13 +81,14 @@ public class QuerysConsultas {
                         + " OR codigoMascota LIKE '%" + campo + "%'");
                 while (rs.next()) {
                     int id = rs.getInt("id");
-                    Timestamp fecha = rs.getTimestamp("fecha");
+                    Date fecha = rs.getDate("fecha");
+                    String hora = rs.getString("hora");
                     String diagnostico = rs.getString("diagnostico");
                     String tratamiento = rs.getString("tratamiento");
                     int codMedicamento = rs.getInt("codigoMedicamento");
                     int codVeterinario = rs.getInt("codigoVeterinario");
                     int codMascota = rs.getInt("codigoMascota");
-                    consulta = new Consultas(id, fecha, diagnostico, tratamiento, codMedicamento, codVeterinario, codMascota);
+                    consulta = new Consultas(id, fecha, hora,diagnostico, tratamiento, codMedicamento, codVeterinario, codMascota);
                     lista.add(consulta);
                 }
             }
@@ -101,6 +104,7 @@ public class QuerysConsultas {
                 smnt = AbrirConexion.getCone().createStatement();
 
                 smnt.executeUpdate("INSERT INTO consultas VALUES (null,'" + consulta.getFecha()+ "','" 
+                        + consulta.getHora()+ "','" 
                         + consulta.getDiagnostico()+ "','" 
                         + consulta.getTratamiento()+ "','"
                         + consulta.getCodMedicamento()+ "','" 
@@ -117,6 +121,7 @@ public class QuerysConsultas {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
                 smnt.executeUpdate("UPDATE  consultas SET fecha = '" + consulta.getFecha()
+                        + "', hora = '" + consulta.getHora()
                         + "', diagnostico = '" + consulta.getDiagnostico()
                         + "', tratamiento = '" + consulta.getTratamiento()
                         + "', codigoMedicamento = '" + consulta.getCodMedicamento()

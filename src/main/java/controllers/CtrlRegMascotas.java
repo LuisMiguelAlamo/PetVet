@@ -29,6 +29,7 @@ public class CtrlRegMascotas implements MouseListener {
     boolean opcion;
     Pattern p = Pattern.compile("[0-9]{5}");
     Matcher m;
+    int chip;
 
     public CtrlRegMascotas(FrmPrincipal frm, RegistroMascotasPanel r, boolean opcion) {
         this.frm = frm;
@@ -39,30 +40,42 @@ public class CtrlRegMascotas implements MouseListener {
 
         this.registro.getBtnGuardar().addMouseListener(this);
         this.registro.getBtnSeleccionar().addMouseListener(this);
+        this.registro.getjRadioButton1().addMouseListener(this);
+        this.registro.getjComboBox1().addMouseListener(this);
 
         if (opcion) {
             this.registro.getTxtNombre().setText(CtrlPrincipal.mascota.getNombre());
             this.registro.getTxtEspecie().setText(CtrlPrincipal.mascota.getEspecie());
+            this.registro.getjComboBox1().setSelectedItem(CtrlPrincipal.mascota.getSexo());
             this.registro.getTxtColor().setText(CtrlPrincipal.mascota.getColor());
             this.registro.getTxtEnfermedades().setText(CtrlPrincipal.mascota.getEnfermedades());
             this.registro.getTxtAnotaciones().setText(CtrlPrincipal.mascota.getAnotaciones());
             this.registro.getTxtVacunas().setText(CtrlPrincipal.mascota.getVacunas());
+            if (CtrlPrincipal.mascota.getChip() == 1) {
+                this.registro.getjRadioButton1().setSelected(true);
+            } else {
+                this.registro.getjRadioButton1().setSelected(false);
+            }
             this.registro.getTxtCliente().setText(CtrlPrincipal.cliente.getNombre());
         }
     }
-    
 
     public Mascotas setMascota() {
-        int id = 0;
         String nombre = this.registro.getTxtNombre().getText();
         String especie = this.registro.getTxtEspecie().getText();
+        String sexo = this.registro.getjComboBox1().getSelectedItem().toString();
         String color = this.registro.getTxtColor().getText();
         String enfermedades = this.registro.getTxtEnfermedades().getText();
         String anotaciones = this.registro.getTxtAnotaciones().getText();
         String vacunas = this.registro.getTxtVacunas().getText();
-
-        this.mascota = new Mascotas(id, nombre, especie, color, "hembra", enfermedades, anotaciones, vacunas, false, id);
+        if (registro.getjRadioButton1().isSelected()) {
+            chip = 1;
+        } else {
+            chip = 0;
+        }
         
+        this.mascota = new Mascotas(0, nombre, especie, color, sexo, enfermedades, anotaciones, vacunas, chip, 0);
+
         return this.mascota;
     }
 
@@ -81,16 +94,24 @@ public class CtrlRegMascotas implements MouseListener {
             } else {
 
                 if (CtrlPrincipal.isNew) {
+                    CtrlPrincipal.mascota = setMascota();
                     CtrlPrincipal.mascota.setCodCliente(CtrlPrincipal.cliente.getId());
                     QuerysMascotas.crear(CtrlPrincipal.mascota);
                 } else {
                     this.mascota = CtrlPrincipal.mascota;
                     this.mascota.setNombre(this.registro.getTxtNombre().getText());
                     this.mascota.setEspecie(this.registro.getTxtEspecie().getText());
+                    this.mascota.setSexo(this.registro.getjComboBox1().getSelectedItem().toString());
                     this.mascota.setColor(this.registro.getTxtColor().getText());
                     this.mascota.setEnfermedades(this.registro.getTxtEnfermedades().getText());
                     this.mascota.setAnotaciones(this.registro.getTxtAnotaciones().getText());
                     this.mascota.setVacunas(this.registro.getTxtVacunas().getText());
+                    if (registro.getjRadioButton1().isSelected()) {
+                        chip = 1;
+                    } else {
+                        chip = 0;
+                    }
+                    this.mascota.setChip(chip);
                     this.mascota.setCodCliente(CtrlPrincipal.cliente.getId());
                     QuerysMascotas.actualizar(this.mascota);
                 }
@@ -102,8 +123,8 @@ public class CtrlRegMascotas implements MouseListener {
         if (e.getSource().equals(this.registro.getBtnSeleccionar())) {
             if (this.registro.getTxtNombre().getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Debe llenar los campos antes de seleccionar el cliente");
-            }else {
-                CtrlPrincipal.isMascota = true;
+            } else {
+                CtrlPrincipal.eleccion = 3;
                 if (CtrlPrincipal.isNew) {
                     CtrlPrincipal.mascota = setMascota();
                     ClientePanel cp = new ClientePanel();
@@ -111,14 +132,22 @@ public class CtrlRegMascotas implements MouseListener {
                 } else {
                     CtrlPrincipal.mascota.setNombre(this.registro.getTxtNombre().getText());
                     CtrlPrincipal.mascota.setEspecie(this.registro.getTxtEspecie().getText());
+                    CtrlPrincipal.mascota.setSexo(this.registro.getjComboBox1().getSelectedItem().toString());
                     CtrlPrincipal.mascota.setColor(this.registro.getTxtColor().getText());
                     CtrlPrincipal.mascota.setEnfermedades(this.registro.getTxtEnfermedades().getText());
                     CtrlPrincipal.mascota.setAnotaciones(this.registro.getTxtAnotaciones().getText());
                     CtrlPrincipal.mascota.setVacunas(this.registro.getTxtVacunas().getText());
+                    if (registro.getjRadioButton1().isSelected()) {
+                        chip = 1;
+                    } else {
+                        chip = 0;
+                    }
+                    CtrlPrincipal.mascota.setChip(chip);
+                    
                     ClientePanel cp = new ClientePanel();
                     CtrlClientes cli = new CtrlClientes(frm, cp, true);
                 }
-            }            
+            }
         }
     }
 
