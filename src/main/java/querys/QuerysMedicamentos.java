@@ -69,6 +69,7 @@ public class QuerysMedicamentos {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
                 rs = smnt.executeQuery("SELECT * FROM medicamentos WHERE nombre LIKE '%" + campo + "%'"
+                        + " OR precio LIKE '%" + campo + "%'"
                         + " OR codigoProveedor LIKE '%" + campo + "%'");
                 while (rs.next()) {
                     int id = rs.getInt("id");

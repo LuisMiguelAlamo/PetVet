@@ -70,9 +70,7 @@ public class QuerysCitas {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
                 rs = smnt.executeQuery("SELECT * FROM citas WHERE fecha LIKE '%" + campo + "%'"
-                        + " OR hora LIKE '%" + campo + "%'"
-                        + " OR codigoMedicamento LIKE '%" + campo + "%'"
-                        + " OR codigoMascota LIKE '%" + campo + "%'");
+                        + " OR hora LIKE '%" + campo + "%'");
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     Date fecha = rs.getDate("fecha");

@@ -7,19 +7,16 @@ package controllers;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import models.Citas;
+import models.Clientes;
 import models.Facturas;
-import querys.QuerysCitas;
 import querys.QuerysClientes;
 import querys.QuerysFacturas;
-import views.CitasPanel;
 import views.FacturasPanel;
 import views.FrmPrincipal;
-//import views.RegistroClientePanel;
+import views.RegistroFacturasPanel;
 
 /**
  *
@@ -30,9 +27,11 @@ public class CtrlFacturas implements MouseListener{
     FrmPrincipal frm;
     FacturasPanel panel;
     Facturas factura;
-    String titulos[] = {"Id", "Total", "IGIC", "total con IGIC", "codConsulta"};
+    String titulos[] = {"No. Factura", "Total", "IGIC", "total con IGIC", "Cliente"};
     String info[][];
     boolean isSelected;
+    ArrayList<Facturas> miLista;
+    ArrayList<Clientes> cliList;
 
     public CtrlFacturas(FrmPrincipal frm, FacturasPanel p) {
         this.frm = frm;
@@ -55,7 +54,8 @@ public class CtrlFacturas implements MouseListener{
     
     private String[][] obtieneMatriz() {
 
-        ArrayList<Facturas> miLista = QuerysFacturas.consultaGeneral();
+        miLista = QuerysFacturas.consultaGeneral();
+        cliList = QuerysClientes.consultaGeneral();
 
         String informacion[][] = new String[miLista.size()][5];
 
@@ -64,7 +64,10 @@ public class CtrlFacturas implements MouseListener{
             informacion[x][1] = miLista.get(x).getTotal()+ "";
             informacion[x][2] = miLista.get(x).getIGIC()+ "";
             informacion[x][3] = miLista.get(x).getTotalConIGIC()+ "";
-            informacion[x][4] = miLista.get(x).getCodConsulta()+ "";
+            int cc = miLista.get(x).getCodCliente();
+            String cli = leerClientes(cc);
+
+            informacion[x][4] = cli;
         }
 
         return informacion;
@@ -72,8 +75,9 @@ public class CtrlFacturas implements MouseListener{
 
     private String[][] obtieneFiltro() {
 
-        ArrayList<Facturas> miLista = QuerysFacturas.consultaFiltro(this.panel.getCampoBuscar().getText());
-
+        miLista = QuerysFacturas.consultaFiltro(this.panel.getCampoBuscar().getText());
+        cliList = QuerysClientes.consultaGeneral();
+        
         String informacion[][] = new String[miLista.size()][5];
 
         for (int x = 0; x < informacion.length; x++) {
@@ -81,37 +85,46 @@ public class CtrlFacturas implements MouseListener{
             informacion[x][1] = miLista.get(x).getTotal()+ "";
             informacion[x][2] = miLista.get(x).getIGIC()+ "";
             informacion[x][3] = miLista.get(x).getTotalConIGIC()+ "";
-            informacion[x][4] = miLista.get(x).getCodConsulta()+ "";
+            int cc = miLista.get(x).getCodCliente();
+            String cli = leerClientes(cc);
+
+            informacion[x][4] = cli;
         }
 
         return informacion;
     }
     
-    private Facturas llenaCampos() {
+    private String leerClientes(int cc) {
+        String nombre = "";
+        for (Clientes c : cliList) {
+            if (c.getId() == cc) {
+                nombre = c.getNombre();
+            }
+        }
+        return nombre;
+    }
+    
+    private Facturas setFactura() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaFacturas().getValueAt(this.panel.getTablaFacturas().getSelectedRow(), 0)));
-        double total = Double.parseDouble(String.valueOf(this.panel.getTablaFacturas().getValueAt(this.panel.getTablaFacturas().getSelectedRow(), 1)));
-        double IGIC = Double.parseDouble(String.valueOf(this.panel.getTablaFacturas().getValueAt(this.panel.getTablaFacturas().getSelectedRow(), 1)));
-        double totalConIGIC = Double.parseDouble(String.valueOf(this.panel.getTablaFacturas().getValueAt(this.panel.getTablaFacturas().getSelectedRow(), 1)));
-        int codMascota = Integer.parseInt(String.valueOf(this.panel.getTablaFacturas().getValueAt(this.panel.getTablaFacturas().getSelectedRow(), 0)));
-
-        factura = new Facturas(id, total, IGIC, totalConIGIC, codMascota);
+        factura = QuerysFacturas.consultaGeneral(id);
         return factura;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource().equals(this.panel.getBtnBuscar())) {
-            
-        }
+
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
-//            RegistroClientePanel registro = new RegistroClientePanel();                        
-//            CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.cliente, false);
+            CtrlPrincipal.isNew = true;
+            RegistroFacturasPanel registro = new RegistroFacturasPanel();                        
+            CtrlRegFacturas rc = new CtrlRegFacturas(frm, registro, false);
         }
         
         if (e.getSource().equals(this.panel.getBtnEditar())) {
             if (isSelected) {
-//                RegistroClientePanel registro = new RegistroClientePanel();
-//                CtrlRegClientes rc = new CtrlRegClientes(this.frm, registro, this.cliente, true);
+                CtrlPrincipal.isNew = false;
+                CtrlPrincipal.factura = setFactura();
+                RegistroFacturasPanel registro = new RegistroFacturasPanel();  
+                CtrlRegFacturas rc = new CtrlRegFacturas(frm, registro, true);
             }else{
                 JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
             }
@@ -129,7 +142,7 @@ public class CtrlFacturas implements MouseListener{
         
         if (e.getSource().equals(this.panel.getTablaFacturas())) {
             isSelected = true;
-           this.factura = llenaCampos();
+           this.factura = setFactura();
         }
     }
 

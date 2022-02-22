@@ -12,12 +12,12 @@ import javax.swing.JTextField;
  *
  * @author Luis Miguel
  */
-public class RegistroClientePanel extends javax.swing.JPanel {
+public class RegistroUsuariosPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ClientePanel
      */
-    public RegistroClientePanel() {
+    public RegistroUsuariosPanel() {
         initComponents();
     }
 
@@ -37,29 +37,6 @@ public class RegistroClientePanel extends javax.swing.JPanel {
         this.txtNombre = txtNombre;
     }
 
-    public JTextField getTxtCP() {
-        return txtCP;
-    }
-
-    public void setTxtCP(JTextField txtCP) {
-        this.txtCP = txtCP;
-    }
-
-    public JTextField getTxtEmail() {
-        return txtEmail;
-    }
-
-    public void setTxtEmail(JTextField txtEmail) {
-        this.txtEmail = txtEmail;
-    }
-
-    public JTextField getTxtLocalidad() {
-        return txtLocalidad;
-    }
-
-    public void setTxtLocalidad(JTextField txtLocalidad) {
-        this.txtLocalidad = txtLocalidad;
-    }
 
     public JTextField getTxtTelefono() {
         return txtTelefono;
@@ -95,21 +72,16 @@ public class RegistroClientePanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
         labelDireccion = new javax.swing.JLabel();
-        labelLocalidad = new javax.swing.JLabel();
-        txtLocalidad = new javax.swing.JTextField();
         labelTelefono = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
-        labelEmail = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
-        labelCP = new javax.swing.JLabel();
-        txtCP = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
+        labelTelefono1 = new javax.swing.JLabel();
+        txtTelefono1 = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         labelNombre.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        labelNombre.setText("Nombre");
+        labelNombre.setText("Rol");
 
         btnGuardar.setBackground(new java.awt.Color(51, 204, 0));
         btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -130,91 +102,63 @@ public class RegistroClientePanel extends javax.swing.JPanel {
         );
 
         labelDireccion.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        labelDireccion.setText("Dirección");
-
-        labelLocalidad.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        labelLocalidad.setText("Localidad");
+        labelDireccion.setText("Usuario");
 
         labelTelefono.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        labelTelefono.setText("Teléfono");
-
-        labelEmail.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        labelEmail.setText("Email");
-
-        labelCP.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        labelCP.setText("CP");
+        labelTelefono.setText("Password");
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 24)); // NOI18N
-        jLabel1.setText("Registro Clientes");
+        labelTelefono1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        labelTelefono1.setText("Veterinario");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(682, Short.MAX_VALUE)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addContainerGap(376, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(labelNombre)
-                        .addComponent(txtNombre)
-                        .addComponent(txtDireccion)
-                        .addComponent(labelDireccion)
-                        .addComponent(labelLocalidad)
-                        .addComponent(txtLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labelTelefono)
-                    .addComponent(txtTelefono)
-                    .addComponent(labelEmail)
-                    .addComponent(txtEmail)
-                    .addComponent(labelCP)
-                    .addComponent(txtCP, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(81, 81, 81))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelTelefono)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(labelNombre)
+                                .addComponent(txtNombre)
+                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelDireccion))
+                            .addComponent(labelTelefono1)
+                            .addComponent(txtTelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(112, 112, 112))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(50, 50, 50)
-                                .addComponent(labelNombre)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(labelDireccion)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(labelLocalidad)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtLocalidad, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
+                        .addComponent(labelNombre)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelDireccion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(labelTelefono)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(labelEmail)
+                        .addComponent(labelTelefono1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(labelCP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtTelefono1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -235,21 +179,16 @@ public class RegistroClientePanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnGuardar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel labelCP;
     private javax.swing.JLabel labelDireccion;
-    private javax.swing.JLabel labelEmail;
-    private javax.swing.JLabel labelLocalidad;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelTelefono;
-    private javax.swing.JTextField txtCP;
+    private javax.swing.JLabel labelTelefono1;
     private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtLocalidad;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtTelefono1;
     // End of variables declaration//GEN-END:variables
 }

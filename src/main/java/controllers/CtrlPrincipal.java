@@ -25,9 +25,11 @@ import views.ClientePanel;
 import views.ConsultasPanel;
 import views.FacturasPanel;
 import views.FrmPrincipal;
+import views.InicioPanel;
 import views.MascotasPanel;
 import views.MedicamentosPanel;
 import views.ProveedoresPanel;
+import views.UsuariosPanel;
 import views.VeterinariosPanel;
 
 /**
@@ -49,12 +51,11 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     public static Consultas consulta;
     public static Facturas factura;
     public static boolean isNew;
-    public static boolean isMascota;
-    public static boolean isVet;
-    public static int eleccion; //citas = 1, consultas = 2, mascotas = 3
+    public static int eleccion; //citas = 1, consultas = 2, mascotas = 3, facturas = 4
 
     public CtrlPrincipal(boolean condicion) {
         frm = new FrmPrincipal();
+        this.frm.getBtnPrincipal().addMouseListener(this);
         this.frm.getBtnClientes().addMouseListener(this);
         this.frm.getBtnMascotas().addMouseListener(this);
         this.frm.getBtnConsultas().addMouseListener(this);
@@ -78,6 +79,8 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
             this.frm.getBtnUsuarios().setVisible(false);           
         }
         
+        InicioPanel ip = new InicioPanel();
+        CtrlInicio ci = new CtrlInicio(frm, ip);
         
         this.frm.getLabelFecha().setText(String.valueOf(fecha));
         frm.setVisible(true);
@@ -117,7 +120,8 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.frm.getBtnPrincipal())) {
-            
+            InicioPanel ip = new InicioPanel();
+            CtrlInicio ci = new CtrlInicio(frm, ip);
         }
         if (e.getSource().equals(this.frm.getBtnClientes())) {
             ClientePanel cp = new ClientePanel();
@@ -129,7 +133,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         }
         if (e.getSource().equals(this.frm.getBtnConsultas())) {
             ConsultasPanel consPan = new ConsultasPanel();
-            CtrlConsultas consultas = new CtrlConsultas(frm, consPan);
+            CtrlConsultas consultas = new CtrlConsultas(frm, consPan, false);
         }
         if (e.getSource().equals(this.frm.getBtnCitas())) {
             CitasPanel cpa = new CitasPanel();
@@ -150,6 +154,10 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         if (e.getSource().equals(this.frm.getBtnProveedores())) {
             ProveedoresPanel proPan = new ProveedoresPanel();
             CtrlProveedores proveedores = new CtrlProveedores(frm, proPan, false);
+        }
+        if (e.getSource().equals(this.frm.getBtnUsuarios())) {
+            UsuariosPanel usuPan = new UsuariosPanel();
+            CtrlUsuarios usuarios = new CtrlUsuarios(frm, usuPan, false);
         }
         if (e.getSource().equals(this.frm.getExitLabel())) {
             System.exit(0);

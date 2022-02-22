@@ -6,6 +6,7 @@
 package com.mycompany.petvetfinal;
 
 import controllers.CtrlLogin;
+import controllers.CtrlPrincipal;
 
 /**
  *
@@ -17,7 +18,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        CtrlLogin ctrlLog = new CtrlLogin();
+//        CtrlLogin ctrlLog = new CtrlLogin();
+        CtrlPrincipal ctrlPr = new CtrlPrincipal(true);
     }
     
 }

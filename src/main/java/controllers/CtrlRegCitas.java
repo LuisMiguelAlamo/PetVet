@@ -56,12 +56,28 @@ public class CtrlRegCitas implements MouseListener {
             this.registro.getTxtVeterinario().setText(String.valueOf(CtrlPrincipal.veterinario.getNombre()));
         }
     }
+    
+    private Citas setCita(){
+        long tiempo;
+        Date fecha = null;
+        if (this.registro.getTxtFecha().getDate() == null) {
+            tiempo = 0;
+            this.registro.getTxtFecha().setDate(null);
+        }else{
+            tiempo = this.registro.getTxtFecha().getDate().getTime();
+            fecha = new Date(tiempo);
+        }
+        String hora = this.registro.getTxtHora().getText();
+        this.cita = new Citas(0, fecha, hora, idVet, 0);
+        return this.cita;
+    }
+    
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.registro.getBtnGuardar())) {
             //Se comprueba que los campos no estén vacíos antes de guardar la nueva información
-            if (!this.registro.getTxtFecha().isValid()
+            if (this.registro.getTxtFecha() == null
                     || this.registro.getTxtHora().getText().isEmpty()
                     || this.registro.getTxtMascota().getText().isEmpty()
                     || this.registro.getTxtVeterinario().getText().isEmpty()) {
@@ -90,20 +106,11 @@ public class CtrlRegCitas implements MouseListener {
             }
         }
         if (e.getSource().equals(this.registro.getBtnMascota())) {
-            //Se comprueba que los campos no estén vacíos
-            if (this.registro.getTxtFecha().isValid()
-                    || this.registro.getTxtHora().getText().isEmpty()) {
-
-                JOptionPane.showMessageDialog(null, "Debe llenar los campos antes de seleccionar la mascota");
-
-            } else {
                 //Se comprueba que sea una nueva cita
-                CtrlPrincipal.isMascota = true;
                 CtrlPrincipal.eleccion = 1;
                 if (CtrlPrincipal.isNew) {
                     //Se crea un objeto cita para almacenar la fecha y la hora
-                    this.time = this.registro.getTxtFecha().getDate().getTime();
-                    CtrlPrincipal.cita = new Citas(0, new Date(time), this.registro.getTxtHora().getText(), 0, 0);
+                    CtrlPrincipal.cita = setCita();
                     
                     //Compruebo si el veterinario es null, entonces creo uno vacío no perder los datos
                     //cuando seleccione la mascota
@@ -116,9 +123,8 @@ public class CtrlRegCitas implements MouseListener {
                     CtrlMascotas mas = new CtrlMascotas(frm, mp, true);
                 } else {
                     //Se carga el objeto cita con los datos de los campos y los almacenados en mascotas y veterinarios
-                    this.time = this.registro.getTxtFecha().getDate().getTime();
-                    CtrlPrincipal.cita.setFecha(new Date(time));
-                    CtrlPrincipal.cita.setHora(this.registro.getTxtHora().getText());
+                    CtrlPrincipal.cita.setFecha(setCita().getFecha());
+                    CtrlPrincipal.cita.setHora(setCita().getHora());
                     CtrlPrincipal.cita.setCodMascota(CtrlPrincipal.mascota.getId());
                     CtrlPrincipal.cita.setCodVeterinario(CtrlPrincipal.veterinario.getId());
 
@@ -126,22 +132,14 @@ public class CtrlRegCitas implements MouseListener {
                     MascotasPanel mp = new MascotasPanel();
                     CtrlMascotas mas = new CtrlMascotas(frm, mp, true);  //se carga a true para que muestre solo la opción de seleccionar
                 }
-            }
+            
         }
         if (e.getSource().equals(this.registro.getBtnVeterinario())) {
-            //Se comprueba que los campos no estén vacíos
-            if (this.registro.getTxtFecha().isValid()
-                    || this.registro.getTxtHora().getText().isEmpty()) {
 
-                JOptionPane.showMessageDialog(null, "Debe llenar los campos antes de seleccionar el veterinario");
-
-            } else {
                 //Se comprueba que sea una nueva cita
-                CtrlPrincipal.isVet = true;
                 CtrlPrincipal.eleccion = 1;
                 if (CtrlPrincipal.isNew) {
-                    this.time = this.registro.getTxtFecha().getDate().getTime();
-                    CtrlPrincipal.cita = new Citas(0, new Date(time), this.registro.getTxtHora().getText(), 0, 0);
+                    CtrlPrincipal.cita = setCita();
                     
                     /*
                     Compruebo si la mascota es null, entonces creo uno vacío 
@@ -156,9 +154,8 @@ public class CtrlRegCitas implements MouseListener {
                     CtrlVeterinarios vet = new CtrlVeterinarios(frm, vp, true);
                 } else {
                     //Se carga el objeto cita con los datos de los campos y los almacenados en mascotas y veterinarios
-                    this.time = this.registro.getTxtFecha().getDate().getTime();
-                    CtrlPrincipal.cita.setFecha(new Date(time));
-                    CtrlPrincipal.cita.setHora(this.registro.getTxtHora().getText());
+                    CtrlPrincipal.cita.setFecha(setCita().getFecha());
+                    CtrlPrincipal.cita.setHora(setCita().getHora());
                     CtrlPrincipal.cita.setCodMascota(CtrlPrincipal.mascota.getId());
                     CtrlPrincipal.cita.setCodVeterinario(CtrlPrincipal.veterinario.getId());
 
@@ -166,7 +163,7 @@ public class CtrlRegCitas implements MouseListener {
                     VeterinariosPanel vp = new VeterinariosPanel();
                     CtrlVeterinarios vet = new CtrlVeterinarios(frm, vp, true); //se carga a true para que muestre solo la opción de seleccionar
                 }
-            }
+            
         }
     }
 

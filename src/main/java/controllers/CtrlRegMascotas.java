@@ -73,7 +73,15 @@ public class CtrlRegMascotas implements MouseListener {
         } else {
             chip = 0;
         }
-        
+        if (enfermedades.isEmpty()) {
+            enfermedades = "";
+        }
+        if (anotaciones.isEmpty()) {
+            anotaciones = "";
+        }
+        if (vacunas.isEmpty()) {
+            vacunas = "";
+        }
         this.mascota = new Mascotas(0, nombre, especie, color, sexo, enfermedades, anotaciones, vacunas, chip, 0);
 
         return this.mascota;
@@ -85,9 +93,7 @@ public class CtrlRegMascotas implements MouseListener {
             if (this.registro.getTxtNombre().getText().isEmpty()
                     || this.registro.getTxtEspecie().getText().isEmpty()
                     || this.registro.getTxtColor().getText().isEmpty()
-                    || this.registro.getTxtEnfermedades().getText().isEmpty()
-                    || this.registro.getTxtAnotaciones().getText().isEmpty()
-                    || this.registro.getTxtVacunas().getText().isEmpty()) {
+                    || this.registro.getTxtCliente().getText().isEmpty()) {
 
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
@@ -98,22 +104,15 @@ public class CtrlRegMascotas implements MouseListener {
                     CtrlPrincipal.mascota.setCodCliente(CtrlPrincipal.cliente.getId());
                     QuerysMascotas.crear(CtrlPrincipal.mascota);
                 } else {
-                    this.mascota = CtrlPrincipal.mascota;
-                    this.mascota.setNombre(this.registro.getTxtNombre().getText());
-                    this.mascota.setEspecie(this.registro.getTxtEspecie().getText());
-                    this.mascota.setSexo(this.registro.getjComboBox1().getSelectedItem().toString());
-                    this.mascota.setColor(this.registro.getTxtColor().getText());
-                    this.mascota.setEnfermedades(this.registro.getTxtEnfermedades().getText());
-                    this.mascota.setAnotaciones(this.registro.getTxtAnotaciones().getText());
-                    this.mascota.setVacunas(this.registro.getTxtVacunas().getText());
-                    if (registro.getjRadioButton1().isSelected()) {
-                        chip = 1;
-                    } else {
-                        chip = 0;
-                    }
-                    this.mascota.setChip(chip);
-                    this.mascota.setCodCliente(CtrlPrincipal.cliente.getId());
-                    QuerysMascotas.actualizar(this.mascota);
+                    CtrlPrincipal.mascota.setNombre(setMascota().getNombre());
+                    CtrlPrincipal.mascota.setEspecie(setMascota().getEspecie());
+                    CtrlPrincipal.mascota.setSexo(setMascota().getSexo());
+                    CtrlPrincipal.mascota.setColor(setMascota().getColor());
+                    CtrlPrincipal.mascota.setEnfermedades(setMascota().getEnfermedades());
+                    CtrlPrincipal.mascota.setAnotaciones(setMascota().getAnotaciones());
+                    CtrlPrincipal.mascota.setVacunas(setMascota().getVacunas());
+                    CtrlPrincipal.mascota.setCodCliente(CtrlPrincipal.cliente.getId());
+                    QuerysMascotas.actualizar(CtrlPrincipal.mascota);
                 }
 
                 MascotasPanel mp = new MascotasPanel();
@@ -121,9 +120,7 @@ public class CtrlRegMascotas implements MouseListener {
             }
         }
         if (e.getSource().equals(this.registro.getBtnSeleccionar())) {
-            if (this.registro.getTxtNombre().getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Debe llenar los campos antes de seleccionar el cliente");
-            } else {
+            
                 CtrlPrincipal.eleccion = 3;
                 if (CtrlPrincipal.isNew) {
                     CtrlPrincipal.mascota = setMascota();
@@ -147,7 +144,7 @@ public class CtrlRegMascotas implements MouseListener {
                     ClientePanel cp = new ClientePanel();
                     CtrlClientes cli = new CtrlClientes(frm, cp, true);
                 }
-            }
+            
         }
     }
 

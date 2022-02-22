@@ -23,10 +23,6 @@ public class ProveedoresPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    public JPanel getBtnBuscar() {
-        return btnBuscar;
-    }
-
     public JPanel getBtnNuevo() {
         return btnNuevo;
     }
@@ -77,8 +73,6 @@ public class ProveedoresPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         campoBuscar = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaProveedores = new javax.swing.JTable();
         btnNuevo = new javax.swing.JPanel();
@@ -95,28 +89,6 @@ public class ProveedoresPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         jLabel1.setText("Proveedores");
 
-        campoBuscar.setForeground(new java.awt.Color(204, 204, 204));
-        campoBuscar.setText("Buscar cliente");
-
-        btnBuscar.setBackground(new java.awt.Color(153, 0, 153));
-        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Buscar");
-
-        javax.swing.GroupLayout btnBuscarLayout = new javax.swing.GroupLayout(btnBuscar);
-        btnBuscar.setLayout(btnBuscarLayout);
-        btnBuscarLayout.setHorizontalGroup(
-            btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-        );
-        btnBuscarLayout.setVerticalGroup(
-            btnBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
         tablaProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -130,7 +102,7 @@ public class ProveedoresPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablaProveedores);
 
-        btnNuevo.setBackground(new java.awt.Color(153, 0, 153));
+        btnNuevo.setBackground(new java.awt.Color(0, 153, 51));
         btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         nuevoLabel.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
@@ -149,7 +121,7 @@ public class ProveedoresPanel extends javax.swing.JPanel {
             .addComponent(nuevoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
         );
 
-        btnEditar.setBackground(new java.awt.Color(153, 0, 153));
+        btnEditar.setBackground(new java.awt.Color(0, 102, 255));
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel5.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
@@ -168,7 +140,7 @@ public class ProveedoresPanel extends javax.swing.JPanel {
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
         );
 
-        btnEliminar.setBackground(new java.awt.Color(153, 0, 153));
+        btnEliminar.setBackground(new java.awt.Color(204, 0, 0));
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel6.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
@@ -194,12 +166,9 @@ public class ProveedoresPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(campoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addContainerGap(196, Short.MAX_VALUE))
+                .addContainerGap(327, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -219,9 +188,7 @@ public class ProveedoresPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(campoBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addComponent(campoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
@@ -246,13 +213,11 @@ public class ProveedoresPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel btnBuscar;
     private javax.swing.JPanel btnEditar;
     private javax.swing.JPanel btnEliminar;
     private javax.swing.JPanel btnNuevo;
     private javax.swing.JTextField campoBuscar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;

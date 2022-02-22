@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -46,7 +47,6 @@ public class Login extends javax.swing.JFrame {
         exitPanel = new javax.swing.JPanel();
         btnX = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JPanel();
@@ -56,6 +56,7 @@ public class Login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -130,15 +131,8 @@ public class Login extends javax.swing.JFrame {
 
         fondoPanel.add(headerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        txtUsuario.setForeground(new java.awt.Color(204, 204, 204));
-        txtUsuario.setText("Ingrese su nombre de usuario");
         txtUsuario.setBorder(null);
         fondoPanel.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 180, 30));
-
-        txtPassword.setForeground(new java.awt.Color(204, 204, 204));
-        txtPassword.setText("*****");
-        txtPassword.setBorder(null);
-        fondoPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, 180, 30));
 
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel1.setText("Usuario:");
@@ -199,6 +193,9 @@ public class Login extends javax.swing.JFrame {
         fondoPanel.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 180, 10));
         fondoPanel.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 180, 10));
 
+        txtPassword.setBorder(null);
+        fondoPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, 180, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -217,7 +214,7 @@ public class Login extends javax.swing.JFrame {
         return txtPassword;
     }
 
-    public void setTxtPassword(JTextField txtPassword) {
+    public void setTxtPassword(JPasswordField txtPassword) {
         this.txtPassword = txtPassword;
     }
 
@@ -274,7 +271,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel sidePanel;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

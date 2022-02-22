@@ -1,6 +1,7 @@
 package querys;
 
 import conexion.AbrirConexion;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +17,7 @@ public class QuerysAcceso {
 
     static ResultSet rs;
     static Statement smnt;
+    static PreparedStatement ps;
 
     public static ArrayList<Acceso> consultaGeneral() {
         Acceso acceso;
@@ -38,14 +40,13 @@ public class QuerysAcceso {
             JOptionPane.showMessageDialog(null, "Error en la consulta general de acceso");
         }
         return lista;
-
     }
     public static Acceso consultaGeneral(int id) {
         Acceso acceso = null;
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM acceso");
+                rs = smnt.executeQuery("SELECT * FROM acceso WHERE id = " + id);
                 while (rs.next()) {
                     int rol = rs.getInt("rol");
                     String usuario = rs.getString("usuario");
@@ -56,6 +57,31 @@ public class QuerysAcceso {
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en la consulta general de acceso");
+        }
+        return acceso;
+    }
+    
+    
+    public static Acceso isLogged(String user) {
+        Acceso acceso = null;
+        try {
+            if (AbrirConexion.abrirConect()) {
+                smnt = AbrirConexion.getCone().createStatement();
+                rs = smnt.executeQuery("SELECT * FROM acceso WHERE usuario = '"+ user +"'");
+                
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    int rol = rs.getInt("rol");
+                    String usuario = rs.getString("usuario");
+                    String pass = rs.getString("password");
+                    int codigoVeterinario = rs.getInt("codigoVeterinario");
+                    
+                    acceso = new Acceso(id, rol, usuario, pass, codigoVeterinario);
+                }
+                
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en la consulta isLogged");
         }
         return acceso;
 
@@ -125,6 +151,8 @@ public class QuerysAcceso {
             JOptionPane.showMessageDialog(null, "Error al eliminar el acceso");
         }
     }
+
+    
 }
 
 

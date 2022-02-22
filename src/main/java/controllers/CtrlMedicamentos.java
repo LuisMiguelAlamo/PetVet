@@ -5,10 +5,15 @@
  */
 package controllers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import models.Medicamentos;
 import models.Proveedores;
@@ -23,7 +28,7 @@ import views.RegistroMedicamentosPanel;
  *
  * @author Luis Miguel
  */
-public class CtrlMedicamentos implements MouseListener{
+public class CtrlMedicamentos implements MouseListener, DocumentListener{
     
     FrmPrincipal frm;
     MedicamentosPanel panel;
@@ -34,6 +39,8 @@ public class CtrlMedicamentos implements MouseListener{
     String info[][];
     boolean isSelected;
     boolean condicion;
+    private static final int TIEMPO_BUSCAR = 300;
+    private Timer timer_buscar;
 
     public CtrlMedicamentos(FrmPrincipal frm, MedicamentosPanel p, boolean condicion) {
         this.frm = frm;
@@ -41,6 +48,7 @@ public class CtrlMedicamentos implements MouseListener{
         this.condicion = condicion;
         CtrlPrincipal.showContentPanel(frm, p);
         
+        this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
         this.panel.getBtnNuevo().addMouseListener(this);
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
@@ -93,6 +101,7 @@ public class CtrlMedicamentos implements MouseListener{
     private String[][] obtieneFiltro() {
 
         ArrayList<Medicamentos> miLista = QuerysMedicamentos.consultaFiltro(this.panel.getCampoBuscar().getText());
+        proList = QuerysProveedores.consultaGeneral();
 
         String informacion[][] = new String[miLista.size()][4];
 
@@ -100,10 +109,29 @@ public class CtrlMedicamentos implements MouseListener{
             informacion[x][0] = miLista.get(x).getId() + "";
             informacion[x][1] = miLista.get(x).getNombre() + "";
             informacion[x][2] = miLista.get(x).getPrecio()+ "";
-            informacion[x][3] = miLista.get(x).getCodProveedor()+ "";
+            int cp = miLista.get(x).getCodProveedor();
+            String proveedor = leerProveedor(cp);
+            informacion[x][3] = proveedor;
         }
 
         return informacion;
+    }
+    
+    public void activarTimer() {
+        if ((timer_buscar != null) && timer_buscar.isRunning()) {
+            timer_buscar.restart();
+        } else {
+            timer_buscar = new Timer(TIEMPO_BUSCAR, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    timer_buscar = null;
+                        info = obtieneFiltro();
+                        panel.getTablaMedicamentos().setModel(new DefaultTableModel(info, titulos));
+                }
+            });
+            timer_buscar.setRepeats(false);
+            timer_buscar.start();
+        }
     }
     
     private Medicamentos getMedicamento() {
@@ -114,9 +142,7 @@ public class CtrlMedicamentos implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource().equals(this.panel.getBtnBuscar())) {
-            
-        }
+
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
             if (condicion) {
                 if (isSelected) {
@@ -177,6 +203,21 @@ public class CtrlMedicamentos implements MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        this.activarTimer();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        this.activarTimer();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        this.activarTimer();
     }
     
     

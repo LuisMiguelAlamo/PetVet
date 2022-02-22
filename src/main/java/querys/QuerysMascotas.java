@@ -109,9 +109,10 @@ public class QuerysMascotas {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM clientes WHERE codCliente LIKE '%" + campo + "%'"
+                rs = smnt.executeQuery("SELECT * FROM mascotas WHERE id LIKE '%" + campo + "%'"
                         + " OR nombre LIKE '%" + campo + "%'"
-                        + " OR telefono LIKE '%" + campo + "%'");
+                        + " OR especie LIKE '%" + campo + "%'"
+                        + " OR color LIKE '%" + campo + "%'");
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     String nombre = rs.getString("nombre");

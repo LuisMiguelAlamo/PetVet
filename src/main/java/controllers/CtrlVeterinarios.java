@@ -102,9 +102,7 @@ public class CtrlVeterinarios implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource().equals(this.panel.getBtnBuscar())) {
 
-        }
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
             if (condicion) {
                 if (isSelected) {

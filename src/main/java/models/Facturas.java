@@ -14,14 +14,14 @@ public class Facturas {
     double total;
     double IGIC;
     double totalConIGIC;
-    int codConsulta;
+    int codCliente;
 
-    public Facturas(int id, double total, double IGIC, double totalConIGIC, int codConsulta) {
+    public Facturas(int id, double total, double IGIC, double totalConIGIC, int codCliente) {
         this.id = id;
         this.total = total;
         this.IGIC = IGIC;
         this.totalConIGIC = totalConIGIC;
-        this.codConsulta = codConsulta;
+        this.codCliente = codCliente;
     }
 
     public int getId() {
@@ -56,12 +56,12 @@ public class Facturas {
         this.totalConIGIC = totalConIGIC;
     }
 
-    public int getCodConsulta() {
-        return codConsulta;
+    public int getCodCliente() {
+        return codCliente;
     }
 
-    public void setCodConsulta(int codConsulta) {
-        this.codConsulta = codConsulta;
+    public void setCodCliente(int codCliente) {
+        this.codCliente = codCliente;
     }
     
     

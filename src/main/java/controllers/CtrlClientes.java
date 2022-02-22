@@ -5,23 +5,29 @@
  */
 package controllers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import models.Clientes;
 import querys.QuerysClientes;
 import views.ClientePanel;
 import views.FrmPrincipal;
 import views.RegistroClientePanel;
+import views.RegistroFacturasPanel;
 import views.RegistroMascotasPanel;
 
 /**
  *
  * @author Luis Miguel
  */
-public class CtrlClientes implements MouseListener{
+public class CtrlClientes implements MouseListener, DocumentListener{
     
     FrmPrincipal frm;
     ClientePanel panel;
@@ -30,6 +36,8 @@ public class CtrlClientes implements MouseListener{
     String info[][];
     boolean isSelected;
     boolean condicion;
+    private static final int TIEMPO_BUSCAR = 300;
+    private Timer timer_buscar;
 
     public CtrlClientes(FrmPrincipal frm, ClientePanel p, boolean condicion) {
         this.frm = frm;
@@ -37,6 +45,7 @@ public class CtrlClientes implements MouseListener{
         this.condicion = condicion;
         CtrlPrincipal.showContentPanel(frm, p);
         
+        this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
         this.panel.getBtnNuevo().addMouseListener(this);
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
@@ -95,6 +104,23 @@ public class CtrlClientes implements MouseListener{
         return informacion;
     }
     
+    public void activarTimer() {
+        if ((timer_buscar != null) && timer_buscar.isRunning()) {
+            timer_buscar.restart();
+        } else {
+            timer_buscar = new Timer(TIEMPO_BUSCAR, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    timer_buscar = null;
+                        info = obtieneFiltro();
+                        panel.getTablaClientes().setModel(new DefaultTableModel(info, titulos));
+                }
+            });
+            timer_buscar.setRepeats(false);
+            timer_buscar.start();
+        }
+    }
+    
     private Clientes getCliente() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaClientes().getValueAt(this.panel.getTablaClientes().getSelectedRow(), 0)));        
         this.cliente = QuerysClientes.consultaGeneral(id);
@@ -103,9 +129,7 @@ public class CtrlClientes implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource().equals(this.panel.getBtnBuscar())) {
-            
-        }
+        
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
             if (condicion) {
                 if (isSelected) {
@@ -113,8 +137,10 @@ public class CtrlClientes implements MouseListener{
                         CtrlPrincipal.cliente = getCliente();
                         RegistroMascotasPanel mp = new RegistroMascotasPanel();
                         CtrlRegMascotas mas = new CtrlRegMascotas(frm, mp, true);
-                    } else if(CtrlPrincipal.eleccion == 2) {
-
+                    } else if(CtrlPrincipal.eleccion == 4) {
+                        CtrlPrincipal.cliente = getCliente();
+                        RegistroFacturasPanel fp = new RegistroFacturasPanel();
+                        CtrlRegFacturas fac = new CtrlRegFacturas(frm, fp, true);
                     }
                 }else{
                     JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
@@ -165,6 +191,21 @@ public class CtrlClientes implements MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        this.activarTimer();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        this.activarTimer();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        this.activarTimer();
     }
     
     

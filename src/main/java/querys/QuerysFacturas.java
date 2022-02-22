@@ -30,8 +30,8 @@ public class QuerysFacturas {
                     double total = rs.getDouble("total");
                     double IGIC = rs.getDouble("IGIC");
                     double totalConIGIC = rs.getDouble("totalConIGIC");
-                    int codConsulta = rs.getInt("codigoConsulta");
-                    factura = new Facturas(id, total, IGIC, totalConIGIC, codConsulta);
+                    int codCliente = rs.getInt("codigoCliente");
+                    factura = new Facturas(id, total, IGIC, totalConIGIC, codCliente);
                     
                     lista.add(factura);
                 }
@@ -49,17 +49,17 @@ public class QuerysFacturas {
             if (AbrirConexion.abrirConect()) {
                 System.out.println("metodo consultaGeneral");
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM facturas");
+                rs = smnt.executeQuery("SELECT * FROM facturas WHERE id = " + id);
                 while (rs.next()) {
                     double total = rs.getDouble("total");
                     double IGIC = rs.getDouble("IGIC");
                     double totalConIGIC = rs.getDouble("totalConIGIC");
-                    int codConsulta = rs.getInt("codigoConsulta");
-                    factura = new Facturas(id, total, IGIC, totalConIGIC, codConsulta);
+                    int codCliente = rs.getInt("codigoCliente");
+                    factura = new Facturas(id, total, IGIC, totalConIGIC, codCliente);
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+            JOptionPane.showMessageDialog(null, "Error al obtener la facturas");
         }
         return factura;
     }
@@ -77,14 +77,14 @@ public class QuerysFacturas {
                     double total = rs.getDouble("total");
                     double IGIC = rs.getDouble("IGIC");
                     double totalConIGIC = rs.getDouble("totalConIGIC");
-                    int codConsulta = rs.getInt("codigoConsulta");
+                    int codConsulta = rs.getInt("codigoCliente");
                     factura = new Facturas(id, total, IGIC, totalConIGIC, codConsulta);
                     
                     lista.add(factura);
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+            JOptionPane.showMessageDialog(null, "Error al filtrar la factura");
         }
         return lista;
     }
@@ -98,10 +98,10 @@ public class QuerysFacturas {
                         + factura.getTotal()+ "','"
                         + factura.getIGIC()+ "','"
                         + factura.getTotalConIGIC()+ "','"
-                        + factura.getCodConsulta()+ "');");
+                        + factura.getCodCliente()+ "');");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la consulta");
+            JOptionPane.showMessageDialog(null, "Error al crear la factura");
         }
     }
 
@@ -112,10 +112,11 @@ public class QuerysFacturas {
                 smnt.executeUpdate("UPDATE  facturas SET total = '" + factura.getTotal()
                         + "', IGIC = '" + factura.getIGIC()
                         + "', totalConIGIC = '" + factura.getTotalConIGIC()
+                        + "', codigoCliente = '" + factura.getCodCliente()
                         + "' WHERE id = '" + factura.getId() + "';");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la consulta");
+            JOptionPane.showMessageDialog(null, "Error al actualizar la factura");
         }
     }
 
@@ -126,7 +127,7 @@ public class QuerysFacturas {
                 smnt.executeUpdate("DELETE FROM facturas WHERE id = '" + id + "';");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar el cliente");
+            JOptionPane.showMessageDialog(null, "Error al eliminar la factura");
         }
     }
 }

@@ -73,8 +73,9 @@ public class QuerysClientes {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM clientes WHERE codCliente LIKE '%" + campo + "%'"
+                rs = smnt.executeQuery("SELECT * FROM clientes WHERE id LIKE '%" + campo + "%'"
                         + " OR nombre LIKE '%" + campo + "%'"
+                        + " OR email LIKE '%" + campo + "%'"
                         + " OR telefono LIKE '%" + campo + "%'");
                 while (rs.next()) {
                     int id = rs.getInt("id");
@@ -89,7 +90,7 @@ public class QuerysClientes {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos, filtro no funciona");
         }
         return lista;
     }

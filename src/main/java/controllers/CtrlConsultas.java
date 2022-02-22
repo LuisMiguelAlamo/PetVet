@@ -5,10 +5,15 @@
  */
 package controllers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import models.Consultas;
 import models.Mascotas;
@@ -26,7 +31,7 @@ import views.RegistroConsultasPanel;
  *
  * @author Luis Miguel
  */
-public class CtrlConsultas implements MouseListener{
+public class CtrlConsultas implements MouseListener, DocumentListener{
     
     FrmPrincipal frm;
     ConsultasPanel panel;
@@ -34,20 +39,31 @@ public class CtrlConsultas implements MouseListener{
     String titulos[] = {"Id", "Fecha", "Hora","Diagnostico", "Tratamiento", "Medicamento", "Veterinario", "Mascota"};
     String info[][];
     boolean isSelected;
+    boolean opcion;
+    private static final int TIEMPO_BUSCAR = 300;
+    private Timer timer_buscar;
     ArrayList<Consultas> miLista;
     ArrayList<Mascotas> listaMascotas;
     ArrayList<Veterinarios> listaVet;
     ArrayList<Medicamentos> listaMed;
 
-    public CtrlConsultas(FrmPrincipal frm, ConsultasPanel p) {
+    public CtrlConsultas(FrmPrincipal frm, ConsultasPanel p, boolean opcion) {
         this.frm = frm;
         this.panel = p;
+        this.opcion = opcion;
         CtrlPrincipal.showContentPanel(frm, p);
         
+        this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
         this.panel.getBtnNuevo().addMouseListener(this);
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
         this.panel.getTablaConsultas().addMouseListener(this);
+        
+        if (opcion) {
+            this.panel.getBtnEditar().setVisible(false);
+            this.panel.getBtnEliminar().setVisible(false);
+            this.panel.getNuevoLabel().setText("Seleccionar");
+        }
         
         isSelected = false;
         actualizarTabla();
@@ -120,6 +136,23 @@ public class CtrlConsultas implements MouseListener{
         return informacion;
     }
     
+    public void activarTimer() {
+        if ((timer_buscar != null) && timer_buscar.isRunning()) {
+            timer_buscar.restart();
+        } else {
+            timer_buscar = new Timer(TIEMPO_BUSCAR, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    timer_buscar = null;
+                        info = obtieneFiltro();
+                        panel.getTablaConsultas().setModel(new DefaultTableModel(info, titulos));
+                }
+            });
+            timer_buscar.setRepeats(false);
+            timer_buscar.start();
+        }
+    }
+    
     
     //Método que devuelve el nombre de la mascota para no tener que llenar la tabla
     //con el número del id 
@@ -170,9 +203,7 @@ public class CtrlConsultas implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource().equals(this.panel.getBtnBuscar())) {
-            
-        }
+
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
             //Si es una nueva consulta se cargan a null las variables globales
             CtrlPrincipal.isNew = true;
@@ -181,8 +212,17 @@ public class CtrlConsultas implements MouseListener{
             CtrlPrincipal.veterinario = null;
             CtrlPrincipal.medicamento = null;
             
-            RegistroConsultasPanel registro = new RegistroConsultasPanel();                        
-            CtrlRegConsultas rc = new CtrlRegConsultas(frm, registro, false);
+            if (opcion) {
+                if (isSelected) {
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "No ha seleccionado una consulta");
+                }
+            }else {
+                RegistroConsultasPanel registro = new RegistroConsultasPanel();
+                CtrlRegConsultas rc = new CtrlRegConsultas(frm, registro, false);
+            }
+            
         }
         
         if (e.getSource().equals(this.panel.getBtnEditar())) {
@@ -231,6 +271,21 @@ public class CtrlConsultas implements MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        this.activarTimer();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        this.activarTimer();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        this.activarTimer();
     }
     
     
