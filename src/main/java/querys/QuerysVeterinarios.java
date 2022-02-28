@@ -66,8 +66,8 @@ public class QuerysVeterinarios {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM veterinarios WHERE codCliente LIKE '%" + campo + "%'"
-                        + " OR nombre LIKE '%" + campo + "%'"
+                rs = smnt.executeQuery("SELECT * FROM veterinarios WHERE nombre LIKE '%" + campo + "%'"
+                        + " OR direccion LIKE '%" + campo + "%'"
                         + " OR telefono LIKE '%" + campo + "%'");
                 while (rs.next()) {
                     int id = rs.getInt("id");
@@ -94,7 +94,7 @@ public class QuerysVeterinarios {
                         + vet.getTelefono() + "');");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la consulta");
+            JOptionPane.showMessageDialog(null, "Error al crear nuevo Veterinario");
         }
     }
 
@@ -108,7 +108,7 @@ public class QuerysVeterinarios {
                         + "' WHERE id = '" + vet.getId() + "';");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la consulta");
+            JOptionPane.showMessageDialog(null, "Error al editar el veterinario");
         }
     }
 
@@ -120,8 +120,7 @@ public class QuerysVeterinarios {
                 System.out.println("Ejecutó método eliminar");
             }
         } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Error al eliminar el veterinario");
-            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al eliminar el veterinario");
         }
     }
 }

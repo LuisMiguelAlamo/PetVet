@@ -78,9 +78,13 @@ public class QuerysProveedores {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM proveedores WHERE codCliente LIKE '%" + campo + "%'"
-                        + " OR nombre LIKE '%" + campo + "%'"
-                        + " OR telefono LIKE '%" + campo + "%'");
+                rs = smnt.executeQuery("SELECT * FROM proveedores WHERE nombre LIKE '%" + campo + "%'"
+                        + " OR direccion LIKE '%" + campo + "%'"
+                        + " OR localidad LIKE '%" + campo + "%'"
+                        + " OR telefono LIKE '%" + campo + "%'"
+                        + " OR email LIKE '%" + campo + "%'"
+                        + " OR CP LIKE '%" + campo + "%'"
+                        + " OR alta LIKE '%" + campo + "%'");
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     String nombre = rs.getString("nombre");
@@ -95,7 +99,7 @@ public class QuerysProveedores {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+            JOptionPane.showMessageDialog(null, "Error al filtrar el proveedor");
         }
         return lista;
     }
@@ -115,7 +119,7 @@ public class QuerysProveedores {
                         + proveedor.getFecha()+ "');");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la consulta");
+            JOptionPane.showMessageDialog(null, "Error al crear nuevo proveedor");
         }
     }
 
@@ -133,7 +137,7 @@ public class QuerysProveedores {
                         + "' WHERE id = '" + proveedor.getId() + "';");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la consulta");
+            JOptionPane.showMessageDialog(null, "Error al actualizar el proveedor");
         }
     }
 
@@ -144,7 +148,7 @@ public class QuerysProveedores {
                 smnt.executeUpdate("DELETE FROM proveedores WHERE id = '" + id + "';");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar el cliente");
+            JOptionPane.showMessageDialog(null, "Error al eliminar el proveedor");
         }
     }
 }

@@ -29,10 +29,10 @@ public class QuerysAcceso {
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     int rol = rs.getInt("rol");
-                    String usuario = rs.getString("usuario");
+                    String email = rs.getString("email");
                     String password = rs.getString("password");
                     int codigoVeterinario = rs.getInt("codigoVeterinario");
-                    acceso = new Acceso(id, rol, usuario, password, codigoVeterinario);
+                    acceso = new Acceso(id, rol, email, password, codigoVeterinario);
                     lista.add(acceso);
                 }
             }
@@ -49,10 +49,10 @@ public class QuerysAcceso {
                 rs = smnt.executeQuery("SELECT * FROM acceso WHERE id = " + id);
                 while (rs.next()) {
                     int rol = rs.getInt("rol");
-                    String usuario = rs.getString("usuario");
+                    String email = rs.getString("email");
                     String password = rs.getString("password");
                     int codigoVeterinario = rs.getInt("codigoVeterinario");
-                    acceso = new Acceso(id, rol, usuario, password, codigoVeterinario);
+                    acceso = new Acceso(id, rol, email, password, codigoVeterinario);
                 }
             }
         } catch (SQLException ex) {
@@ -72,11 +72,11 @@ public class QuerysAcceso {
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     int rol = rs.getInt("rol");
-                    String usuario = rs.getString("usuario");
+                    String email = rs.getString("email");
                     String pass = rs.getString("password");
                     int codigoVeterinario = rs.getInt("codigoVeterinario");
                     
-                    acceso = new Acceso(id, rol, usuario, pass, codigoVeterinario);
+                    acceso = new Acceso(id, rol, email, pass, codigoVeterinario);
                 }
                 
             }
@@ -93,14 +93,14 @@ public class QuerysAcceso {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM acceso WHERE usuario LIKE '%" + campo + "%'");
+                rs = smnt.executeQuery("SELECT * FROM acceso WHERE email LIKE '%" + campo + "%'");
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     int rol = rs.getInt("rol");
-                    String usuario = rs.getString("usuario");
+                    String email = rs.getString("email");
                     String password = rs.getString("password");
                     int codigoVeterinario = rs.getInt("codigoVeterinario");
-                    acceso = new Acceso(id, rol,usuario, password, codigoVeterinario);
+                    acceso = new Acceso(id, rol,email, password, codigoVeterinario);
                     lista.add(acceso);
                 }
             }
@@ -117,7 +117,7 @@ public class QuerysAcceso {
                 smnt = AbrirConexion.getCone().createStatement();
 
                 smnt.executeUpdate("INSERT INTO acceso VALUES (null,'" + acceso.getRol()+ "','" 
-                        + acceso.getUsuario()+ "','" 
+                        + acceso.getEmail()+ "','" 
                         + acceso.getPassword()+ "','"
                         + acceso.getCodigoVeterinario()+ "');");
             }
@@ -131,7 +131,7 @@ public class QuerysAcceso {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
                 smnt.executeUpdate("UPDATE  acceso SET rol = '" + acceso.getRol()
-                        + "', usuario = '" + acceso.getUsuario()
+                        + "', email = '" + acceso.getEmail()
                         + "', password = '" + acceso.getPassword()
                         + "', codigoVeterinario = '" + acceso.getCodigoVeterinario()
                         + "' WHERE id = '" + acceso.getId() + "';");

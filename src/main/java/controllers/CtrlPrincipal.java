@@ -10,8 +10,14 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JPanel;
+import models.Acceso;
 import models.Citas;
 import models.Clientes;
 import models.Consultas;
@@ -40,8 +46,23 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     FrmPrincipal frm;
     int xMouse, yMouse;
     boolean condicion;
+    //Variable para la fecha del programa
     LocalDateTime dateTime = LocalDateTime.now();
-    String fecha = "Hoy es "+dateTime.getDayOfWeek()+" "+ dateTime.getDayOfMonth() + " de "+ dateTime.getMonth() + " del "+ dateTime.getYear();
+    String fecha = "Hoy es:  "+ dateTime.getDayOfMonth() + " / "+ dateTime.getMonthValue()+ " / "+ dateTime.getYear();
+    //Variables para la validación de las expresiones regulares
+    public static Pattern pEmail = Pattern.compile("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$");
+    public static Pattern pTel = Pattern.compile("[0-9]{9}");
+    public static Pattern pCP = Pattern.compile("0[1-9][0-9]{3}|[1-4][0-9]{4}|5[0-2][0-9]{3}");
+    public static Pattern pPrecio = Pattern.compile("[0-9]+[.]?[0-9]{1,2}");
+    public static Pattern pIGIC = Pattern.compile("[0-9]+[.]?[0-9]{1,2}");
+    public static Matcher mEmail;
+    public static Matcher mTel;
+    public static Matcher mCP;
+    public static Matcher mPrecio;
+    public static Matcher mIGIC;
+    //Variables para acumular los datos de los modelos
+    
+    public static Acceso usuario;
     public static Clientes cliente;
     public static Proveedores proveedor;
     public static Veterinarios veterinario;
@@ -51,8 +72,9 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     public static Consultas consulta;
     public static Facturas factura;
     public static boolean isNew;
-    public static int eleccion; //citas = 1, consultas = 2, mascotas = 3, facturas = 4
+    public static int eleccion; //citas = 1, consultas = 2, mascotas = 3, facturas = 4, usuario = 5
 
+    //Constructor de la clase
     public CtrlPrincipal(boolean condicion) {
         frm = new FrmPrincipal();
         this.frm.getBtnPrincipal().addMouseListener(this);

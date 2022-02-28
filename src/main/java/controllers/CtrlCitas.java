@@ -184,15 +184,15 @@ public class CtrlCitas implements MouseListener, DocumentListener{
                 //Si es una actualización de datos se carga la cita seleccionada
                 CtrlPrincipal.isNew = false;
                 CtrlPrincipal.cita = getCita();
-                this.cita = getCita();
-                CtrlPrincipal.mascota = QuerysMascotas.consultaGeneral(this.cita.getCodMascota());
-                CtrlPrincipal.veterinario = QuerysVeterinarios.consultaGeneral(this.cita.getCodVeterinario());
+                System.out.println(CtrlPrincipal.cita.getHora());
+                CtrlPrincipal.mascota = QuerysMascotas.consultaGeneral(CtrlPrincipal.cita.getCodMascota());
+                CtrlPrincipal.veterinario = QuerysVeterinarios.consultaGeneral(CtrlPrincipal.cita.getCodVeterinario());
                 
                 //Se abre el panel de registro de citas a true para que cargue los datos 
                 RegistroCitasPanel registro = new RegistroCitasPanel();                        
                 CtrlRegCitas rc = new CtrlRegCitas(frm, registro, true);
             }else{
-                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+                JOptionPane.showMessageDialog(null, "No ha seleccionado una cita");
             }
         }
         
@@ -203,7 +203,7 @@ public class CtrlCitas implements MouseListener, DocumentListener{
                 QuerysCitas.eliminar(this.cita.getId());
                 this.actualizarTabla();
             }else{
-                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+                JOptionPane.showMessageDialog(null, "No ha seleccionado una cita");
             }
         }
         

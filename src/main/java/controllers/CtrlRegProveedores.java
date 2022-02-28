@@ -81,24 +81,35 @@ public class CtrlRegProveedores implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
-
-                if (opcion) {
-                    this.proveedor.setNombre(this.registro.getTxtNombre().getText());
-                    this.proveedor.setDireccion(this.registro.getTxtDireccion().getText());
-                    this.proveedor.setLocalidad(this.registro.getTxtLocalidad().getText());
-                    this.proveedor.setTelefono(this.registro.getTxtTelefono().getText());
-                    this.proveedor.setEmail(this.registro.getTxtEmail().getText());
-                    this.proveedor.setCP(Integer.parseInt(this.registro.getTxtCP().getText()));
-                    long time = this.registro.getjDateChooser1().getDate().getTime();
-                    this.proveedor.setFecha(new Date(time));
-                    QuerysProveedores.actualizar(this.proveedor);
+                CtrlPrincipal.mEmail = CtrlPrincipal.pEmail.matcher(this.registro.getTxtEmail().getText());
+                CtrlPrincipal.mTel = CtrlPrincipal.pTel.matcher(this.registro.getTxtTelefono().getText());
+                CtrlPrincipal.mCP = CtrlPrincipal.pCP.matcher(this.registro.getTxtCP().getText());
+                if (!CtrlPrincipal.mEmail.matches()) {
+                    JOptionPane.showMessageDialog(null, "El email no es válido");
+                } else if (!CtrlPrincipal.mTel.matches()) {
+                    JOptionPane.showMessageDialog(null, "El teléfono no es válido");
+                } else if (!CtrlPrincipal.mCP.matches()) {
+                    JOptionPane.showMessageDialog(null, "El CP no es válido");
                 } else {
-                    this.proveedor = llenaProveedor();
-                    QuerysProveedores.crear(this.proveedor);
-                }
 
-                ProveedoresPanel pp = new ProveedoresPanel();
-                CtrlProveedores pro = new CtrlProveedores(frm, pp, false);
+                    if (opcion) {
+                        this.proveedor.setNombre(this.registro.getTxtNombre().getText());
+                        this.proveedor.setDireccion(this.registro.getTxtDireccion().getText());
+                        this.proveedor.setLocalidad(this.registro.getTxtLocalidad().getText());
+                        this.proveedor.setTelefono(this.registro.getTxtTelefono().getText());
+                        this.proveedor.setEmail(this.registro.getTxtEmail().getText());
+                        this.proveedor.setCP(Integer.parseInt(this.registro.getTxtCP().getText()));
+                        long time = this.registro.getjDateChooser1().getDate().getTime();
+                        this.proveedor.setFecha(new Date(time));
+                        QuerysProveedores.actualizar(this.proveedor);
+                    } else {
+                        this.proveedor = llenaProveedor();
+                        QuerysProveedores.crear(this.proveedor);
+                    }
+
+                    ProveedoresPanel pp = new ProveedoresPanel();
+                    CtrlProveedores pro = new CtrlProveedores(frm, pp, false);
+                }
             }
         }
     }

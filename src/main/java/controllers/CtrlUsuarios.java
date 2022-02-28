@@ -26,7 +26,7 @@ public class CtrlUsuarios implements MouseListener {
     FrmPrincipal frm;
     UsuariosPanel panel;
     Acceso usuarios;
-    String titulos[] = {"Id", "Rol", "Usuario", "Password"};
+    String titulos[] = {"Id", "Rol", "Email", "Password"};
     String info[][];
     boolean isSelected;
     boolean condicion;
@@ -66,9 +66,17 @@ public class CtrlUsuarios implements MouseListener {
         String informacion[][] = new String[miLista.size()][4];
 
         for (int x = 0; x < informacion.length; x++) {
+            String rolTxt = "";
+            int rolNum;
             informacion[x][0] = miLista.get(x).getId() + "";
-            informacion[x][1] = miLista.get(x).getRol()+ "";
-            informacion[x][2] = miLista.get(x).getUsuario()+ "";
+            rolNum = miLista.get(x).getRol();
+            if (rolNum == 1) {
+                rolTxt = "Veterinario";
+            }else{
+                rolTxt = "Admin";
+            }
+            informacion[x][1] = rolTxt;
+            informacion[x][2] = miLista.get(x).getEmail()+ "";
             informacion[x][3] = miLista.get(x).getPassword()+ "";
         }
 
@@ -82,9 +90,17 @@ public class CtrlUsuarios implements MouseListener {
         String informacion[][] = new String[miLista.size()][4];
 
         for (int x = 0; x < informacion.length; x++) {
+            String rolTxt = "";
+            int rolNum;
             informacion[x][0] = miLista.get(x).getId() + "";
-            informacion[x][1] = miLista.get(x).getRol()+ "";
-            informacion[x][2] = miLista.get(x).getUsuario()+ "";
+            rolNum = miLista.get(x).getRol();
+            if (rolNum == 1) {
+                rolTxt = "Veterinario";
+            }else{
+                rolTxt = "Admin";
+            }
+            informacion[x][1] = rolTxt;
+            informacion[x][2] = miLista.get(x).getEmail()+ "";
             informacion[x][3] = miLista.get(x).getPassword()+ "";
         }
 
@@ -101,14 +117,18 @@ public class CtrlUsuarios implements MouseListener {
     public void mouseClicked(MouseEvent e) {
 
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
+            CtrlPrincipal.isNew = true;
             RegistroUsuariosPanel registro = new RegistroUsuariosPanel();
-//                CtrlRegUsuarios rc = new CtrlRegUsuarios(this.frm, registro, this.usuarios, true);            
+            CtrlRegUsuarios rc = new CtrlRegUsuarios(this.frm, registro, false);
         }
 
         if (e.getSource().equals(this.panel.getBtnEditar())) {
             if (isSelected) {
+                CtrlPrincipal.isNew = false;
+                CtrlPrincipal.usuario = getUsuario();
+                CtrlPrincipal.veterinario = QuerysVeterinarios.consultaGeneral(CtrlPrincipal.usuario.getCodigoVeterinario());
                 RegistroUsuariosPanel registro = new RegistroUsuariosPanel();
-//                CtrlRegUsuarios rc = new CtrlRegUsuarios(this.frm, registro, this.usuarios, true);
+                CtrlRegUsuarios rc = new CtrlRegUsuarios(this.frm, registro, true);
             } else {
                 JOptionPane.showMessageDialog(null, "No ha seleccionado un usuario");
             }

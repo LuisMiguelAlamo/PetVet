@@ -47,7 +47,7 @@ public class QuerysCitas {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM citas");
+                rs = smnt.executeQuery("SELECT * FROM citas WHERE id = " + id);
                 while (rs.next()) {
                     Date fecha = rs.getDate("fecha");
                     String hora = rs.getString("hora");

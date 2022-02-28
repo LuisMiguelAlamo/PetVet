@@ -72,21 +72,29 @@ public class CtrlRegMedicamentos implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
-                if (CtrlPrincipal.isNew) {
-                    CtrlPrincipal.medicamento.setCodProveedor(CtrlPrincipal.proveedor.getId());
-                    QuerysMedicamentos.crear(CtrlPrincipal.medicamento);
-                } else {                    
-                    this.medicamento = CtrlPrincipal.medicamento;
-                    this.medicamento.setNombre(this.registro.getTxtNombre().getText());
-                    this.medicamento.setPrecio(Double.parseDouble(this.registro.getTxtPrecio().getText()));
-                    this.medicamento.setCodProveedor(CtrlPrincipal.proveedor.getId());
-                    QuerysMedicamentos.actualizar(this.medicamento);
-                }
+                CtrlPrincipal.mPrecio = CtrlPrincipal.pPrecio.matcher(this.registro.getTxtPrecio().getText());
+                if (!CtrlPrincipal.mPrecio.matches()) {
+                    JOptionPane.showMessageDialog(null, "El precio no es válido");
+                } else {
 
-                MedicamentosPanel cp = new MedicamentosPanel();
-                CtrlMedicamentos med = new CtrlMedicamentos(frm, cp, false);
+                    if (CtrlPrincipal.isNew) {
+                        CtrlPrincipal.medicamento.setCodProveedor(CtrlPrincipal.proveedor.getId());
+                        QuerysMedicamentos.crear(CtrlPrincipal.medicamento);
+                    } else {
+                        this.medicamento = CtrlPrincipal.medicamento;
+                        this.medicamento.setNombre(this.registro.getTxtNombre().getText());
+                        this.medicamento.setPrecio(Double.parseDouble(this.registro.getTxtPrecio().getText()));
+                        this.medicamento.setCodProveedor(CtrlPrincipal.proveedor.getId());
+                        QuerysMedicamentos.actualizar(this.medicamento);
+                    }
+
+                    MedicamentosPanel cp = new MedicamentosPanel();
+                    CtrlMedicamentos med = new CtrlMedicamentos(frm, cp, false);
+                }
             }
         }
+        
+        
         if (e.getSource().equals(this.registro.getBtnSeleccionar())) {
             if (this.registro.getTxtNombre().getText().isEmpty()
                     && this.registro.getTxtPrecio().getText().isEmpty()

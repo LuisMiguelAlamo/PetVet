@@ -26,8 +26,7 @@ public class CtrlRegClientes implements MouseListener {
     FrmPrincipal frm;
     RegistroClientePanel registro;
     boolean opcion;
-    Pattern p = Pattern.compile("[0-9]{5}");
-    Matcher m;
+
 
     public CtrlRegClientes(FrmPrincipal frm, RegistroClientePanel r, Clientes c, boolean opcion) {
         this.frm = frm;
@@ -76,22 +75,35 @@ public class CtrlRegClientes implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
+                CtrlPrincipal.mEmail = CtrlPrincipal.pEmail.matcher(this.registro.getTxtEmail().getText());
+                CtrlPrincipal.mTel = CtrlPrincipal.pTel.matcher(this.registro.getTxtTelefono().getText());
+                CtrlPrincipal.mCP = CtrlPrincipal.pCP.matcher(this.registro.getTxtCP().getText());
+                if (!CtrlPrincipal.mEmail.matches()) {
+                    JOptionPane.showMessageDialog(null, "El email no es válido");
+                }
+                else if (!CtrlPrincipal.mTel.matches()) {
+                    JOptionPane.showMessageDialog(null, "El teléfono no es válido");
+                }
+                else if (!CtrlPrincipal.mCP.matches()) {
+                    JOptionPane.showMessageDialog(null, "El CP no es válido");
+                }else{
+                    if (opcion) {
+                        this.cliente.setNombre(this.registro.getTxtNombre().getText());
+                        this.cliente.setDireccion(this.registro.getTxtDireccion().getText());
+                        this.cliente.setLocalidad(this.registro.getTxtLocalidad().getText());
+                        this.cliente.setTelefono(this.registro.getTxtTelefono().getText());
+                        this.cliente.setEmail(this.registro.getTxtEmail().getText());
+                        this.cliente.setCp(Integer.parseInt(this.registro.getTxtCP().getText()));
+                        QuerysClientes.actualizar(this.cliente);
+                    } else {
+                        this.cliente = llenaCliente();
+                        QuerysClientes.crear(this.cliente);
+                    }
 
-                if (opcion) {
-                    this.cliente.setNombre(this.registro.getTxtNombre().getText());
-                    this.cliente.setDireccion(this.registro.getTxtDireccion().getText());
-                    this.cliente.setLocalidad(this.registro.getTxtLocalidad().getText());
-                    this.cliente.setTelefono(this.registro.getTxtTelefono().getText());
-                    this.cliente.setEmail(this.registro.getTxtEmail().getText());
-                    this.cliente.setCp(Integer.parseInt(this.registro.getTxtCP().getText()));
-                    QuerysClientes.actualizar(this.cliente);
-                } else {
-                    this.cliente = llenaCliente();
-                    QuerysClientes.crear(this.cliente);
+                    ClientePanel cp = new ClientePanel();
+                    CtrlClientes cli = new CtrlClientes(frm, cp, false);
                 }
 
-                ClientePanel cp = new ClientePanel();
-                CtrlClientes cli = new CtrlClientes(frm, cp, opcion);
             }
         }
     }

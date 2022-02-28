@@ -5,10 +5,15 @@
  */
 package controllers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import models.Clientes;
 import models.Facturas;
@@ -22,14 +27,16 @@ import views.RegistroFacturasPanel;
  *
  * @author Luis Miguel
  */
-public class CtrlFacturas implements MouseListener{
+public class CtrlFacturas implements MouseListener, DocumentListener {
     
     FrmPrincipal frm;
     FacturasPanel panel;
     Facturas factura;
-    String titulos[] = {"No. Factura", "Total", "IGIC", "total con IGIC", "Cliente"};
+    String titulos[] = {"No. Factura", "Total", "% IGIC", "total con IGIC", "Cliente"};
     String info[][];
     boolean isSelected;
+    private static final int TIEMPO_BUSCAR = 300;
+    private Timer timer_buscar;
     ArrayList<Facturas> miLista;
     ArrayList<Clientes> cliList;
 
@@ -38,6 +45,7 @@ public class CtrlFacturas implements MouseListener{
         this.panel = p;
         CtrlPrincipal.showContentPanel(frm, p);
         
+        this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
         this.panel.getBtnNuevo().addMouseListener(this);
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
@@ -104,6 +112,23 @@ public class CtrlFacturas implements MouseListener{
         return nombre;
     }
     
+    public void activarTimer() {
+        if ((timer_buscar != null) && timer_buscar.isRunning()) {
+            timer_buscar.restart();
+        } else {
+            timer_buscar = new Timer(TIEMPO_BUSCAR, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    timer_buscar = null;
+                        info = obtieneFiltro();
+                        panel.getTablaFacturas().setModel(new DefaultTableModel(info, titulos));
+                }
+            });
+            timer_buscar.setRepeats(false);
+            timer_buscar.start();
+        }
+    }
+    
     private Facturas setFactura() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaFacturas().getValueAt(this.panel.getTablaFacturas().getSelectedRow(), 0)));
         factura = QuerysFacturas.consultaGeneral(id);
@@ -123,6 +148,7 @@ public class CtrlFacturas implements MouseListener{
             if (isSelected) {
                 CtrlPrincipal.isNew = false;
                 CtrlPrincipal.factura = setFactura();
+                CtrlPrincipal.cliente = QuerysClientes.consultaGeneral(CtrlPrincipal.factura.getCodCliente());
                 RegistroFacturasPanel registro = new RegistroFacturasPanel();  
                 CtrlRegFacturas rc = new CtrlRegFacturas(frm, registro, true);
             }else{
@@ -160,6 +186,21 @@ public class CtrlFacturas implements MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        this.activarTimer();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        this.activarTimer();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        this.activarTimer();
     }
     
     

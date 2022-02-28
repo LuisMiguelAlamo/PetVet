@@ -12,14 +12,14 @@ package models;
 public class Acceso {
     int id;
     int rol;
-    String usuario;
+    String email;
     String password;
     int codigoVeterinario;
 
-    public Acceso(int id, int rol,String usuario, String password, int codigoVeterinario) {
+    public Acceso(int id, int rol,String email, String password, int codigoVeterinario) {
         this.id = id;
         this.rol = rol;
-        this.usuario = usuario;
+        this.email = email;
         this.password = password;
         this.codigoVeterinario = codigoVeterinario;
     }
@@ -42,12 +42,12 @@ public class Acceso {
     
     
 
-    public String getUsuario() {
-        return usuario;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

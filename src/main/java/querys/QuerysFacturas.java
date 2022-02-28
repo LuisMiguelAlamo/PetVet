@@ -71,14 +71,16 @@ public class QuerysFacturas {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
                 rs = smnt.executeQuery("SELECT * FROM facturas WHERE total LIKE '%" + campo + "%'"
-                        + " OR codigoConsulta LIKE '%" + campo + "%'");
+                        + " OR IGIC LIKE '%" + campo + "%'"
+                        + " OR totalConIGIC LIKE '%" + campo + "%'"
+                        + " OR codigoCliente LIKE '%" + campo + "%'");
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     double total = rs.getDouble("total");
                     double IGIC = rs.getDouble("IGIC");
                     double totalConIGIC = rs.getDouble("totalConIGIC");
-                    int codConsulta = rs.getInt("codigoCliente");
-                    factura = new Facturas(id, total, IGIC, totalConIGIC, codConsulta);
+                    int codCliente = rs.getInt("codigoCliente");
+                    factura = new Facturas(id, total, IGIC, totalConIGIC, codCliente);
                     
                     lista.add(factura);
                 }

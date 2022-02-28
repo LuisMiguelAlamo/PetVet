@@ -67,19 +67,23 @@ public class CtrlRegVeterinarios implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
-
-                if (opcion) {
-                    this.veterinario.setNombre(this.registro.getTxtNombre().getText());
-                    this.veterinario.setDireccion(this.registro.getTxtDireccion().getText());
-                    this.veterinario.setTelefono(this.registro.getTxtTelefono().getText());
-                    QuerysVeterinarios.actualizar(this.veterinario);
+                CtrlPrincipal.mTel = CtrlPrincipal.pTel.matcher(this.registro.getTxtTelefono().getText());
+                if (!CtrlPrincipal.mTel.matches()) {
+                    JOptionPane.showMessageDialog(null, "El teléfono no es válido");
                 } else {
-                    this.veterinario = llenaVeterinario();
-                    QuerysVeterinarios.crear(this.veterinario);
-                }
+                    if (opcion) {
+                        this.veterinario.setNombre(this.registro.getTxtNombre().getText());
+                        this.veterinario.setDireccion(this.registro.getTxtDireccion().getText());
+                        this.veterinario.setTelefono(this.registro.getTxtTelefono().getText());
+                        QuerysVeterinarios.actualizar(this.veterinario);
+                    } else {
+                        this.veterinario = llenaVeterinario();
+                        QuerysVeterinarios.crear(this.veterinario);
+                    }
 
-                VeterinariosPanel vp = new VeterinariosPanel();
-                CtrlVeterinarios vet = new CtrlVeterinarios(frm, vp, false);
+                    VeterinariosPanel vp = new VeterinariosPanel();
+                    CtrlVeterinarios vet = new CtrlVeterinarios(frm, vp, false);
+                }
             }
         }
     }
