@@ -76,6 +76,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         topPanel = new javax.swing.JPanel();
         labelTitulo = new javax.swing.JLabel();
         labelFecha = new javax.swing.JLabel();
+        labelUserReg = new javax.swing.JLabel();
+        labelUsuario = new javax.swing.JLabel();
         headerPanel = new javax.swing.JPanel();
         exitPanel = new javax.swing.JPanel();
         exitLabel = new javax.swing.JLabel();
@@ -462,9 +464,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         labelTitulo.setForeground(new java.awt.Color(255, 255, 255));
         labelTitulo.setText("Administración de clínica veterinaria");
 
-        labelFecha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        labelFecha.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
         labelFecha.setForeground(new java.awt.Color(255, 255, 255));
         labelFecha.setText("16/12/2021");
+
+        labelUserReg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Male User_30px.png"))); // NOI18N
+
+        labelUsuario.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
+        labelUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        labelUsuario.setText("Usuario: ");
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
@@ -473,18 +481,32 @@ public class FrmPrincipal extends javax.swing.JFrame {
             .addGroup(topPanelLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelFecha)
-                    .addComponent(labelTitulo))
-                .addContainerGap(426, Short.MAX_VALUE))
+                    .addGroup(topPanelLayout.createSequentialGroup()
+                        .addComponent(labelUsuario)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(topPanelLayout.createSequentialGroup()
+                        .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelTitulo)
+                            .addComponent(labelFecha))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 386, Short.MAX_VALUE)
+                        .addComponent(labelUserReg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topPanelLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(labelTitulo)
-                .addGap(18, 18, 18)
-                .addComponent(labelFecha)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(topPanelLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(labelUserReg, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(topPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(labelTitulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelFecha)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelUsuario)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         fondoPanel.add(topPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 790, -1));
@@ -631,6 +653,24 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public void setLabelTitulo(JLabel labelTitulo) {
         this.labelTitulo = labelTitulo;
     }
+
+    public JLabel getLabelUserReg() {
+        return labelUserReg;
+    }
+
+    public void setLabelUserReg(JLabel labelUserReg) {
+        this.labelUserReg = labelUserReg;
+    }
+
+    public JLabel getLabelUsuario() {
+        return labelUsuario;
+    }
+
+    public void setLabelUsuario(JLabel labelUsuario) {
+        this.labelUsuario = labelUsuario;
+    }
+    
+    
     
     
       
@@ -677,6 +717,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel labelFecha;
     private javax.swing.JLabel labelTitulo;
+    private javax.swing.JLabel labelUserReg;
+    private javax.swing.JLabel labelUsuario;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables

@@ -40,8 +40,31 @@ public class QuerysCitas {
             JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
         }
         return lista;
-
     }
+    public static ArrayList<Citas> getByVeterinario(int idVet) {
+        Citas cita;
+        ArrayList<Citas> lista = new ArrayList<>();
+        try {
+            if (AbrirConexion.abrirConect()) {
+                smnt = AbrirConexion.getCone().createStatement();
+                rs = smnt.executeQuery("SELECT * FROM citas WHERE codigoVeterinario = "+ idVet);
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    Date fecha = rs.getDate("fecha");
+                    String hora = rs.getString("hora");
+                    int codVeterinario = rs.getInt("codigoVeterinario");
+                    int codMascota = rs.getInt("codigoMascota");
+                    cita = new Citas(id, fecha, hora,codVeterinario, codMascota);
+                    lista.add(cita);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+        }
+        return lista;
+    }
+    
+    
     public static Citas consultaGeneral(int id) {
         Citas cita = null;
         try {
@@ -60,9 +83,9 @@ public class QuerysCitas {
             JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
         }
         return cita;
-
     }
 
+    
     public static ArrayList<Citas> consultaFiltro(String campo) {
         Citas cita;
         ArrayList<Citas> lista = new ArrayList<>();

@@ -36,6 +36,7 @@ import views.InicioPanel;
 import views.MascotasPanel;
 import views.MedicamentosPanel;
 import views.ProveedoresPanel;
+import views.RegistroUsuariosPanel;
 import views.UsuariosPanel;
 import views.VeterinariosPanel;
 
@@ -62,7 +63,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     public static Matcher mPrecio;
     public static Matcher mIGIC;
     //Variables para acumular los datos de los modelos
-    
+    public static boolean isAdmin = false;
     public static Roles rol;
     public static Acceso usuario;
     public static Clientes cliente;
@@ -79,6 +80,8 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     //Constructor de la clase
     public CtrlPrincipal(boolean condicion) {
         frm = new FrmPrincipal();
+                
+        this.frm.getLabelUserReg().addMouseListener(this);
         this.frm.getBtnPrincipal().addMouseListener(this);
         this.frm.getBtnClientes().addMouseListener(this);
         this.frm.getBtnMascotas().addMouseListener(this);
@@ -97,7 +100,11 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         this.condicion = condicion;
         if (condicion) {
             cargaAdmin();
+            isAdmin = true;
+            this.frm.getLabelUserReg().setVisible(false);
+            this.frm.getLabelUsuario().setText("Administrador: "+CtrlPrincipal.usuario.getEmail());
         }else{
+            this.frm.getLabelUsuario().setText("Veterinario: "+CtrlPrincipal.usuario.getEmail());
             this.frm.getBtnMedicamentos().setVisible(false);
             this.frm.getBtnVeterinarios().setVisible(false);
             this.frm.getBtnProveedores().setVisible(false);
@@ -145,6 +152,10 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     //Apertura de un panel dependiendo de que botón es seleccionado
     @Override
     public void mouseClicked(MouseEvent e) {
+        if (e.getSource().equals(this.frm.getLabelUserReg())) {
+            RegistroUsuariosPanel registro = new RegistroUsuariosPanel();
+            CtrlRegUsuarios rc = new CtrlRegUsuarios(this.frm, registro, true);
+        }
         if (e.getSource().equals(this.frm.getBtnPrincipal())) {
             InicioPanel ip = new InicioPanel();
             CtrlInicio ci = new CtrlInicio(frm, ip);

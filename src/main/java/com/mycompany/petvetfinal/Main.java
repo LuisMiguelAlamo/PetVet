@@ -18,8 +18,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        CtrlLogin ctrlLog = new CtrlLogin();
-        CtrlPrincipal ctrlPr = new CtrlPrincipal(true);
+        CtrlLogin ctrlLog = new CtrlLogin();
+//        CtrlPrincipal ctrlPr = new CtrlPrincipal(true);
     }
     
 }

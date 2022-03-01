@@ -60,17 +60,16 @@ public class QuerysAcceso {
     }
     
     
-    public static Acceso isLogged(String user) {
+    public static Acceso isLogged(String email) {
         Acceso acceso = null;
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM acceso WHERE usuario = '"+ user +"'");
+                rs = smnt.executeQuery("SELECT * FROM acceso WHERE email = '"+ email +"'");
                 
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     int rol = rs.getInt("rol");
-                    String email = rs.getString("email");
                     String pass = rs.getString("password");
                     
                     acceso = new Acceso(id, rol, email, pass);

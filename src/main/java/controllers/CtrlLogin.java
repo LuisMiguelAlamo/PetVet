@@ -67,6 +67,7 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
                     JOptionPane.showMessageDialog(null, "Usuario no existe");
                 }else{
                     if (comprobarPassword(acceso, password)) {
+                        CtrlPrincipal.usuario = this.acceso;
                         if (acceso.getRol() == 1) {
                             CtrlPrincipal pri = new CtrlPrincipal(false);
                             this.log.dispose();

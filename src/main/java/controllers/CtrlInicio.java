@@ -18,9 +18,8 @@ public class CtrlInicio {
 
     public CtrlInicio(FrmPrincipal frm, InicioPanel panel) {
         this.frm = frm;
-        this.panel = panel;
-        
-        CtrlPrincipal.showContentPanel(frm, panel);
+        this.panel = panel;        
+        CtrlPrincipal.showContentPanel(frm, panel);      
     }
     
     

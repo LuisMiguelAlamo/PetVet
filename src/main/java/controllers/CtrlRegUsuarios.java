@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import models.Acceso;
 import querys.QuerysAcceso;
 import views.FrmPrincipal;
+import views.InicioPanel;
 import views.RegistroUsuariosPanel;
 import views.UsuariosPanel;
 import views.VeterinariosPanel;
@@ -43,6 +44,13 @@ public class CtrlRegUsuarios implements MouseListener {
         CtrlPrincipal.showContentPanel(frm, r);
 
         this.registro.getBtnGuardar().addMouseListener(this);
+        
+        //Si es administrador puede editar el ComboBox 
+        if (!CtrlPrincipal.isAdmin) {
+            this.registro.getComboRol().setEnabled(false);
+        }else{
+            this.registro.getComboRol().setEnabled(true);
+        }
 
         //Si la opcion es verdadera se llenan los campos 
         if (opcion) {
@@ -96,15 +104,26 @@ public class CtrlRegUsuarios implements MouseListener {
                         QuerysAcceso.crear(CtrlPrincipal.usuario);
                     } else {
                         //Si no es nueva se cargan los datos que se han actualizado
-                        CtrlPrincipal.usuario.setRol(setUsuario().getRol());
-                        CtrlPrincipal.usuario.setEmail(setUsuario().getEmail());
-                        CtrlPrincipal.usuario.setPassword(setUsuario().getPassword());
+                        //Se verifica si es Administrador para saber si permite manejar el combobox
+                        if (!CtrlPrincipal.isAdmin) {                            
+                            CtrlPrincipal.usuario.setEmail(setUsuario().getEmail());
+                            CtrlPrincipal.usuario.setPassword(setUsuario().getPassword());
+                        }else {
+                            CtrlPrincipal.usuario.setRol(setUsuario().getRol());
+                            CtrlPrincipal.usuario.setEmail(setUsuario().getEmail());
+                            CtrlPrincipal.usuario.setPassword(setUsuario().getPassword());
+                        }
                         QuerysAcceso.actualizar(CtrlPrincipal.usuario);
                     }
-
-                    //Abrimos en panel de citas
-                    UsuariosPanel up = new UsuariosPanel();
-                    CtrlUsuarios usu = new CtrlUsuarios(frm, up, false);
+                    //Si es admin nos manda al Panel de Usuarios, sino al panel de inicio
+                    if (CtrlPrincipal.isAdmin) {
+                        //Abrimos en panel de citas
+                        UsuariosPanel up = new UsuariosPanel();
+                        CtrlUsuarios usu = new CtrlUsuarios(frm, up, false);
+                    }else {
+                        InicioPanel ip = new InicioPanel();
+                        CtrlInicio ci = new CtrlInicio(frm, ip);
+                    }
                 }
             }
         }
