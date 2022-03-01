@@ -15,8 +15,7 @@ import querys.QuerysAcceso;
 import views.FrmPrincipal;
 import views.InicioPanel;
 import views.RegistroUsuariosPanel;
-import views.UsuariosPanel;
-import views.VeterinariosPanel;
+import views.UsuariosPanel;import views.VeterinariosPanel;
 
 /**
  *
@@ -127,29 +126,6 @@ public class CtrlRegUsuarios implements MouseListener {
                 }
             }
         }
-
-//        if (e.getSource().equals(this.registro.getBtnVeterinario())) {
-//
-//                //Se comprueba que sea una nueva usuario
-//                CtrlPrincipal.eleccion = 5;
-//                if (CtrlPrincipal.isNew) {
-//                    CtrlPrincipal.usuario = setUsuario();
-//                    
-//
-//                    //Se abre el panel de veterinarios para seleccionar uno
-//                    VeterinariosPanel vp = new VeterinariosPanel();
-//                    CtrlVeterinarios vet = new CtrlVeterinarios(frm, vp, true);
-//                } else {
-//                    //Se carga el objeto usuario con los datos de los campos y los almacenados en mascotas y veterinarios
-//                    CtrlPrincipal.usuario.setEmail(setUsuario().getEmail());
-//                    CtrlPrincipal.usuario.setPassword(setUsuario().getPassword());
-//
-//                    //Se abre el panel de veterinarios para seleccionar uno 
-//                    VeterinariosPanel vp = new VeterinariosPanel();
-//                    CtrlVeterinarios vet = new CtrlVeterinarios(frm, vp, true); //se carga a true para que muestre solo la opción de seleccionar
-//                }
-//            
-//        }
     }
 
     @Override

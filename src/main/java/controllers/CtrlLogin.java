@@ -38,6 +38,7 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
         this.log.getHeaderPanel().addMouseMotionListener(this);
         this.log.getExitPanel().addMouseListener(this);
         this.log.getBtnX().addMouseListener(this);
+        this.log.getRegistroLabel().addMouseListener(this);
         this.log.setVisible(true);
         admin = false;
     }
@@ -86,6 +87,9 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
         }
         if (e.getSource().equals(this.log.getBtnX())) {
             System.exit(0);
+        }
+        if (e.getSource().equals(this.log.getRegistroLabel())) {
+            CtrlRegistro ctrlReg = new CtrlRegistro(this.log);
         }
     }
 

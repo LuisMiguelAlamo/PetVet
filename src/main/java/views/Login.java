@@ -57,6 +57,7 @@ public class Login extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         txtPassword = new javax.swing.JPasswordField();
+        registroLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
@@ -196,6 +197,12 @@ public class Login extends javax.swing.JFrame {
         txtPassword.setBorder(null);
         fondoPanel.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, 180, 30));
 
+        registroLabel.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        registroLabel.setForeground(new java.awt.Color(0, 0, 204));
+        registroLabel.setText("Registrate");
+        registroLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        fondoPanel.add(registroLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -224,9 +231,7 @@ public class Login extends javax.swing.JFrame {
 
     public void setTxtUsuario(JTextField txtUsuario) {
         this.txtUsuario = txtUsuario;
-    }
-
-    
+    }    
 
     public JPanel getBtnAceptar() {
         return btnAceptar;
@@ -248,6 +253,15 @@ public class Login extends javax.swing.JFrame {
         return exitPanel;
     }
 
+    public JLabel getRegistroLabel() {
+        return registroLabel;
+    }
+
+    public void setRegistroLabel(JLabel registroLabel) {
+        this.registroLabel = registroLabel;
+    }
+
+    
     
     
     
@@ -270,6 +284,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel registroLabel;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;

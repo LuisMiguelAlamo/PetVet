@@ -469,6 +469,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         labelFecha.setText("16/12/2021");
 
         labelUserReg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Male User_30px.png"))); // NOI18N
+        labelUserReg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         labelUsuario.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
         labelUsuario.setForeground(new java.awt.Color(255, 255, 255));
