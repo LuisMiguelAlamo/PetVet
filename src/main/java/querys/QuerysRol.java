@@ -42,4 +42,23 @@ public class QuerysRol {
         return lista;
 
     }
+     
+     
+     public static Roles consultaGeneral(int id) {
+        Roles rol = null;
+        try {
+            if (AbrirConexion.abrirConect()) {
+                smnt = AbrirConexion.getCone().createStatement();
+                rs = smnt.executeQuery("SELECT * FROM roles WHERE id = " + id);
+                while (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    rol = new Roles(id, nombre);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
+        }
+        return rol;
+
+    }
 }

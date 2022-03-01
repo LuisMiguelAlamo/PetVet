@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import models.Acceso;
 import querys.QuerysAcceso;
-import views.CitasPanel;
 import views.FrmPrincipal;
 import views.RegistroUsuariosPanel;
 import views.UsuariosPanel;
@@ -44,7 +43,6 @@ public class CtrlRegUsuarios implements MouseListener {
         CtrlPrincipal.showContentPanel(frm, r);
 
         this.registro.getBtnGuardar().addMouseListener(this);
-        this.registro.getBtnVeterinario().addMouseListener(this);
 
         //Si la opcion es verdadera se llenan los campos 
         if (opcion) {
@@ -57,21 +55,20 @@ public class CtrlRegUsuarios implements MouseListener {
             this.registro.getComboRol().setSelectedItem(this.txtRol);
             this.registro.getTxtEmail().setText(CtrlPrincipal.usuario.getEmail());
             this.registro.getTxtPassword().setText(CtrlPrincipal.usuario.getPassword());
-            this.registro.getTxtVeterinario().setText(CtrlPrincipal.veterinario.getNombre());
         }
     }
     
     private Acceso setUsuario() {
         int rol;
         if (this.registro.getComboRol().getSelectedItem().toString().equals("Administrador")) {
-            rol = 1;
-        }else{
             rol = 2;
+        }else{
+            rol = 1;
         }
         String email = this.registro.getTxtEmail().getText();
         String password = this.registro.getTxtPassword().getText();
         
-        this.usuario = new Acceso(0, rol, email, password, 0);
+        this.usuario = new Acceso(0, rol, email, password);
         return this.usuario;
     }
     
@@ -81,53 +78,59 @@ public class CtrlRegUsuarios implements MouseListener {
         if (e.getSource().equals(this.registro.getBtnGuardar())) {
             //Se comprueba que los campos no estén vacíos antes de guardar la nueva información
             if (this.registro.getTxtEmail().getText().isEmpty()
-                    || this.registro.getTxtPassword().getText().isEmpty()
-                    || this.registro.getTxtVeterinario().getText().isEmpty()) {
+                    || this.registro.getTxtPassword().getText().isEmpty()) {
 
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
+                CtrlPrincipal.mEmail = CtrlPrincipal.pEmail.matcher(this.registro.getTxtEmail().getText());
                 this.txtRol = this.registro.getComboRol().getSelectedItem().toString();
-                //Se comprueba que sea una nueva usuario
-                if (CtrlPrincipal.isNew) {
-                    CtrlPrincipal.usuario = setUsuario();
-                    CtrlPrincipal.usuario.setCodigoVeterinario(CtrlPrincipal.veterinario.getId());
-                    QuerysAcceso.crear(CtrlPrincipal.usuario);
+                //Se comprueba que el email sea válido mediante una expresión regular
+                if (!CtrlPrincipal.mEmail.matches()) {
+                    JOptionPane.showMessageDialog(null, "El email no es válido");
                 } else {
-                    //Si no es nueva se cargan los datos que se han actualizado
-                    this.usuario = CtrlPrincipal.usuario;
-                    this.usuario.setCodigoVeterinario(CtrlPrincipal.veterinario.getId());
-                    QuerysAcceso.actualizar(this.usuario);
-                }
 
-                //Abrimos en panel de citas
-                UsuariosPanel up = new UsuariosPanel();
-                CtrlUsuarios usu = new CtrlUsuarios(frm, up, false);
+                    //Se comprueba que sea una nueva usuario
+                    if (CtrlPrincipal.isNew) {
+                        CtrlPrincipal.usuario = setUsuario();
+                        QuerysAcceso.crear(CtrlPrincipal.usuario);
+                    } else {
+                        //Si no es nueva se cargan los datos que se han actualizado
+                        CtrlPrincipal.usuario.setRol(setUsuario().getRol());
+                        CtrlPrincipal.usuario.setEmail(setUsuario().getEmail());
+                        CtrlPrincipal.usuario.setPassword(setUsuario().getPassword());
+                        QuerysAcceso.actualizar(CtrlPrincipal.usuario);
+                    }
+
+                    //Abrimos en panel de citas
+                    UsuariosPanel up = new UsuariosPanel();
+                    CtrlUsuarios usu = new CtrlUsuarios(frm, up, false);
+                }
             }
         }
 
-        if (e.getSource().equals(this.registro.getBtnVeterinario())) {
-
-                //Se comprueba que sea una nueva usuario
-                CtrlPrincipal.eleccion = 5;
-                if (CtrlPrincipal.isNew) {
-                    CtrlPrincipal.usuario = setUsuario();
-                    
-
-                    //Se abre el panel de veterinarios para seleccionar uno
-                    VeterinariosPanel vp = new VeterinariosPanel();
-                    CtrlVeterinarios vet = new CtrlVeterinarios(frm, vp, true);
-                } else {
-                    //Se carga el objeto usuario con los datos de los campos y los almacenados en mascotas y veterinarios
-                    CtrlPrincipal.usuario.setEmail(setUsuario().getEmail());
-                    CtrlPrincipal.usuario.setPassword(setUsuario().getPassword());
-
-                    //Se abre el panel de veterinarios para seleccionar uno 
-                    VeterinariosPanel vp = new VeterinariosPanel();
-                    CtrlVeterinarios vet = new CtrlVeterinarios(frm, vp, true); //se carga a true para que muestre solo la opción de seleccionar
-                }
-            
-        }
+//        if (e.getSource().equals(this.registro.getBtnVeterinario())) {
+//
+//                //Se comprueba que sea una nueva usuario
+//                CtrlPrincipal.eleccion = 5;
+//                if (CtrlPrincipal.isNew) {
+//                    CtrlPrincipal.usuario = setUsuario();
+//                    
+//
+//                    //Se abre el panel de veterinarios para seleccionar uno
+//                    VeterinariosPanel vp = new VeterinariosPanel();
+//                    CtrlVeterinarios vet = new CtrlVeterinarios(frm, vp, true);
+//                } else {
+//                    //Se carga el objeto usuario con los datos de los campos y los almacenados en mascotas y veterinarios
+//                    CtrlPrincipal.usuario.setEmail(setUsuario().getEmail());
+//                    CtrlPrincipal.usuario.setPassword(setUsuario().getPassword());
+//
+//                    //Se abre el panel de veterinarios para seleccionar uno 
+//                    VeterinariosPanel vp = new VeterinariosPanel();
+//                    CtrlVeterinarios vet = new CtrlVeterinarios(frm, vp, true); //se carga a true para que muestre solo la opción de seleccionar
+//                }
+//            
+//        }
     }
 
     @Override

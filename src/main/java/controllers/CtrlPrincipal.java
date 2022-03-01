@@ -25,6 +25,7 @@ import models.Facturas;
 import models.Mascotas;
 import models.Medicamentos;
 import models.Proveedores;
+import models.Roles;
 import models.Veterinarios;
 import views.CitasPanel;
 import views.ClientePanel;
@@ -62,6 +63,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     public static Matcher mIGIC;
     //Variables para acumular los datos de los modelos
     
+    public static Roles rol;
     public static Acceso usuario;
     public static Clientes cliente;
     public static Proveedores proveedor;
@@ -91,6 +93,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         this.frm.getExitPanel().addMouseListener(this);
         this.frm.getExitLabel().addMouseListener(this);
         
+        //si la condicion se cumple se carga la ventana para el usuario admin
         this.condicion = condicion;
         if (condicion) {
             cargaAdmin();
@@ -108,7 +111,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         frm.setVisible(true);
     }
     
-    
+    //Método que repinta el panel de contenido en dependencia de la opción elegida
     public static void showContentPanel(FrmPrincipal frm,JPanel p){
         p.setSize(790, 480);
         p.setLocation(0, 0);
@@ -118,7 +121,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         frm.getContentPanel().repaint();
     }
     
-    
+    //Método que transforma la ventana cargando los colores y habilitando los botones si el usuario es Admin
     private  void cargaAdmin(){
         this.frm.getTopPanel().setBackground(new Color(0, 102, 102));
         this.frm.getSidePanel().setBackground(new Color(0, 51, 51));
@@ -139,6 +142,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         this.frm.getBtnUsuarios().setVisible(true);
     }
 
+    //Apertura de un panel dependiendo de que botón es seleccionado
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.frm.getBtnPrincipal())) {
@@ -186,6 +190,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         }
     }
 
+    //Método para controlar el movimiento de la ventana en la pantalla
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getSource().equals(this.frm.getHeaderPanel())) {
@@ -198,6 +203,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     public void mouseReleased(MouseEvent e) {
     }
 
+    //Método para cambiar el color de fondo del botón al hacer el foco en él
     @Override
     public void mouseEntered(MouseEvent e) {
         if (e.getSource().equals(this.frm.getExitLabel())) {
@@ -206,6 +212,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         }
     }
 
+    //Método que cambia el color de fondo del botón al quitarle el foco
     @Override
     public void mouseExited(MouseEvent e) {
         if (e.getSource().equals(this.frm.getExitLabel())) {
@@ -214,6 +221,7 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         }
     }
 
+    //Método para habilitar el movimiento de la ventana desde su barra superior
     @Override
     public void mouseDragged(MouseEvent e) {
         if (e.getSource().equals(this.frm.getHeaderPanel())) {

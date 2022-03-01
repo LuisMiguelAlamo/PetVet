@@ -5,13 +5,19 @@
  */
 package controllers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import models.Acceso;
 import querys.QuerysAcceso;
+import querys.QuerysRol;
 import querys.QuerysVeterinarios;
 import views.UsuariosPanel;
 import views.FrmPrincipal;
@@ -21,7 +27,7 @@ import views.RegistroUsuariosPanel;
  *
  * @author Luis Miguel
  */
-public class CtrlUsuarios implements MouseListener {
+public class CtrlUsuarios implements MouseListener, DocumentListener {
 
     FrmPrincipal frm;
     UsuariosPanel panel;
@@ -31,6 +37,8 @@ public class CtrlUsuarios implements MouseListener {
     boolean isSelected;
     boolean condicion;
     int idMascota;
+    private static final int TIEMPO_BUSCAR = 300;
+    private Timer timer_buscar;
 
     public CtrlUsuarios(FrmPrincipal frm, UsuariosPanel u, boolean condicion) {
         this.frm = frm;
@@ -39,6 +47,7 @@ public class CtrlUsuarios implements MouseListener {
 
         CtrlPrincipal.showContentPanel(frm, u);
 
+        this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
         this.panel.getBtnNuevo().addMouseListener(this);
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
@@ -85,7 +94,7 @@ public class CtrlUsuarios implements MouseListener {
 
     private String[][] obtieneFiltro() {
 
-        ArrayList<Acceso> miLista = QuerysAcceso.consultaGeneral();
+        ArrayList<Acceso> miLista = QuerysAcceso.consultaFiltro(this.panel.getCampoBuscar().getText());
 
         String informacion[][] = new String[miLista.size()][4];
 
@@ -106,6 +115,23 @@ public class CtrlUsuarios implements MouseListener {
 
         return informacion;
     }
+    
+    private void activarTimer() {
+        if ((timer_buscar != null) && timer_buscar.isRunning()) {
+            timer_buscar.restart();
+        } else {
+            timer_buscar = new Timer(TIEMPO_BUSCAR, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    timer_buscar = null;
+                        info = obtieneFiltro();
+                        panel.getTablaUsuarios().setModel(new DefaultTableModel(info, titulos));
+                }
+            });
+            timer_buscar.setRepeats(false);
+            timer_buscar.start();
+        }
+    }
 
     private Acceso getUsuario() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaUsuarios().getValueAt(this.panel.getTablaUsuarios().getSelectedRow(), 0)));
@@ -118,6 +144,7 @@ public class CtrlUsuarios implements MouseListener {
 
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
             CtrlPrincipal.isNew = true;
+            CtrlPrincipal.rol = null;
             RegistroUsuariosPanel registro = new RegistroUsuariosPanel();
             CtrlRegUsuarios rc = new CtrlRegUsuarios(this.frm, registro, false);
         }
@@ -126,7 +153,7 @@ public class CtrlUsuarios implements MouseListener {
             if (isSelected) {
                 CtrlPrincipal.isNew = false;
                 CtrlPrincipal.usuario = getUsuario();
-                CtrlPrincipal.veterinario = QuerysVeterinarios.consultaGeneral(CtrlPrincipal.usuario.getCodigoVeterinario());
+                
                 RegistroUsuariosPanel registro = new RegistroUsuariosPanel();
                 CtrlRegUsuarios rc = new CtrlRegUsuarios(this.frm, registro, true);
             } else {
@@ -138,7 +165,7 @@ public class CtrlUsuarios implements MouseListener {
             if (isSelected) {
                 int id = Integer.parseInt(String.valueOf(this.panel.getTablaUsuarios().getValueAt(this.panel.getTablaUsuarios().getSelectedRow(), 0)));
                 System.out.println(id);
-                QuerysVeterinarios.eliminar(id);
+                QuerysAcceso.eliminar(id);
                 this.actualizarTabla();
             } else {
                 JOptionPane.showMessageDialog(null, "No ha seleccionado un usuario");
@@ -165,6 +192,21 @@ public class CtrlUsuarios implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+        this.activarTimer();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        this.activarTimer();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        this.activarTimer();
     }
 
 }

@@ -54,11 +54,22 @@ public class CtrlRegMedicamentos implements MouseListener {
 
 
     //Crea un nuevo medicamento vacío 
-    public void setMedicamento() {
-        String nombre = this.registro.getTxtNombre().getText();
-        double precio = Double.parseDouble(this.registro.getTxtPrecio().getText());
+    public Medicamentos setMedicamento() {
+        String nombre;
+        double precio;
 
+        if (this.registro.getTxtNombre().getText().isEmpty()) {
+            nombre = "";
+        }else{
+            nombre = this.registro.getTxtNombre().getText();
+        }
+        if (this.registro.getTxtPrecio().getText().isEmpty()) {
+            precio = 0;
+        } else {
+            precio = Double.parseDouble(this.registro.getTxtPrecio().getText());
+        }
         this.medicamento = new Medicamentos(0, nombre, precio, 0);
+        return this.medicamento;
     }
 
     @Override
@@ -78,6 +89,7 @@ public class CtrlRegMedicamentos implements MouseListener {
                 } else {
 
                     if (CtrlPrincipal.isNew) {
+                        CtrlPrincipal.medicamento = setMedicamento();
                         CtrlPrincipal.medicamento.setCodProveedor(CtrlPrincipal.proveedor.getId());
                         QuerysMedicamentos.crear(CtrlPrincipal.medicamento);
                     } else {
@@ -96,26 +108,18 @@ public class CtrlRegMedicamentos implements MouseListener {
         
         
         if (e.getSource().equals(this.registro.getBtnSeleccionar())) {
-            if (this.registro.getTxtNombre().getText().isEmpty()
-                    && this.registro.getTxtPrecio().getText().isEmpty()
-                    && this.registro.getTxtProveedor().getText().isEmpty()) {
-
-                JOptionPane.showMessageDialog(null, "Debe llenar los campos antes de seleccionar el dueño");
-
-            }else {                
+                            
                 if (CtrlPrincipal.isNew) {
-                    CtrlPrincipal.medicamento = new Medicamentos(0, this.registro.getTxtNombre().getText(), Double.parseDouble(this.registro.getTxtPrecio().getText()), 0);
+                    CtrlPrincipal.medicamento = setMedicamento();
                     
                     ProveedoresPanel pp = new ProveedoresPanel();
                     CtrlProveedores pro = new CtrlProveedores(frm, pp, true);
                 }else {
-                    CtrlPrincipal.medicamento.setNombre(this.registro.getTxtNombre().getText());
-                    CtrlPrincipal.medicamento.setPrecio(Double.parseDouble(this.registro.getTxtPrecio().getText()));
+                    CtrlPrincipal.medicamento.setNombre(setMedicamento().getNombre());
+                    CtrlPrincipal.medicamento.setPrecio(setMedicamento().getPrecio());
                     ProveedoresPanel pp = new ProveedoresPanel();
                     CtrlProveedores pro = new CtrlProveedores(frm, pp, true);
-                }
-                
-            }
+                }                            
         }
     }
 

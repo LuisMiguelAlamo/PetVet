@@ -31,8 +31,7 @@ public class QuerysAcceso {
                     int rol = rs.getInt("rol");
                     String email = rs.getString("email");
                     String password = rs.getString("password");
-                    int codigoVeterinario = rs.getInt("codigoVeterinario");
-                    acceso = new Acceso(id, rol, email, password, codigoVeterinario);
+                    acceso = new Acceso(id, rol, email, password);
                     lista.add(acceso);
                 }
             }
@@ -51,8 +50,7 @@ public class QuerysAcceso {
                     int rol = rs.getInt("rol");
                     String email = rs.getString("email");
                     String password = rs.getString("password");
-                    int codigoVeterinario = rs.getInt("codigoVeterinario");
-                    acceso = new Acceso(id, rol, email, password, codigoVeterinario);
+                    acceso = new Acceso(id, rol, email, password);
                 }
             }
         } catch (SQLException ex) {
@@ -74,9 +72,8 @@ public class QuerysAcceso {
                     int rol = rs.getInt("rol");
                     String email = rs.getString("email");
                     String pass = rs.getString("password");
-                    int codigoVeterinario = rs.getInt("codigoVeterinario");
                     
-                    acceso = new Acceso(id, rol, email, pass, codigoVeterinario);
+                    acceso = new Acceso(id, rol, email, pass);
                 }
                 
             }
@@ -99,8 +96,7 @@ public class QuerysAcceso {
                     int rol = rs.getInt("rol");
                     String email = rs.getString("email");
                     String password = rs.getString("password");
-                    int codigoVeterinario = rs.getInt("codigoVeterinario");
-                    acceso = new Acceso(id, rol,email, password, codigoVeterinario);
+                    acceso = new Acceso(id, rol,email, password);
                     lista.add(acceso);
                 }
             }
@@ -118,8 +114,7 @@ public class QuerysAcceso {
 
                 smnt.executeUpdate("INSERT INTO acceso VALUES (null,'" + acceso.getRol()+ "','" 
                         + acceso.getEmail()+ "','" 
-                        + acceso.getPassword()+ "','"
-                        + acceso.getCodigoVeterinario()+ "');");
+                        + acceso.getPassword()+ "');");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en la consulta");
@@ -133,7 +128,6 @@ public class QuerysAcceso {
                 smnt.executeUpdate("UPDATE  acceso SET rol = '" + acceso.getRol()
                         + "', email = '" + acceso.getEmail()
                         + "', password = '" + acceso.getPassword()
-                        + "', codigoVeterinario = '" + acceso.getCodigoVeterinario()
                         + "' WHERE id = '" + acceso.getId() + "';");
             }
         } catch (SQLException ex) {

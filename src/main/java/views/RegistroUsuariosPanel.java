@@ -39,14 +39,6 @@ public class RegistroUsuariosPanel extends javax.swing.JPanel {
         this.comboRol = comboRol;
     }
 
-    public JLabel getVeterinarioLabel() {
-        return veterinarioLabel;
-    }
-
-    public void setVeterinarioLabel(JLabel veterinarioLabel) {
-        this.veterinarioLabel = veterinarioLabel;
-    }    
-
     public JTextField getTxtPassword() {
         return txtPassword;
     }
@@ -54,25 +46,7 @@ public class RegistroUsuariosPanel extends javax.swing.JPanel {
     public void setTxtPassword(JTextField txtPassword) {
         this.txtPassword = txtPassword;
     }
-
-    public JTextField getTxtVeterinario() {
-        return txtVeterinario;
-    }
-
-    public void setTxtVeterinario(JTextField txtVeterinario) {
-        this.txtVeterinario = txtVeterinario;
-    }
-
-    public JPanel getBtnVeterinario() {
-        return btnVeterinario;
-    }
-
-    public void setBtnVeterinario(JPanel btnVeterinario) {
-        this.btnVeterinario = btnVeterinario;
-    }
-        
-    
-
+            
     public JPanel getBtnGuardar() {
         return btnGuardar;
     }
@@ -99,13 +73,9 @@ public class RegistroUsuariosPanel extends javax.swing.JPanel {
         labelTelefono = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        labelTelefono1 = new javax.swing.JLabel();
-        txtVeterinario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         comboRol = new javax.swing.JComboBox<>();
-        btnVeterinario = new javax.swing.JPanel();
-        veterinarioLabel = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -138,35 +108,12 @@ public class RegistroUsuariosPanel extends javax.swing.JPanel {
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        labelTelefono1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        labelTelefono1.setText("Veterinario");
-
-        txtVeterinario.setEditable(false);
-
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 18)); // NOI18N
         jLabel1.setText("Registro Usuario");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/usuario.png"))); // NOI18N
 
         comboRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Veterinario" }));
-
-        btnVeterinario.setBackground(new java.awt.Color(51, 204, 0));
-        btnVeterinario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        veterinarioLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        veterinarioLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        veterinarioLabel.setText("Veterinario");
-
-        javax.swing.GroupLayout btnVeterinarioLayout = new javax.swing.GroupLayout(btnVeterinario);
-        btnVeterinario.setLayout(btnVeterinarioLayout);
-        btnVeterinarioLayout.setHorizontalGroup(
-            btnVeterinarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(veterinarioLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
-        );
-        btnVeterinarioLayout.setVerticalGroup(
-            btnVeterinarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(veterinarioLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -187,36 +134,31 @@ public class RegistroUsuariosPanel extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addGap(112, 112, 112)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addGap(72, 72, 72)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelTelefono)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelNombre)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelDireccion)
-                    .addComponent(labelTelefono1)
-                    .addComponent(txtVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboRol, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(112, 112, 112))
+                    .addComponent(comboRol, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(82, 82, 82))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
                                 .addComponent(jLabel1)
                                 .addGap(51, 51, 51)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
                         .addComponent(labelNombre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboRol, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,14 +169,10 @@ public class RegistroUsuariosPanel extends javax.swing.JPanel {
                         .addGap(49, 49, 49)
                         .addComponent(labelTelefono)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(labelTelefono1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70))))
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -252,7 +190,6 @@ public class RegistroUsuariosPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnGuardar;
-    private javax.swing.JPanel btnVeterinario;
     private javax.swing.JComboBox<String> comboRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -262,10 +199,7 @@ public class RegistroUsuariosPanel extends javax.swing.JPanel {
     private javax.swing.JLabel labelDireccion;
     private javax.swing.JLabel labelNombre;
     private javax.swing.JLabel labelTelefono;
-    private javax.swing.JLabel labelTelefono1;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtPassword;
-    private javax.swing.JTextField txtVeterinario;
-    private javax.swing.JLabel veterinarioLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,14 +14,12 @@ public class Acceso {
     int rol;
     String email;
     String password;
-    int codigoVeterinario;
 
-    public Acceso(int id, int rol,String email, String password, int codigoVeterinario) {
+    public Acceso(int id, int rol,String email, String password) {
         this.id = id;
         this.rol = rol;
         this.email = email;
         this.password = password;
-        this.codigoVeterinario = codigoVeterinario;
     }
 
     public int getId() {
@@ -57,14 +55,5 @@ public class Acceso {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public int getCodigoVeterinario() {
-        return codigoVeterinario;
-    }
-
-    public void setCodigoVeterinario(int codigoVeterinario) {
-        this.codigoVeterinario = codigoVeterinario;
-    }
-    
-    
+       
 }

@@ -5,19 +5,23 @@
  */
 package models;
 
+import java.sql.Date;
+
 /**
  *
  * @author Luis Miguel
  */
 public class Facturas {
     int id;
+    Date fecha;
     double total;
     double IGIC;
     double totalConIGIC;
     int codCliente;
 
-    public Facturas(int id, double total, double IGIC, double totalConIGIC, int codCliente) {
+    public Facturas(int id, Date fecha,double total, double IGIC, double totalConIGIC, int codCliente) {
         this.id = id;
+        this.fecha = fecha;
         this.total = total;
         this.IGIC = IGIC;
         this.totalConIGIC = totalConIGIC;
@@ -31,6 +35,14 @@ public class Facturas {
     public void setId(int id) {
         this.id = id;
     }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }        
 
     public double getTotal() {
         return total;

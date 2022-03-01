@@ -3,6 +3,7 @@ package querys;
 import conexion.AbrirConexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -27,11 +28,12 @@ public class QuerysFacturas {
                 rs = smnt.executeQuery("SELECT * FROM facturas");
                 while (rs.next()) {
                     int id = rs.getInt("id");
+                    Date fecha = rs.getDate("fecha");
                     double total = rs.getDouble("total");
                     double IGIC = rs.getDouble("IGIC");
                     double totalConIGIC = rs.getDouble("totalConIGIC");
                     int codCliente = rs.getInt("codigoCliente");
-                    factura = new Facturas(id, total, IGIC, totalConIGIC, codCliente);
+                    factura = new Facturas(id, fecha,total, IGIC, totalConIGIC, codCliente);
                     
                     lista.add(factura);
                 }
@@ -51,11 +53,12 @@ public class QuerysFacturas {
                 smnt = AbrirConexion.getCone().createStatement();
                 rs = smnt.executeQuery("SELECT * FROM facturas WHERE id = " + id);
                 while (rs.next()) {
+                    Date fecha = rs.getDate("fecha");
                     double total = rs.getDouble("total");
                     double IGIC = rs.getDouble("IGIC");
                     double totalConIGIC = rs.getDouble("totalConIGIC");
                     int codCliente = rs.getInt("codigoCliente");
-                    factura = new Facturas(id, total, IGIC, totalConIGIC, codCliente);
+                    factura = new Facturas(id, fecha,total, IGIC, totalConIGIC, codCliente);
                 }
             }
         } catch (SQLException ex) {
@@ -71,16 +74,18 @@ public class QuerysFacturas {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
                 rs = smnt.executeQuery("SELECT * FROM facturas WHERE total LIKE '%" + campo + "%'"
+                        + " OR fecha LIKE '%" + campo + "%'"
                         + " OR IGIC LIKE '%" + campo + "%'"
                         + " OR totalConIGIC LIKE '%" + campo + "%'"
                         + " OR codigoCliente LIKE '%" + campo + "%'");
                 while (rs.next()) {
                     int id = rs.getInt("id");
+                    Date fecha = rs.getDate("fecha");
                     double total = rs.getDouble("total");
                     double IGIC = rs.getDouble("IGIC");
                     double totalConIGIC = rs.getDouble("totalConIGIC");
                     int codCliente = rs.getInt("codigoCliente");
-                    factura = new Facturas(id, total, IGIC, totalConIGIC, codCliente);
+                    factura = new Facturas(id, fecha,total, IGIC, totalConIGIC, codCliente);
                     
                     lista.add(factura);
                 }
@@ -95,8 +100,9 @@ public class QuerysFacturas {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-
+                System.out.println(factura.getFecha());
                 smnt.executeUpdate("INSERT INTO facturas VALUES (null,'"
+                        + factura.getFecha()+ "','"
                         + factura.getTotal()+ "','"
                         + factura.getIGIC()+ "','"
                         + factura.getTotalConIGIC()+ "','"
@@ -111,7 +117,8 @@ public class QuerysFacturas {
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
-                smnt.executeUpdate("UPDATE  facturas SET total = '" + factura.getTotal()
+                smnt.executeUpdate("UPDATE  facturas SET fecha = '" + factura.getFecha()
+                        + "', total = '" + factura.getTotal()
                         + "', IGIC = '" + factura.getIGIC()
                         + "', totalConIGIC = '" + factura.getTotalConIGIC()
                         + "', codigoCliente = '" + factura.getCodCliente()

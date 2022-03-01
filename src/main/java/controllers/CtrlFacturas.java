@@ -32,7 +32,7 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
     FrmPrincipal frm;
     FacturasPanel panel;
     Facturas factura;
-    String titulos[] = {"No. Factura", "Total", "% IGIC", "total con IGIC", "Cliente"};
+    String titulos[] = {"No. Factura", "Fecha","Total", "% IGIC", "total con IGIC", "Cliente"};
     String info[][];
     boolean isSelected;
     private static final int TIEMPO_BUSCAR = 300;
@@ -65,17 +65,18 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
         miLista = QuerysFacturas.consultaGeneral();
         cliList = QuerysClientes.consultaGeneral();
 
-        String informacion[][] = new String[miLista.size()][5];
+        String informacion[][] = new String[miLista.size()][6];
 
         for (int x = 0; x < informacion.length; x++) {
             informacion[x][0] = miLista.get(x).getId() + "";
-            informacion[x][1] = miLista.get(x).getTotal()+ "";
-            informacion[x][2] = miLista.get(x).getIGIC()+ "";
-            informacion[x][3] = miLista.get(x).getTotalConIGIC()+ "";
+            informacion[x][1] = miLista.get(x).getFecha() + "";
+            informacion[x][2] = miLista.get(x).getTotal()+ "";
+            informacion[x][3] = miLista.get(x).getIGIC()+ "";
+            informacion[x][4] = miLista.get(x).getTotalConIGIC()+ "";
             int cc = miLista.get(x).getCodCliente();
             String cli = leerClientes(cc);
 
-            informacion[x][4] = cli;
+            informacion[x][5] = cli;
         }
 
         return informacion;
@@ -86,17 +87,18 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
         miLista = QuerysFacturas.consultaFiltro(this.panel.getCampoBuscar().getText());
         cliList = QuerysClientes.consultaGeneral();
         
-        String informacion[][] = new String[miLista.size()][5];
+        String informacion[][] = new String[miLista.size()][6];
 
         for (int x = 0; x < informacion.length; x++) {
             informacion[x][0] = miLista.get(x).getId() + "";
-            informacion[x][1] = miLista.get(x).getTotal()+ "";
-            informacion[x][2] = miLista.get(x).getIGIC()+ "";
-            informacion[x][3] = miLista.get(x).getTotalConIGIC()+ "";
+            informacion[x][1] = miLista.get(x).getFecha()+ "";
+            informacion[x][2] = miLista.get(x).getTotal()+ "";
+            informacion[x][3] = miLista.get(x).getIGIC()+ "";
+            informacion[x][4] = miLista.get(x).getTotalConIGIC()+ "";
             int cc = miLista.get(x).getCodCliente();
             String cli = leerClientes(cc);
 
-            informacion[x][4] = cli;
+            informacion[x][5] = cli;
         }
 
         return informacion;
@@ -140,6 +142,7 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
 
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
             CtrlPrincipal.isNew = true;
+            CtrlPrincipal.cliente = null;
             RegistroFacturasPanel registro = new RegistroFacturasPanel();                        
             CtrlRegFacturas rc = new CtrlRegFacturas(frm, registro, false);
         }
