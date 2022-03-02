@@ -18,7 +18,7 @@ public class QuerysConsultas {
     static ResultSet rs;
     static Statement smnt;
     
-    
+    //Método que devuelve una lista de todas las Consultas
     public static ArrayList<Consultas> consultaGeneral() {
         Consultas consulta;
         ArrayList<Consultas> lista = new ArrayList<>();
@@ -46,6 +46,7 @@ public class QuerysConsultas {
         return lista;
     }
     
+    //Método que devuelve una Consulta por su id
     public static Consultas consultaGeneral(int id) {
         Consultas consulta = null;
         try {
@@ -70,6 +71,8 @@ public class QuerysConsultas {
         return consulta;
     }
 
+    //Método que devuelve una lista de las Consultas que contengan algún dato 
+    //igual al pasado como argumento
     public static ArrayList<Consultas> consultaFiltro(String campo) {
         Consultas consulta;
         ArrayList<Consultas> lista = new ArrayList<>();
@@ -99,6 +102,7 @@ public class QuerysConsultas {
         return lista;
     }
 
+    //Método que crea una nueva Consulta
     public static void crear(Consultas consulta) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -117,6 +121,7 @@ public class QuerysConsultas {
         }
     }
 
+    //Método que actualiza la Consulta pasada como argumento
     public static void actualizar(Consultas consulta) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -135,6 +140,7 @@ public class QuerysConsultas {
         }
     }
 
+    //Método que elimina la Consulta con el id pasado como argumento
     public static void eliminar(int id) {
         try {
             if (AbrirConexion.abrirConect()) {

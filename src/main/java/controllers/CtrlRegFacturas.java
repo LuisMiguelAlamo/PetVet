@@ -31,19 +31,19 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
     int chip;
     long time;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlRegFacturas(FrmPrincipal frm, RegistroFacturasPanel r, boolean opcion) {
         this.frm = frm;
         this.registro = r;
         this.opcion = opcion;
-
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, r);
 
         this.registro.getBtnGuardar().addMouseListener(this);
         this.registro.getBtnSeleccionar().addMouseListener(this);
         this.registro.getTxtTotal().addKeyListener(this);
         this.registro.getTxtIGIC().addKeyListener(this);
-
-
+        //Si la opcion es verdadera se llenan los campos
         if (opcion) {
             this.registro.getTxtFecha().setDate(CtrlPrincipal.factura.getFecha());
             this.registro.getTxtTotal().setText(String.valueOf(CtrlPrincipal.factura.getTotal()));
@@ -98,6 +98,7 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.registro.getBtnGuardar())) {
+            //Se comprueba que los demás campos no estén vacíos antes de guardar la nueva información
             if (this.registro.getTxtTotal().getText().isEmpty()
                     || this.registro.getTxtIGIC().getText().isEmpty()
                     || this.registro.getTxtTotalIGIC().getText().isEmpty()
@@ -106,6 +107,7 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
+                //Se comprueba la validez de los datos introducidos mediante las regex
                 CtrlPrincipal.mPrecio = CtrlPrincipal.pPrecio.matcher(this.registro.getTxtTotal().getText());
                 CtrlPrincipal.mIGIC = CtrlPrincipal.pIGIC.matcher(this.registro.getTxtIGIC().getText());
                 if (!CtrlPrincipal.mPrecio.matches()) {
@@ -114,12 +116,12 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
                 else if(!CtrlPrincipal.mIGIC.matches()){
                     JOptionPane.showMessageDialog(null, "El IGIC introducido no es válido");
                 }else {
-
+                    //Se comprueba que sea una nueva factura
                     if (CtrlPrincipal.isNew) {
                         CtrlPrincipal.factura = setFactura();
                         CtrlPrincipal.factura.setCodCliente(CtrlPrincipal.cliente.getId());
                         QuerysFacturas.crear(CtrlPrincipal.factura);
-                    } else {
+                    } else {//Si no es nueva se cargan los datos que se han actualizado
                         this.time = this.registro.getTxtFecha().getDate().getTime();
                         CtrlPrincipal.factura.setFecha(new Date(time));
                         CtrlPrincipal.factura.setTotal(Double.parseDouble(this.registro.getTxtTotal().getText()));
@@ -128,7 +130,7 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
                         CtrlPrincipal.factura.setCodCliente(CtrlPrincipal.cliente.getId());
                         QuerysFacturas.actualizar(CtrlPrincipal.factura);
                     }
-
+                    //Abrimos en panel de facturas
                     FacturasPanel fp = new FacturasPanel();
                     CtrlFacturas fac = new CtrlFacturas(frm, fp);
                 }
@@ -137,7 +139,16 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
         
         
         if (e.getSource().equals(this.registro.getBtnSeleccionar())) {
+            //Se comprueba la validez de los datos introducidos mediante las regex
+            CtrlPrincipal.mPrecio = CtrlPrincipal.pPrecio.matcher(this.registro.getTxtTotal().getText());
+            CtrlPrincipal.mIGIC = CtrlPrincipal.pIGIC.matcher(this.registro.getTxtIGIC().getText());
             
+            if (!CtrlPrincipal.mPrecio.matches()) {
+                JOptionPane.showMessageDialog(null, "El total introducido no es válido");
+            } else if (!CtrlPrincipal.mIGIC.matches()) {
+                JOptionPane.showMessageDialog(null, "El IGIC introducido no es válido");
+            } else {
+                
                 CtrlPrincipal.eleccion = 4;
                 if (CtrlPrincipal.isNew) {
                     CtrlPrincipal.factura = setFactura();
@@ -147,11 +158,12 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
                     CtrlPrincipal.factura.setTotal(setFactura().getTotal());
                     CtrlPrincipal.factura.setIGIC(setFactura().getIGIC());
                     CtrlPrincipal.factura.setTotalConIGIC(setFactura().getTotalConIGIC());
-                    
+
                     ClientePanel cp = new ClientePanel();
-                    CtrlClientes cli  = new CtrlClientes(frm, cp, true);
+                    CtrlClientes cli = new CtrlClientes(frm, cp, true);
                 }
-            
+                
+            }
         }
     }
 
@@ -182,6 +194,7 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        //Se llena el campo de Total con IGIC al escribir en los dos anteriores
         try {
             double base = Double.parseDouble(this.registro.getTxtTotal().getText());
             double impuesto = Double.parseDouble(this.registro.getTxtIGIC().getText());

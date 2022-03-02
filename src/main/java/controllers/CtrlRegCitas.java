@@ -37,11 +37,12 @@ public class CtrlRegCitas implements MouseListener {
     int idVet;
     long time;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlRegCitas(FrmPrincipal frm, RegistroCitasPanel r, boolean opcion) {
         this.frm = frm;
         this.registro = r;
         this.opcion = opcion;
-
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, r);
 
         this.registro.getBtnGuardar().addMouseListener(this);
@@ -57,6 +58,7 @@ public class CtrlRegCitas implements MouseListener {
         }
     }
     
+    //Método que devuelve una nueva cita
     private Citas setCita(){
         long tiempo;
         Date fecha = null;
@@ -85,24 +87,30 @@ public class CtrlRegCitas implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
-                //Se comprueba que sea una nueva cita
-                if (CtrlPrincipal.isNew) {
-                    CtrlPrincipal.cita.setCodMascota(CtrlPrincipal.mascota.getId());
-                    CtrlPrincipal.cita.setCodVeterinario(CtrlPrincipal.veterinario.getId());
-                    QuerysCitas.crear(CtrlPrincipal.cita);
-                } else {
-                    //Si no es nueva se cargan los datos que se han actualizado
-                    this.cita = CtrlPrincipal.cita;
-                    this.time = this.registro.getTxtFecha().getDate().getTime();
-                    this.cita.setFecha(new Date(time));
-                    this.cita.setCodMascota(CtrlPrincipal.mascota.getId());
-                    this.cita.setCodVeterinario(CtrlPrincipal.veterinario.getId());
-                    QuerysCitas.actualizar(this.cita);
-                }
+                CtrlPrincipal.mHora = CtrlPrincipal.pHora.matcher(this.registro.getTxtHora().getText());
+                if (!CtrlPrincipal.mHora.matches()) {
+                    JOptionPane.showMessageDialog(null, "La hora no es válida | Utilizar formato 24 horas hh:mm");
+                }else{
+                    //Se comprueba que sea una nueva cita
+                    if (CtrlPrincipal.isNew) {
+                        CtrlPrincipal.cita.setCodMascota(CtrlPrincipal.mascota.getId());
+                        CtrlPrincipal.cita.setCodVeterinario(CtrlPrincipal.veterinario.getId());
+                        QuerysCitas.crear(CtrlPrincipal.cita);
+                    } else {
+                        //Si no es nueva se cargan los datos que se han actualizado
+                        this.cita = CtrlPrincipal.cita;
+                        this.time = this.registro.getTxtFecha().getDate().getTime();
+                        this.cita.setFecha(new Date(time));
+                        this.cita.setHora(this.registro.getTxtHora().getText());
+                        this.cita.setCodMascota(CtrlPrincipal.mascota.getId());
+                        this.cita.setCodVeterinario(CtrlPrincipal.veterinario.getId());
+                        QuerysCitas.actualizar(this.cita);
+                    }
 
-                //Abrimos en panel de citas
-                CitasPanel mp = new CitasPanel();
-                CtrlCitas cit = new CtrlCitas(frm, mp);
+                    //Abrimos en panel de citas
+                    CitasPanel mp = new CitasPanel();
+                    CtrlCitas cit = new CtrlCitas(frm, mp);
+                }
             }
         }
         if (e.getSource().equals(this.registro.getBtnMascota())) {

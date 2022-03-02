@@ -16,6 +16,7 @@ public class CtrlInicio {
     FrmPrincipal frm;
     InicioPanel panel;
 
+    //Constructor de la clase que recibe el JFrame principal y el panel que será mostrado
     public CtrlInicio(FrmPrincipal frm, InicioPanel panel) {
         this.frm = frm;
         this.panel = panel;        

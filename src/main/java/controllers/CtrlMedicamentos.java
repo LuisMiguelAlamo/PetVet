@@ -42,10 +42,12 @@ public class CtrlMedicamentos implements MouseListener, DocumentListener{
     private static final int TIEMPO_BUSCAR = 300;
     private Timer timer_buscar;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlMedicamentos(FrmPrincipal frm, MedicamentosPanel p, boolean condicion) {
         this.frm = frm;
         this.panel = p;
         this.condicion = condicion;
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, p);
         
         this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
@@ -53,7 +55,7 @@ public class CtrlMedicamentos implements MouseListener, DocumentListener{
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
         this.panel.getTablaMedicamentos().addMouseListener(this);
-        
+        //Si se cumple la condición se muestra solo el botón de seleccionar
         if (condicion) {
             this.panel.getBtnEditar().setVisible(false);
             this.panel.getBtnEliminar().setVisible(false);
@@ -64,11 +66,13 @@ public class CtrlMedicamentos implements MouseListener, DocumentListener{
         actualizarTabla();
     }
     
+    //Método que actualiza la información de la tabla
     private void actualizarTabla() {
         info = obtieneMatriz();
         this.panel.getTablaMedicamentos().setModel(new DefaultTableModel(info, titulos));
     }
     
+    //Método que devuelve una matríz de String con los datos de cada fila y columna de la tabla
     private String[][] obtieneMatriz() {
 
         miLista = QuerysMedicamentos.consultaGeneral();
@@ -84,10 +88,11 @@ public class CtrlMedicamentos implements MouseListener, DocumentListener{
             String proveedor = leerProveedor(cp);
             informacion[x][3] = proveedor;
         }
-
         return informacion;
     }
     
+    //Método que devuelve el nombre del proveedor para no tener que llenar la tabla
+    //con el número del id 
     private String leerProveedor(int cp) {
         String nombre = "";
         for (Proveedores p : proList) {
@@ -98,6 +103,8 @@ public class CtrlMedicamentos implements MouseListener, DocumentListener{
         return nombre;
     }
 
+    //Método que devuelve una matríz de String con los datos de cada fila y columna 
+    //mostrando solamente aquellos resultados que coinciden con la búsqueda
     private String[][] obtieneFiltro() {
 
         ArrayList<Medicamentos> miLista = QuerysMedicamentos.consultaFiltro(this.panel.getCampoBuscar().getText());
@@ -113,10 +120,10 @@ public class CtrlMedicamentos implements MouseListener, DocumentListener{
             String proveedor = leerProveedor(cp);
             informacion[x][3] = proveedor;
         }
-
         return informacion;
     }
     
+    //Método que actualiza la tabla cada 3 segundos filtrando los datos que son mostrados
     public void activarTimer() {
         if ((timer_buscar != null) && timer_buscar.isRunning()) {
             timer_buscar.restart();
@@ -134,6 +141,7 @@ public class CtrlMedicamentos implements MouseListener, DocumentListener{
         }
     }
     
+    //Método que devuelve el medicamento de la fila seleccionada en la tabla
     private Medicamentos getMedicamento() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaMedicamentos().getValueAt(this.panel.getTablaMedicamentos().getSelectedRow(), 0)));        
         medicamento = QuerysMedicamentos.consultaGeneral(id);
@@ -144,6 +152,7 @@ public class CtrlMedicamentos implements MouseListener, DocumentListener{
     public void mouseClicked(MouseEvent e) {
 
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
+            //Si se cumple la condición se activa el botón Seleccionar
             if (condicion) {
                 if (isSelected) {
                     CtrlPrincipal.medicamento = getMedicamento();
@@ -153,6 +162,7 @@ public class CtrlMedicamentos implements MouseListener, DocumentListener{
                     JOptionPane.showMessageDialog(null, "No ha seleccionado una medicamento");
                 }                
             }else {
+                //Como no se cumple simplemente abre su panel de registro
                 CtrlPrincipal.isNew = true;
                 CtrlPrincipal.medicamento = null;
                 RegistroMedicamentosPanel registro = new RegistroMedicamentosPanel();
@@ -184,6 +194,7 @@ public class CtrlMedicamentos implements MouseListener, DocumentListener{
         }
         
         if (e.getSource().equals(this.panel.getTablaMedicamentos())) {
+            //Si está seleccionada una fila se carga el medicamento correspondiente
            isSelected = true;
            this.medicamento = getMedicamento();
         }
@@ -207,17 +218,17 @@ public class CtrlMedicamentos implements MouseListener, DocumentListener{
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
     
     

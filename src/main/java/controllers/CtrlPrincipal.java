@@ -10,10 +10,7 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JPanel;
@@ -42,7 +39,7 @@ import views.VeterinariosPanel;
 
 /**
  *
- * @author Luis Miguel
+ * @author Luis Miguel Alamo Hernández
  */
 public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     FrmPrincipal frm;
@@ -57,11 +54,13 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     public static Pattern pCP = Pattern.compile("0[1-9][0-9]{3}|[1-4][0-9]{4}|5[0-2][0-9]{3}");
     public static Pattern pPrecio = Pattern.compile("[0-9]+[.]?[0-9]{1,2}");
     public static Pattern pIGIC = Pattern.compile("[0-9]+[.]?[0-9]{1,2}");
+    public static Pattern pHora = Pattern.compile("^([01]?[0-9]|2[0-3]):[0-5][0-9]$");
     public static Matcher mEmail;
     public static Matcher mTel;
     public static Matcher mCP;
     public static Matcher mPrecio;
     public static Matcher mIGIC;
+    public static Matcher mHora;
     //Variables para acumular los datos de los modelos
     public static boolean isAdmin = false;
     public static Roles rol;
@@ -96,7 +95,8 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
         this.frm.getExitPanel().addMouseListener(this);
         this.frm.getExitLabel().addMouseListener(this);
         
-        //si la condicion se cumple se carga la ventana para el usuario admin
+        /*si la condicion se cumple se carga la ventana para el usuario admin
+          en caso contrario se carga la de usuario veterinario */
         this.condicion = condicion;
         if (condicion) {
             cargaAdmin();
@@ -111,9 +111,10 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
             this.frm.getBtnUsuarios().setVisible(false);           
         }
         
+        //Se establece como panel inicial el panel Inicio
         InicioPanel ip = new InicioPanel();
         CtrlInicio ci = new CtrlInicio(frm, ip);
-        
+        //Establecemos la fecha actual para el programa
         this.frm.getLabelFecha().setText(String.valueOf(fecha));
         frm.setVisible(true);
     }

@@ -31,18 +31,19 @@ public class CtrlRegMascotas implements MouseListener {
     Matcher m;
     int chip;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlRegMascotas(FrmPrincipal frm, RegistroMascotasPanel r, boolean opcion) {
         this.frm = frm;
         this.registro = r;
         this.opcion = opcion;
-
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, r);
-
+        
         this.registro.getBtnGuardar().addMouseListener(this);
         this.registro.getBtnSeleccionar().addMouseListener(this);
         this.registro.getjRadioButton1().addMouseListener(this);
         this.registro.getjComboBox1().addMouseListener(this);
-
+        //Si la opcion es verdadera se llenan los campos
         if (opcion) {
             this.registro.getTxtNombre().setText(CtrlPrincipal.mascota.getNombre());
             this.registro.getTxtEspecie().setText(CtrlPrincipal.mascota.getEspecie());
@@ -60,6 +61,7 @@ public class CtrlRegMascotas implements MouseListener {
         }
     }
 
+    //Método que crea una nueva mascota cargando los datos de los campos de texto
     public Mascotas setMascota() {
         String nombre = this.registro.getTxtNombre().getText();
         String especie = this.registro.getTxtEspecie().getText();
@@ -90,6 +92,7 @@ public class CtrlRegMascotas implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.registro.getBtnGuardar())) {
+            //Se comprueba que los demás campos no estén vacíos antes de guardar la nueva información
             if (this.registro.getTxtNombre().getText().isEmpty()
                     || this.registro.getTxtEspecie().getText().isEmpty()
                     || this.registro.getTxtColor().getText().isEmpty()
@@ -98,12 +101,12 @@ public class CtrlRegMascotas implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
-
+                //Se comprueba que sea una nueva mascota
                 if (CtrlPrincipal.isNew) {
                     CtrlPrincipal.mascota = setMascota();
                     CtrlPrincipal.mascota.setCodCliente(CtrlPrincipal.cliente.getId());
                     QuerysMascotas.crear(CtrlPrincipal.mascota);
-                } else {
+                } else {//Si no es nueva se cargan los datos que se han actualizado
                     CtrlPrincipal.mascota.setNombre(setMascota().getNombre());
                     CtrlPrincipal.mascota.setEspecie(setMascota().getEspecie());
                     CtrlPrincipal.mascota.setSexo(setMascota().getSexo());
@@ -111,6 +114,7 @@ public class CtrlRegMascotas implements MouseListener {
                     CtrlPrincipal.mascota.setEnfermedades(setMascota().getEnfermedades());
                     CtrlPrincipal.mascota.setAnotaciones(setMascota().getAnotaciones());
                     CtrlPrincipal.mascota.setVacunas(setMascota().getVacunas());
+                    CtrlPrincipal.mascota.setChip(setMascota().getChip());
                     CtrlPrincipal.mascota.setCodCliente(CtrlPrincipal.cliente.getId());
                     QuerysMascotas.actualizar(CtrlPrincipal.mascota);
                 }
@@ -140,7 +144,7 @@ public class CtrlRegMascotas implements MouseListener {
                         chip = 0;
                     }
                     CtrlPrincipal.mascota.setChip(chip);
-                    
+                    //Se abre el panel de clientes para seleccionar uno
                     ClientePanel cp = new ClientePanel();
                     CtrlClientes cli = new CtrlClientes(frm, cp, true);
                 }

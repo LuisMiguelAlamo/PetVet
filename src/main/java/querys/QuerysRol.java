@@ -22,6 +22,7 @@ public class QuerysRol {
     static ResultSet rs;
     static Statement smnt;
     
+    //Método que devuelve una lista de todos los Roles
      public static ArrayList<Roles> consultaGeneral() {
         Roles rol;
         ArrayList<Roles> lista = new ArrayList<>();
@@ -43,7 +44,7 @@ public class QuerysRol {
 
     }
      
-     
+     //Método que devuelve un Rol por su id
      public static Roles consultaGeneral(int id) {
         Roles rol = null;
         try {

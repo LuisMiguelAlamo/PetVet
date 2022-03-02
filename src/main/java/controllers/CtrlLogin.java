@@ -29,6 +29,7 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
     boolean admin;
     boolean isCorrect;
 
+    //Constructor de la clase que activa todos los listener a los componentes
     public CtrlLogin() {
         this.log = new Login();
         this.log.getBtnAceptar().addMouseListener(this);
@@ -43,6 +44,7 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
         admin = false;
     }
     
+    //Método que comprueba que el password sea válido. Devuelve un boolean 
     private static boolean comprobarPassword(Acceso acceso, String password) {
         if (acceso.getPassword().equals(password)) {
             return true;
@@ -109,6 +111,7 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
+        //Se cambia el color de fondo del botón X al tener el foco
         if (e.getSource().equals(this.log.getBtnX())) {
             this.log.getExitPanel().setBackground(Color.RED);
             this.log.getBtnX().setForeground(Color.white);
@@ -117,6 +120,7 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+        //Se cambia el color de fondo del botón X al perder el foco
         if (e.getSource().equals(this.log.getBtnX())) {
             this.log.getExitPanel().setBackground(Color.WHITE);
             this.log.getBtnX().setForeground(Color.black);
@@ -125,6 +129,7 @@ public class CtrlLogin implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        //Se toma la posición del cursor al arrastrar la ventana para posicionarla
         if (e.getSource().equals(this.log.getHeaderPanel())) {
             int xPos = e.getXOnScreen();
             int yPos = e.getYOnScreen();

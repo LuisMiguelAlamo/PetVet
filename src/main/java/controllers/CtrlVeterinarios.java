@@ -42,11 +42,13 @@ public class CtrlVeterinarios implements MouseListener, DocumentListener {
     private static final int TIEMPO_BUSCAR = 300;
     private Timer timer_buscar;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlVeterinarios(FrmPrincipal frm, VeterinariosPanel p, boolean condicion) {
         this.frm = frm;
         this.panel = p;
         this.condicion = condicion;
 
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, p);
 
         this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
@@ -54,7 +56,7 @@ public class CtrlVeterinarios implements MouseListener, DocumentListener {
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
         this.panel.getTablaVeterinarios().addMouseListener(this);
-
+        //Si se cumple la condición se muestra solo el botón de seleccionar
         if (condicion) {
             this.panel.getBtnEditar().setVisible(false);
             this.panel.getBtnEliminar().setVisible(false);
@@ -65,12 +67,13 @@ public class CtrlVeterinarios implements MouseListener, DocumentListener {
         actualizarTabla();
     }
 
-
+    //Método que actualiza la información de la tabla
     private void actualizarTabla() {
         info = obtieneMatriz();
         this.panel.getTablaVeterinarios().setModel(new DefaultTableModel(info, titulos));
     }
 
+    //Método que devuelve una matríz de String con los datos de cada fila y columna de la tabla
     private String[][] obtieneMatriz() {
 
         ArrayList<Veterinarios> miLista = QuerysVeterinarios.consultaGeneral();
@@ -83,10 +86,11 @@ public class CtrlVeterinarios implements MouseListener, DocumentListener {
             informacion[x][2] = miLista.get(x).getDireccion() + "";
             informacion[x][3] = miLista.get(x).getTelefono() + "";
         }
-
         return informacion;
     }
 
+    //Método que devuelve una matríz de String con los datos de cada fila y columna 
+    //mostrando solamente aquellos resultados que coinciden con la búsqueda
     private String[][] obtieneFiltro() {
 
         ArrayList<Veterinarios> miLista = QuerysVeterinarios.consultaFiltro(this.panel.getCampoBuscar().getText());
@@ -99,10 +103,10 @@ public class CtrlVeterinarios implements MouseListener, DocumentListener {
             informacion[x][2] = miLista.get(x).getDireccion() + "";
             informacion[x][3] = miLista.get(x).getTelefono() + "";
         }
-
         return informacion;
     }
     
+    //Método que actualiza la tabla cada 3 ms filtrando los datos que son mostrados
     public void activarTimer() {
         if ((timer_buscar != null) && timer_buscar.isRunning()) {
             timer_buscar.restart();
@@ -120,6 +124,7 @@ public class CtrlVeterinarios implements MouseListener, DocumentListener {
         }
     }
 
+    //Método que devuelve el veterinario de la fila seleccionada en la tabla
     private Veterinarios getVeterinario() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaVeterinarios().getValueAt(this.panel.getTablaVeterinarios().getSelectedRow(), 0)));
         veterinario = QuerysVeterinarios.consultaGeneral(id);
@@ -133,6 +138,7 @@ public class CtrlVeterinarios implements MouseListener, DocumentListener {
             if (condicion) {
                 if (isSelected) {
                     CtrlPrincipal.veterinario = getVeterinario();
+                    //Se comprueba que Panel mostrar en dependencia de la variable global de elección
                     switch (CtrlPrincipal.eleccion) {
                         case 1:
                             RegistroCitasPanel rc = new RegistroCitasPanel();
@@ -203,17 +209,17 @@ public class CtrlVeterinarios implements MouseListener, DocumentListener {
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
 }

@@ -40,10 +40,12 @@ public class CtrlProveedores implements MouseListener, DocumentListener{
     private static final int TIEMPO_BUSCAR = 300;
     private Timer timer_buscar;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlProveedores(FrmPrincipal frm, ProveedoresPanel p, boolean condicion) {
         this.frm = frm;
         this.panel = p;
         this.opcion = condicion;
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, p);
         
         this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
@@ -51,7 +53,7 @@ public class CtrlProveedores implements MouseListener, DocumentListener{
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
         this.panel.getTablaProveedores().addMouseListener(this);
-        
+        //Si se cumple la condición se muestra solo el botón de seleccionar
         if (condicion) {
             this.panel.getBtnEditar().setVisible(false);
             this.panel.getBtnEliminar().setVisible(false);
@@ -62,12 +64,13 @@ public class CtrlProveedores implements MouseListener, DocumentListener{
         actualizarTabla();
     }
     
-    
+    //Método que actualiza la información de la tabla
     private void actualizarTabla() {
         info = obtieneMatriz();
         this.panel.getTablaProveedores().setModel(new DefaultTableModel(info, titulos));
     }
     
+    //Método que devuelve una matríz de String con los datos de cada fila y columna de la tabla
     private String[][] obtieneMatriz() {
 
         ArrayList<Proveedores> miLista = QuerysProveedores.consultaGeneral();
@@ -84,10 +87,11 @@ public class CtrlProveedores implements MouseListener, DocumentListener{
             informacion[x][6] = miLista.get(x).getCP()+ "";
             informacion[x][7] = miLista.get(x).getFecha()+ "";
         }
-
         return informacion;
     }
 
+    //Método que devuelve una matríz de String con los datos de cada fila y columna 
+    //mostrando solamente aquellos resultados que coinciden con la búsqueda
     private String[][] obtieneFiltro() {
 
         ArrayList<Proveedores> miLista = QuerysProveedores.consultaFiltro(this.panel.getCampoBuscar().getText());
@@ -108,6 +112,7 @@ public class CtrlProveedores implements MouseListener, DocumentListener{
         return informacion;
     }
     
+    //Método que actualiza la tabla cada 3 segundos filtrando los datos que son mostrados
     public void activarTimer() {
         if ((timer_buscar != null) && timer_buscar.isRunning()) {
             timer_buscar.restart();
@@ -125,6 +130,7 @@ public class CtrlProveedores implements MouseListener, DocumentListener{
         }
     }
     
+    //Método que devuelve el proveedor de la fila seleccionada en la tabla
     public Proveedores getProveedor() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaProveedores().getValueAt(this.panel.getTablaProveedores().getSelectedRow(), 0)));
         proveedor = QuerysProveedores.consultaGeneral(id);
@@ -135,6 +141,7 @@ public class CtrlProveedores implements MouseListener, DocumentListener{
     public void mouseClicked(MouseEvent e) {
 
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
+            //Si se cumple la condición se activa el botón Seleccionar 
             if (opcion) {
                 if (isSelected) {
                     CtrlPrincipal.proveedor = getProveedor();
@@ -154,7 +161,7 @@ public class CtrlProveedores implements MouseListener, DocumentListener{
                 RegistroProveedoresPanel pp = new RegistroProveedoresPanel();
                 CtrlRegProveedores pro = new CtrlRegProveedores(frm, pp, proveedor, true);
             }else{
-                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+                JOptionPane.showMessageDialog(null, "No ha seleccionado un proveedor");
             }
         }
         
@@ -165,7 +172,7 @@ public class CtrlProveedores implements MouseListener, DocumentListener{
                 QuerysProveedores.eliminar(id);
                 this.actualizarTabla();
             }else{
-                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+                JOptionPane.showMessageDialog(null, "No ha seleccionado un proveedor");
             }
         }
         
@@ -193,17 +200,17 @@ public class CtrlProveedores implements MouseListener, DocumentListener{
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
     
     

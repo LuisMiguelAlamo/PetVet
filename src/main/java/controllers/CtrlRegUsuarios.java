@@ -15,8 +15,7 @@ import querys.QuerysAcceso;
 import views.FrmPrincipal;
 import views.InicioPanel;
 import views.RegistroUsuariosPanel;
-import views.UsuariosPanel;import views.VeterinariosPanel;
-
+import views.UsuariosPanel;
 /**
  *
  * @author Luis Miguel
@@ -35,11 +34,12 @@ public class CtrlRegUsuarios implements MouseListener {
     int rolUsuario;
     String txtRol = "";
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlRegUsuarios(FrmPrincipal frm, RegistroUsuariosPanel r, boolean opcion) {
         this.frm = frm;
         this.registro = r;
         this.opcion = opcion;
-        
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, r);
 
         this.registro.getBtnGuardar().addMouseListener(this);
@@ -65,6 +65,7 @@ public class CtrlRegUsuarios implements MouseListener {
         }
     }
     
+    //Crea un nuevo usuario cargando los datos de los campos de texto
     private Acceso setUsuario() {
         int rol;
         if (this.registro.getComboRol().getSelectedItem().toString().equals("Administrador")) {

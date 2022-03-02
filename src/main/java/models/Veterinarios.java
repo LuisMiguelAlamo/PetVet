@@ -5,8 +5,6 @@
  */
 package models;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author Luis Miguel
@@ -16,7 +14,6 @@ public class Veterinarios {
     String nombre;
     String direccion;
     String telefono;
-    ArrayList <Citas> citas;
 
     public Veterinarios(int id, String nombre, String direccion, String telefono) {
         this.id = id;
@@ -55,17 +52,6 @@ public class Veterinarios {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public ArrayList<Citas> getCitas() {
-        return citas;
-    }
-
-    public void setCitas(ArrayList<Citas> citas) {
-        this.citas = citas;
-    }
-    
-    
-    
+    }    
     
 }

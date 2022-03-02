@@ -17,7 +17,7 @@ public class QuerysVeterinarios {
     static ResultSet rs;
     static Statement smnt;
     
-    
+    //Método que devuelve una lista de todos los Veterinarios
     public static ArrayList<Veterinarios> consultaGeneral() {
         Veterinarios vet;
         ArrayList<Veterinarios> lista = new ArrayList<>();
@@ -40,7 +40,7 @@ public class QuerysVeterinarios {
         return lista;
     }
     
-    
+    //Método que devuelve un Veterinario por su id
     public static Veterinarios consultaGeneral(int id) {
         Veterinarios vet = null;
         try {
@@ -60,6 +60,8 @@ public class QuerysVeterinarios {
         return vet;
     }
 
+    //Método que devuelve una lista de los Veterinarios que contengan algún dato 
+    //igual al pasado como argumento
     public static ArrayList<Veterinarios> consultaFiltro(String campo) {
         Veterinarios vet;
         ArrayList<Veterinarios> lista = new ArrayList<>();
@@ -84,6 +86,7 @@ public class QuerysVeterinarios {
         return lista;
     }
 
+    //Método que crea un nuevo Veterinario
     public static void crear(Veterinarios vet) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -98,6 +101,7 @@ public class QuerysVeterinarios {
         }
     }
 
+    //Método que actualiza el Veterinario pasado como argumento
     public static void actualizar(Veterinarios vet) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -112,6 +116,7 @@ public class QuerysVeterinarios {
         }
     }
 
+    //Método que elimina el Medicamento con el id pasado como argumento
     public static void eliminar(int id) {
         try {
             if (AbrirConexion.abrirConect()) {

@@ -30,16 +30,17 @@ public class CtrlRegProveedores implements MouseListener {
     Pattern p = Pattern.compile("[0-9]{5}");
     Matcher m;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlRegProveedores(FrmPrincipal frm, RegistroProveedoresPanel r, Proveedores p, boolean opcion) {
         this.frm = frm;
         this.registro = r;
         this.opcion = opcion;
-
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, r);
 
         this.registro.getTxtNombre().addMouseListener(this);
         this.registro.getBtnGuardar().addMouseListener(this);
-
+        //Comprueba si hay que cargar los datos en los campos
         if (opcion) {
             this.proveedor = p;
             this.registro.getTxtNombre().setText(p.getNombre());
@@ -53,6 +54,7 @@ public class CtrlRegProveedores implements MouseListener {
 
     }
 
+    //Crea un nuevo proveedor cargando los datos de los campos de texto
     public Proveedores llenaProveedor() {
         int id = 0;
         String nombre = this.registro.getTxtNombre().getText();
@@ -70,6 +72,7 @@ public class CtrlRegProveedores implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.registro.getBtnGuardar())) {
+            //Comprobación de que los campos no están vacíos 
             if (this.registro.getTxtNombre().getText().isEmpty()
                     || this.registro.getTxtDireccion().getText().isEmpty()
                     || this.registro.getTxtLocalidad().getText().isEmpty()
@@ -81,6 +84,7 @@ public class CtrlRegProveedores implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
+                //Se comprueba la validez de los datos introducidos mediante las regex
                 CtrlPrincipal.mEmail = CtrlPrincipal.pEmail.matcher(this.registro.getTxtEmail().getText());
                 CtrlPrincipal.mTel = CtrlPrincipal.pTel.matcher(this.registro.getTxtTelefono().getText());
                 CtrlPrincipal.mCP = CtrlPrincipal.pCP.matcher(this.registro.getTxtCP().getText());
@@ -91,7 +95,7 @@ public class CtrlRegProveedores implements MouseListener {
                 } else if (!CtrlPrincipal.mCP.matches()) {
                     JOptionPane.showMessageDialog(null, "El CP no es válido");
                 } else {
-
+                    //Si la opción es verdadera se actualiza
                     if (opcion) {
                         this.proveedor.setNombre(this.registro.getTxtNombre().getText());
                         this.proveedor.setDireccion(this.registro.getTxtDireccion().getText());
@@ -102,11 +106,11 @@ public class CtrlRegProveedores implements MouseListener {
                         long time = this.registro.getjDateChooser1().getDate().getTime();
                         this.proveedor.setFecha(new Date(time));
                         QuerysProveedores.actualizar(this.proveedor);
-                    } else {
+                    } else {//Si es falsa se crea uno nuevo
                         this.proveedor = llenaProveedor();
                         QuerysProveedores.crear(this.proveedor);
                     }
-
+                    //Cargamos el panel de proveedores nuevamente
                     ProveedoresPanel pp = new ProveedoresPanel();
                     CtrlProveedores pro = new CtrlProveedores(frm, pp, false);
                 }

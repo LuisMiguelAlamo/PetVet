@@ -18,6 +18,7 @@ public class QuerysFacturas {
     static ResultSet rs;
     static Statement smnt;
 
+    //Método que devuelve una lista de todas las Facturas
     public static ArrayList<Facturas> consultaGeneral() {
         Facturas factura;
         ArrayList<Facturas> lista = new ArrayList<>();
@@ -44,7 +45,7 @@ public class QuerysFacturas {
         return lista;
     }
     
-    
+    //Método que devuelve una Factura por su id
     public static Facturas consultaGeneral(int id) {
         Facturas factura = null;
         try {
@@ -67,6 +68,8 @@ public class QuerysFacturas {
         return factura;
     }
 
+    //Método que devuelve una lista de las Facturas que contengan algún dato 
+    //igual al pasado como argumento
     public static ArrayList<Facturas> consultaFiltro(String campo) {
         Facturas factura;
         ArrayList<Facturas> lista = new ArrayList<>();
@@ -96,6 +99,7 @@ public class QuerysFacturas {
         return lista;
     }
 
+    //Método que crea una nueva Factura
     public static void crear(Facturas factura) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -113,6 +117,7 @@ public class QuerysFacturas {
         }
     }
 
+    //Método que actualiza la Factura pasada como argumento
     public static void actualizar(Facturas factura) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -129,6 +134,7 @@ public class QuerysFacturas {
         }
     }
 
+    //Método que elimina la Factura con el id pasado como argumento
     public static void eliminar(int id) {
         try {
             if (AbrirConexion.abrirConect()) {

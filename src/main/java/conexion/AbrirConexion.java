@@ -17,13 +17,16 @@ public class AbrirConexion {
     
     private static Connection cone = null;
     
+    //Método que devuelve una conexión
      public static Connection getCone() {
         return cone;
     }
 
+    //Constructor vacío
     public AbrirConexion() {
     }
     
+    //Método que devuelve un booleano comprobando si hay conexión o no 
     public static boolean abrirConect() throws SQLException {
         if (cone != null && cone.isValid(2000)) {
             return true;

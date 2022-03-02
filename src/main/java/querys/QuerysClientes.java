@@ -17,7 +17,7 @@ public class QuerysClientes {
     static ResultSet rs;
     static Statement smnt;
     
-    
+    //Método que devuelve una lista de todos los Clientes
     public static ArrayList<Clientes> consultaGeneral() {
         Clientes cliente;
         ArrayList<Clientes> lista = new ArrayList<>();
@@ -44,6 +44,7 @@ public class QuerysClientes {
         return lista;
     }
     
+    //Método que devuelve un Cliente por su id
     public static Clientes consultaGeneral(int id) {
         Clientes cliente = null;
         try {
@@ -67,6 +68,8 @@ public class QuerysClientes {
         return cliente;
     }
 
+    //Método que devuelve una lista de los Clientes que contengan algún dato 
+    //igual al pasado como argumento
     public static ArrayList<Clientes> consultaFiltro(String campo) {
         Clientes cliente;
         ArrayList<Clientes> lista = new ArrayList<>();
@@ -95,6 +98,7 @@ public class QuerysClientes {
         return lista;
     }
 
+    //Método que crea un nuevo Cliente
     public static void crear(Clientes cliente) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -113,6 +117,7 @@ public class QuerysClientes {
         }
     }
 
+    //Método que actualiza el Cliente pasado como argumento
     public static void actualizar(Clientes cliente) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -130,6 +135,7 @@ public class QuerysClientes {
         }
     }
 
+    //Método que elimina el Cliente con el id pasado como argumento
     public static void eliminar(int id) {
         try {
             if (AbrirConexion.abrirConect()) {

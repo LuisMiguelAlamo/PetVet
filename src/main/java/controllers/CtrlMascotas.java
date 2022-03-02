@@ -44,11 +44,12 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
     private static final int TIEMPO_BUSCAR = 300;
     private Timer timer_buscar;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlMascotas(FrmPrincipal frm, MascotasPanel p, boolean condicion) {
         this.frm = frm;
         this.panel = p;
         this.condicion = condicion;
-        
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, p);
         
         this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
@@ -57,6 +58,7 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
         this.panel.getBtnEliminar().addMouseListener(this);
         this.panel.getTablaMascotas().addMouseListener(this);
         
+        //Si se cumple la condición se muestra solo el botón de seleccionar
         if (condicion) {
             this.panel.getBtnEditar().setVisible(false);
             this.panel.getBtnEliminar().setVisible(false);
@@ -67,12 +69,13 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
         actualizarTabla();
     }
     
-
+    //Método que actualiza la información de la tabla
     private void actualizarTabla() {
         info = obtieneMatriz();
         this.panel.getTablaMascotas().setModel(new DefaultTableModel(info, titulos));
     }
 
+    //Método que devuelve una matríz de String con los datos de cada fila y columna de la tabla
     private String[][] obtieneMatriz() {
 
          miLista = QuerysMascotas.consultaGeneral();
@@ -105,6 +108,8 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
         return informacion;
     }
 
+    //Método que devuelve el nombre del cliente para no tener que llenar la tabla
+    //con el número del id 
     private String leerClientes(int cc) {
         String nombre = "";
         for (Clientes c : cliList) {
@@ -115,6 +120,8 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
         return nombre;
     }
 
+    //Método que devuelve una matríz de String con los datos de cada fila y columna 
+    //mostrando solamente aquellos resultados que coinciden con la búsqueda
     private String[][] obtieneFiltro() {
 
         miLista = QuerysMascotas.consultaFiltro(this.panel.getCampoBuscar().getText());
@@ -148,6 +155,7 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
         return informacion;
     }
     
+    //Método que actualiza la tabla cada 3 ms filtrando los datos que son mostrados
     public void activarTimer() {
         if ((timer_buscar != null) && timer_buscar.isRunning()) {
             timer_buscar.restart();
@@ -165,6 +173,7 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
         }
     }
 
+    //Método que devuelve la mascota de la fila seleccionada en la tabla
     private Mascotas getMascota() {        
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaMascotas().getValueAt(this.panel.getTablaMascotas().getSelectedRow(), 0)));
         mascota = QuerysMascotas.consultaGeneral(id);
@@ -175,9 +184,11 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
     public void mouseClicked(MouseEvent e) {
 
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
+            //Si se cumple la condición se activa el botón Seleccionar
             if (condicion) {
                 if (isSelected) {
                     CtrlPrincipal.mascota = getMascota();
+                    //Se comprueba que Panel mostrar en dependencia de la variable global de elección
                     switch (CtrlPrincipal.eleccion) {
                         case 1:
                             RegistroCitasPanel rc = new RegistroCitasPanel();
@@ -193,7 +204,7 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
                 } else {
                     JOptionPane.showMessageDialog(null, "No ha seleccionado una mascota");
                 }
-            } else {
+            } else {//Como no se cumple simplemente abre su panel de registro
                 CtrlPrincipal.isNew = true;
                 RegistroMascotasPanel mp = new RegistroMascotasPanel();
                 CtrlRegMascotas mas = new CtrlRegMascotas(frm, mp, false);
@@ -201,6 +212,7 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
         }
 
         if (e.getSource().equals(this.panel.getBtnEditar())) {
+            //Se comprueba que una fila de la tabla esté seleccionada
             if (isSelected) {
                 CtrlPrincipal.isNew = false;
                 CtrlPrincipal.mascota = getMascota();
@@ -224,6 +236,7 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
         }
 
         if (e.getSource().equals(this.panel.getTablaMascotas())) {
+            //Si está seleccionada una fila se carga la mascota correspondiente
             isSelected = true;
             this.mascota = getMascota();
         }
@@ -247,17 +260,17 @@ public class CtrlMascotas implements MouseListener, DocumentListener {
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
 }

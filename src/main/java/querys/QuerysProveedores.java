@@ -18,7 +18,7 @@ public class QuerysProveedores {
     static ResultSet rs;
     static Statement smnt;
     
-    
+    //Método que devuelve una lista de todos los Proveedores
     public static ArrayList<Proveedores> consultaGeneral() {
         Proveedores proveedor;
         ArrayList<Proveedores> lista = new ArrayList<>();
@@ -47,6 +47,7 @@ public class QuerysProveedores {
 
     }
     
+    //Método que devuelve un Proveedor por su id
     public static Proveedores consultaGeneral(int id) {
         Proveedores proveedor = null;
         try {
@@ -72,6 +73,8 @@ public class QuerysProveedores {
 
     }
 
+    //Método que devuelve una lista de los Proveedores que contengan algún dato 
+    //igual al pasado como argumento
     public static ArrayList<Proveedores> consultaFiltro(String campo) {
         Proveedores proveedor;
         ArrayList<Proveedores> lista = new ArrayList<>();
@@ -104,6 +107,7 @@ public class QuerysProveedores {
         return lista;
     }
 
+    //Método que crea un nuevo Proveedor
     public static void crear(Proveedores proveedor) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -123,6 +127,7 @@ public class QuerysProveedores {
         }
     }
 
+    //Método que actualiza el Proveedor pasado como argumento
     public static void actualizar(Proveedores proveedor) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -141,6 +146,7 @@ public class QuerysProveedores {
         }
     }
 
+    //Método que elimina el Medicamento con el id pasado como argumento
     public static void eliminar(int id) {
         try {
             if (AbrirConexion.abrirConect()) {

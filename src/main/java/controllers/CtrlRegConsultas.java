@@ -39,11 +39,12 @@ public class CtrlRegConsultas implements MouseListener {
     int idVet;
     long time;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlRegConsultas(FrmPrincipal frm, RegistroConsultasPanel r, boolean opcion) {
         this.frm = frm;
         this.registro = r;
         this.opcion = opcion;
-
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, r);
 
         this.registro.getBtnGuardar().addMouseListener(this);
@@ -63,6 +64,7 @@ public class CtrlRegConsultas implements MouseListener {
         }
     }
     
+    //Método que devuelve una nueva consulta
     public Consultas setConsultas(){
         long tiempo;
         Date fecha = null;
@@ -103,28 +105,34 @@ public class CtrlRegConsultas implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
-                //Se comprueba que sea una nueva consulta
-                if (CtrlPrincipal.isNew) {
-                    CtrlPrincipal.consulta = setConsultas();
-                    CtrlPrincipal.consulta.setCodMascota(CtrlPrincipal.mascota.getId());
-                    CtrlPrincipal.consulta.setCodVeterinario(CtrlPrincipal.veterinario.getId());
-                    CtrlPrincipal.consulta.setCodMedicamento(CtrlPrincipal.medicamento.getId());
-                    QuerysConsultas.crear(CtrlPrincipal.consulta);
-                } else {
-                    //Si no es nueva se cargan los datos que se han actualizado
-                    CtrlPrincipal.consulta.setFecha(setConsultas().getFecha());
-                    CtrlPrincipal.consulta.setHora(setConsultas().getHora());
-                    CtrlPrincipal.consulta.setDiagnostico(setConsultas().getDiagnostico());
-                    CtrlPrincipal.consulta.setTratamiento(setConsultas().getTratamiento());
-                    CtrlPrincipal.consulta.setCodMascota(CtrlPrincipal.mascota.getId());
-                    CtrlPrincipal.consulta.setCodVeterinario(CtrlPrincipal.veterinario.getId());
-                    CtrlPrincipal.consulta.setCodMedicamento(CtrlPrincipal.medicamento.getId());
-                    QuerysConsultas.actualizar(CtrlPrincipal.consulta);
-                }
+                CtrlPrincipal.mHora = CtrlPrincipal.pHora.matcher(this.registro.getTxtHora().getText());
+                if (!CtrlPrincipal.mHora.matches()) {
+                    JOptionPane.showMessageDialog(null, "La hora no es válida | Utilizar formato 24 horas hh:mm");
+                }else{
 
-                //Abrimos en panel de citas
-                ConsultasPanel cp = new ConsultasPanel();
-                CtrlConsultas con = new CtrlConsultas(frm, cp, false);
+                    //Se comprueba que sea una nueva consulta
+                    if (CtrlPrincipal.isNew) {
+                        CtrlPrincipal.consulta = setConsultas();
+                        CtrlPrincipal.consulta.setCodMascota(CtrlPrincipal.mascota.getId());
+                        CtrlPrincipal.consulta.setCodVeterinario(CtrlPrincipal.veterinario.getId());
+                        CtrlPrincipal.consulta.setCodMedicamento(CtrlPrincipal.medicamento.getId());
+                        QuerysConsultas.crear(CtrlPrincipal.consulta);
+                    } else {
+                        //Si no es nueva se cargan los datos que se han actualizado
+                        CtrlPrincipal.consulta.setFecha(setConsultas().getFecha());
+                        CtrlPrincipal.consulta.setHora(setConsultas().getHora());
+                        CtrlPrincipal.consulta.setDiagnostico(setConsultas().getDiagnostico());
+                        CtrlPrincipal.consulta.setTratamiento(setConsultas().getTratamiento());
+                        CtrlPrincipal.consulta.setCodMascota(CtrlPrincipal.mascota.getId());
+                        CtrlPrincipal.consulta.setCodVeterinario(CtrlPrincipal.veterinario.getId());
+                        CtrlPrincipal.consulta.setCodMedicamento(CtrlPrincipal.medicamento.getId());
+                        QuerysConsultas.actualizar(CtrlPrincipal.consulta);
+                    }
+
+                    //Abrimos en panel de citas
+                    ConsultasPanel cp = new ConsultasPanel();
+                    CtrlConsultas con = new CtrlConsultas(frm, cp, false);
+                }
             }
         }
         if (e.getSource().equals(this.registro.getBtnMascota())) {

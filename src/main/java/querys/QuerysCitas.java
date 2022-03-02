@@ -18,7 +18,7 @@ public class QuerysCitas {
     static ResultSet rs;
     static Statement smnt;
     
-    
+    //Método que devuelve una lista de todas las Citas
     public static ArrayList<Citas> consultaGeneral() {
         Citas cita;
         ArrayList<Citas> lista = new ArrayList<>();
@@ -41,30 +41,9 @@ public class QuerysCitas {
         }
         return lista;
     }
-    public static ArrayList<Citas> getByVeterinario(int idVet) {
-        Citas cita;
-        ArrayList<Citas> lista = new ArrayList<>();
-        try {
-            if (AbrirConexion.abrirConect()) {
-                smnt = AbrirConexion.getCone().createStatement();
-                rs = smnt.executeQuery("SELECT * FROM citas WHERE codigoVeterinario = "+ idVet);
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    Date fecha = rs.getDate("fecha");
-                    String hora = rs.getString("hora");
-                    int codVeterinario = rs.getInt("codigoVeterinario");
-                    int codMascota = rs.getInt("codigoMascota");
-                    cita = new Citas(id, fecha, hora,codVeterinario, codMascota);
-                    lista.add(cita);
-                }
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error de acceso a la base de datos");
-        }
-        return lista;
-    }
+
     
-    
+    //Método que devuelve una Cita por su id
     public static Citas consultaGeneral(int id) {
         Citas cita = null;
         try {
@@ -85,7 +64,8 @@ public class QuerysCitas {
         return cita;
     }
 
-    
+    //Método que devuelve una lista de las Citas que contengan algún dato 
+    //igual al pasado como argumento
     public static ArrayList<Citas> consultaFiltro(String campo) {
         Citas cita;
         ArrayList<Citas> lista = new ArrayList<>();
@@ -110,6 +90,7 @@ public class QuerysCitas {
         return lista;
     }
 
+    //Método que crea una nueva Cita
     public static void crear(Citas cita) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -126,6 +107,7 @@ public class QuerysCitas {
         }
     }
 
+    //Método que actualiza la Cita pasada como argumento
     public static void actualizar(Citas cita) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -141,6 +123,7 @@ public class QuerysCitas {
         }
     }
 
+    //Método que elimina la Cita con el id pasado como argumento
     public static void eliminar(int id) {
         try {
             if (AbrirConexion.abrirConect()) {

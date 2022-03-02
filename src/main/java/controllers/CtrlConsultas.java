@@ -47,10 +47,12 @@ public class CtrlConsultas implements MouseListener, DocumentListener{
     ArrayList<Veterinarios> listaVet;
     ArrayList<Medicamentos> listaMed;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlConsultas(FrmPrincipal frm, ConsultasPanel p, boolean opcion) {
         this.frm = frm;
         this.panel = p;
         this.opcion = opcion;
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, p);
         
         this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
@@ -58,22 +60,23 @@ public class CtrlConsultas implements MouseListener, DocumentListener{
         this.panel.getBtnEditar().addMouseListener(this);
         this.panel.getBtnEliminar().addMouseListener(this);
         this.panel.getTablaConsultas().addMouseListener(this);
-        
+        //Si se cumple la condición se muestra solo el botón de seleccionar
         if (opcion) {
             this.panel.getBtnEditar().setVisible(false);
             this.panel.getBtnEliminar().setVisible(false);
             this.panel.getNuevoLabel().setText("Seleccionar");
-        }
-        
+        }        
         isSelected = false;
         actualizarTabla();
     }
     
+    //Método que actualiza la información de la tabla
     private void actualizarTabla() {
         info = obtieneMatriz();
         this.panel.getTablaConsultas().setModel(new DefaultTableModel(info, titulos));
     }
     
+    //Método que devuelve una matríz de String con los datos de cada fila y columna de la tabla
     private String[][] obtieneMatriz() {
 
         miLista = QuerysConsultas.consultaGeneral();
@@ -101,10 +104,11 @@ public class CtrlConsultas implements MouseListener, DocumentListener{
             informacion[x][6] = vet;
             informacion[x][7] = masc;
         }
-
         return informacion;
     }
 
+    //Método que devuelve una matríz de String con los datos de cada fila y columna 
+    //mostrando solamente aquellos resultados que coinciden con la búsqueda
     private String[][] obtieneFiltro() {
 
         miLista = QuerysConsultas.consultaFiltro(this.panel.getCampoBuscar().getText());
@@ -136,6 +140,7 @@ public class CtrlConsultas implements MouseListener, DocumentListener{
         return informacion;
     }
     
+    //Método que actualiza la tabla cada 3 msm filtrando los datos que son mostrados
     public void activarTimer() {
         if ((timer_buscar != null) && timer_buscar.isRunning()) {
             timer_buscar.restart();
@@ -236,7 +241,7 @@ public class CtrlConsultas implements MouseListener, DocumentListener{
                 RegistroConsultasPanel registro = new RegistroConsultasPanel();
                 CtrlRegConsultas rc = new CtrlRegConsultas(frm, registro, true);
             }else{
-                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+                JOptionPane.showMessageDialog(null, "No ha seleccionado una consulta");
             }
         }
         
@@ -247,11 +252,12 @@ public class CtrlConsultas implements MouseListener, DocumentListener{
                 QuerysConsultas.eliminar(id);
                 this.actualizarTabla();
             }else{
-                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+                JOptionPane.showMessageDialog(null, "No ha seleccionado una consulta");
             }
         }
         
         if (e.getSource().equals(this.panel.getTablaConsultas())) {
+            //Si está seleccionada una fila se carga el cliente correspondiente
             isSelected = true;
            this.consulta = getConsulta();
         }
@@ -275,17 +281,17 @@ public class CtrlConsultas implements MouseListener, DocumentListener{
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
     
     

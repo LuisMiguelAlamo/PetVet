@@ -29,16 +29,17 @@ public class CtrlRegVeterinarios implements MouseListener {
     Pattern p = Pattern.compile("[0-9]{5}");
     Matcher m;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlRegVeterinarios(FrmPrincipal frm, RegistroVeterinariosPanel r, Veterinarios v, boolean opcion) {
         this.frm = frm;
         this.registro = r;
         this.opcion = opcion;
-
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, r);
 
         this.registro.getTxtNombre().addMouseListener(this);
         this.registro.getBtnGuardar().addMouseListener(this);
-
+        //Comprueba si hay que cargar los datos en los campos
         if (opcion) {
             this.veterinario = v;
             this.registro.getTxtNombre().setText(v.getNombre());
@@ -48,6 +49,7 @@ public class CtrlRegVeterinarios implements MouseListener {
 
     }
 
+    //Crea un nuevo veterinario cargando los datos de los campos de texto
     public Veterinarios llenaVeterinario() {
         int id = 0;
         String nombre = this.registro.getTxtNombre().getText();
@@ -59,6 +61,7 @@ public class CtrlRegVeterinarios implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        //Se comprueba que los campos no estén vacíos antes de guardar la nueva información
         if (e.getSource().equals(this.registro.getBtnGuardar())) {
             if (this.registro.getTxtNombre().getText().isEmpty()
                     || this.registro.getTxtDireccion().getText().isEmpty()
@@ -67,6 +70,7 @@ public class CtrlRegVeterinarios implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
+                //Se comprueba la validez de los datos introducidos mediante las regex
                 CtrlPrincipal.mTel = CtrlPrincipal.pTel.matcher(this.registro.getTxtTelefono().getText());
                 if (!CtrlPrincipal.mTel.matches()) {
                     JOptionPane.showMessageDialog(null, "El teléfono no es válido");
@@ -80,7 +84,7 @@ public class CtrlRegVeterinarios implements MouseListener {
                         this.veterinario = llenaVeterinario();
                         QuerysVeterinarios.crear(this.veterinario);
                     }
-
+                    //Se carga el panel de Veterinarios nuevamente
                     VeterinariosPanel vp = new VeterinariosPanel();
                     CtrlVeterinarios vet = new CtrlVeterinarios(frm, vp, false);
                 }

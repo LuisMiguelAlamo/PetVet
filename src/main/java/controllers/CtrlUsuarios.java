@@ -17,8 +17,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import models.Acceso;
 import querys.QuerysAcceso;
-import querys.QuerysRol;
-import querys.QuerysVeterinarios;
 import views.UsuariosPanel;
 import views.FrmPrincipal;
 import views.RegistroUsuariosPanel;
@@ -40,11 +38,12 @@ public class CtrlUsuarios implements MouseListener, DocumentListener {
     private static final int TIEMPO_BUSCAR = 300;
     private Timer timer_buscar;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado y la condición
     public CtrlUsuarios(FrmPrincipal frm, UsuariosPanel u, boolean condicion) {
         this.frm = frm;
         this.panel = u;
         this.condicion = condicion;
-
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, u);
 
         this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
@@ -63,11 +62,13 @@ public class CtrlUsuarios implements MouseListener, DocumentListener {
     }
 
 
+    //Método que actualiza la información de la tabla
     private void actualizarTabla() {
         info = obtieneMatriz();
         this.panel.getTablaUsuarios().setModel(new DefaultTableModel(info, titulos));
     }
 
+    //Método que devuelve una matríz de String con los datos de cada fila y columna de la tabla
     private String[][] obtieneMatriz() {
 
         ArrayList<Acceso> miLista = QuerysAcceso.consultaGeneral();
@@ -88,10 +89,11 @@ public class CtrlUsuarios implements MouseListener, DocumentListener {
             informacion[x][2] = miLista.get(x).getEmail()+ "";
             informacion[x][3] = miLista.get(x).getPassword()+ "";
         }
-
         return informacion;
     }
 
+    //Método que devuelve una matríz de String con los datos de cada fila y columna 
+    //mostrando solamente aquellos resultados que coinciden con la búsqueda
     private String[][] obtieneFiltro() {
 
         ArrayList<Acceso> miLista = QuerysAcceso.consultaFiltro(this.panel.getCampoBuscar().getText());
@@ -112,10 +114,10 @@ public class CtrlUsuarios implements MouseListener, DocumentListener {
             informacion[x][2] = miLista.get(x).getEmail()+ "";
             informacion[x][3] = miLista.get(x).getPassword()+ "";
         }
-
         return informacion;
     }
     
+    //Método que actualiza la tabla cada 3 ms filtrando los datos que son mostrados
     private void activarTimer() {
         if ((timer_buscar != null) && timer_buscar.isRunning()) {
             timer_buscar.restart();
@@ -133,6 +135,7 @@ public class CtrlUsuarios implements MouseListener, DocumentListener {
         }
     }
 
+    //Método que devuelve el usuario de la fila seleccionada en la tabla
     private Acceso getUsuario() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaUsuarios().getValueAt(this.panel.getTablaUsuarios().getSelectedRow(), 0)));
         usuarios = QuerysAcceso.consultaGeneral(id);
@@ -173,6 +176,7 @@ public class CtrlUsuarios implements MouseListener, DocumentListener {
         }
 
         if (e.getSource().equals(this.panel.getTablaUsuarios())) {
+            //Si está seleccionada una fila se carga el usuario correspondiente
             isSelected = true;
             this.usuarios = getUsuario();
         }
@@ -196,17 +200,17 @@ public class CtrlUsuarios implements MouseListener, DocumentListener {
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
 }

@@ -40,9 +40,11 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
     ArrayList<Facturas> miLista;
     ArrayList<Clientes> cliList;
 
+    //Constructor de la clase que recibe el JFrame principal, el panel que será mostrado
     public CtrlFacturas(FrmPrincipal frm, FacturasPanel p) {
         this.frm = frm;
         this.panel = p;
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, p);
         
         this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
@@ -55,11 +57,13 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
         actualizarTabla();
     }
     
+    //Método que actualiza la información de la tabla
     private void actualizarTabla() {
         info = obtieneMatriz();
         this.panel.getTablaFacturas().setModel(new DefaultTableModel(info, titulos));
     }
     
+    //Método que devuelve una matríz de String con los datos de cada fila y columna de la tabla
     private String[][] obtieneMatriz() {
 
         miLista = QuerysFacturas.consultaGeneral();
@@ -78,10 +82,11 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
 
             informacion[x][5] = cli;
         }
-
         return informacion;
     }
 
+    //Método que devuelve una matríz de String con los datos de cada fila y columna 
+    //mostrando solamente aquellos resultados que coinciden con la búsqueda
     private String[][] obtieneFiltro() {
 
         miLista = QuerysFacturas.consultaFiltro(this.panel.getCampoBuscar().getText());
@@ -100,10 +105,11 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
 
             informacion[x][5] = cli;
         }
-
         return informacion;
     }
     
+    //Método que devuelve el nombre del cliente para no tener que llenar la tabla
+    //con el número del id 
     private String leerClientes(int cc) {
         String nombre = "";
         for (Clientes c : cliList) {
@@ -114,6 +120,7 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
         return nombre;
     }
     
+    //Método que actualiza la tabla cada 3 ms filtrando los datos que son mostrados
     public void activarTimer() {
         if ((timer_buscar != null) && timer_buscar.isRunning()) {
             timer_buscar.restart();
@@ -131,6 +138,7 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
         }
     }
     
+    //Método que devuelve la factura de la fila seleccionada en la tabla
     private Facturas setFactura() {
         int id = Integer.parseInt(String.valueOf(this.panel.getTablaFacturas().getValueAt(this.panel.getTablaFacturas().getSelectedRow(), 0)));
         factura = QuerysFacturas.consultaGeneral(id);
@@ -141,6 +149,7 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
     public void mouseClicked(MouseEvent e) {
 
         if (e.getSource().equals(this.panel.getBtnNuevo())) {
+            //Si es una nueva consulta se cargan a null las variables globales
             CtrlPrincipal.isNew = true;
             CtrlPrincipal.cliente = null;
             RegistroFacturasPanel registro = new RegistroFacturasPanel();                        
@@ -155,7 +164,7 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
                 RegistroFacturasPanel registro = new RegistroFacturasPanel();  
                 CtrlRegFacturas rc = new CtrlRegFacturas(frm, registro, true);
             }else{
-                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+                JOptionPane.showMessageDialog(null, "No ha seleccionado una factura");
             }
         }
         
@@ -165,11 +174,12 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
                 QuerysFacturas.eliminar(id);
                 this.actualizarTabla();
             }else{
-                JOptionPane.showMessageDialog(null, "No ha seleccionado un cliente");
+                JOptionPane.showMessageDialog(null, "No ha seleccionado una factura");
             }
         }
         
         if (e.getSource().equals(this.panel.getTablaFacturas())) {
+            //Si está seleccionada una fila se carga la factura correspondiente
             isSelected = true;
            this.factura = setFactura();
         }
@@ -193,17 +203,17 @@ public class CtrlFacturas implements MouseListener, DocumentListener {
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
     
     

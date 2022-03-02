@@ -43,9 +43,11 @@ public class CtrlCitas implements MouseListener, DocumentListener{
     private static final int TIEMPO_BUSCAR = 300;
     private Timer timer_buscar;
 
+    //Constructor de la clase que recibe el JFrame principal y el panel que será mostrado
     public CtrlCitas(FrmPrincipal frm, CitasPanel p) {
         this.frm = frm;
         this.panel = p;
+        //Cargamos el panel
         CtrlPrincipal.showContentPanel(frm, p);
         
         this.panel.getCampoBuscar().getDocument().addDocumentListener(this);
@@ -114,6 +116,7 @@ public class CtrlCitas implements MouseListener, DocumentListener{
         return informacion;
     }
     
+    //Método que actualiza la tabla cada 3 ms filtrando los datos que son mostrados
     public void activarTimer() {
         if ((timer_buscar != null) && timer_buscar.isRunning()) {
             timer_buscar.restart();
@@ -232,17 +235,17 @@ public class CtrlCitas implements MouseListener, DocumentListener{
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        this.activarTimer();
+        this.activarTimer();//Se llama al método que actualiza la tabla cada 3 ms
     }
     
     

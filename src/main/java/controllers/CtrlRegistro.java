@@ -3,6 +3,8 @@ package controllers;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import models.Acceso;
 import querys.QuerysAcceso;
@@ -18,6 +20,8 @@ public class CtrlRegistro implements MouseListener{
     Login frm;
     DlgRegistro dlg;
     Acceso usuario;
+    Pattern pEmail = Pattern.compile("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$");
+    Matcher mEmail;
 
     public CtrlRegistro(Login frm) {
         dlg = new DlgRegistro(frm);        
@@ -34,9 +38,9 @@ public class CtrlRegistro implements MouseListener{
             rol = 1;
         }
         String email = this.dlg.getTxtEmail().getText();
-        String password = this.dlg.getTxtPassword().getText();
+        String valorPass = new String(this.dlg.getTxtPassword().getPassword());
         
-        this.usuario = new Acceso(0, rol, email, password);
+        this.usuario = new Acceso(0, rol, email, valorPass);
         return this.usuario;
     }
 
@@ -46,8 +50,13 @@ public class CtrlRegistro implements MouseListener{
             if (this.dlg.getTxtEmail().getText().isEmpty() || this.dlg.getTxtPassword().getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
             }else{
-                QuerysAcceso.crear(setUsuario());
-                this.dlg.dispose();
+                mEmail = pEmail.matcher(this.dlg.getTxtEmail().getText());
+                if (!mEmail.matches()) {
+                    JOptionPane.showMessageDialog(null, "El email no es válido");
+                } else {
+                    QuerysAcceso.crear(setUsuario());
+                    this.dlg.dispose();
+                }
             }
             
         }

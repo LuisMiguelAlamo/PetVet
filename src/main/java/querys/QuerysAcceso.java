@@ -19,6 +19,7 @@ public class QuerysAcceso {
     static Statement smnt;
     static PreparedStatement ps;
 
+    //Método que devuelve una lista de todos los Usuarios
     public static ArrayList<Acceso> consultaGeneral() {
         Acceso acceso;
         ArrayList<Acceso> lista = new ArrayList<>();
@@ -40,6 +41,8 @@ public class QuerysAcceso {
         }
         return lista;
     }
+    
+    //Método que devuelve un Usuario por su id
     public static Acceso consultaGeneral(int id) {
         Acceso acceso = null;
         try {
@@ -59,7 +62,8 @@ public class QuerysAcceso {
         return acceso;
     }
     
-    
+    //Método que devuelve un boolean evaluando que el email pasado como argumento se 
+    //encuentre o no en la tabla acceso
     public static Acceso isLogged(String email) {
         Acceso acceso = null;
         try {
@@ -83,6 +87,8 @@ public class QuerysAcceso {
 
     }
 
+    //Método que devuelve una lista de los Usuarios que contengan un email 
+    //como el pasado como argumento
     public static ArrayList<Acceso> consultaFiltro(String campo) {
         Acceso acceso;
         ArrayList<Acceso> lista = new ArrayList<>();
@@ -105,7 +111,7 @@ public class QuerysAcceso {
         return lista;
     }
     
-    
+    //Método que crea un nuevo Usuario
     public static void crear(Acceso acceso) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -120,6 +126,7 @@ public class QuerysAcceso {
         }
     }
 
+    //Método que actualiza el usuario pasado como argumento
     public static void actualizar(Acceso acceso) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -134,6 +141,7 @@ public class QuerysAcceso {
         }
     }
 
+    //Método que elimina el usuario con el id pasado como argumento
     public static void eliminar(int id) {
         try {
             if (AbrirConexion.abrirConect()) {

@@ -17,6 +17,7 @@ public class QuerysMedicamentos {
     static ResultSet rs;
     static Statement smnt;
 
+    //Método que devuelve una lista de todos los Medicamentos
     public static ArrayList<Medicamentos> consultaGeneral() {
         Medicamentos medicamento;
         ArrayList<Medicamentos> lista = new ArrayList<>();
@@ -41,6 +42,8 @@ public class QuerysMedicamentos {
         return lista;
 
     }
+    
+    //Método que devuelve un Medicamento por su id
     public static Medicamentos consultaGeneral(int id) {
         Medicamentos medicamento = null;
         try {
@@ -62,6 +65,8 @@ public class QuerysMedicamentos {
 
     }
 
+    //Método que devuelve una lista de los Medicamentos que contengan algún dato 
+    //igual al pasado como argumento
     public static ArrayList<Medicamentos> consultaFiltro(String campo) {
         Medicamentos medicamento;
         ArrayList<Medicamentos> lista = new ArrayList<>();
@@ -87,6 +92,7 @@ public class QuerysMedicamentos {
         return lista;
     }
 
+    //Método que crea un nuevo Medicamento
     public static void crear(Medicamentos medicamento) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -102,6 +108,7 @@ public class QuerysMedicamentos {
         }
     }
 
+    //Método que actualiza el Medicamento pasado como argumento
     public static void actualizar(Medicamentos medicamento) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -116,6 +123,7 @@ public class QuerysMedicamentos {
         }
     }
 
+    //Método que elimina el Medicamento con el id pasado como argumento
     public static void eliminar(int id) {
         try {
             if (AbrirConexion.abrirConect()) {

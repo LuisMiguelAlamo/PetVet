@@ -18,7 +18,7 @@ public class QuerysMascotas {
     static ResultSet rs;
     static Statement smnt;
     
-    
+    //Método que devuelve una lista de todas las Mascotas
     public static ArrayList<Mascotas> consultaGeneral() {
         Mascotas mascota;
         ArrayList<Mascotas> lista = new ArrayList<>();
@@ -49,7 +49,7 @@ public class QuerysMascotas {
 
     }
     
-    
+    //Método que devuelve una Mascota por su id
     public static Mascotas consultaGeneral(int id) {
         Mascotas mascota = null;
         
@@ -76,10 +76,9 @@ public class QuerysMascotas {
         return mascota;
     }
     
-    
+    //Método que devuelve un cliente con el id pasado como argumento
     public static Clientes leerCliente(int id) {
-        Clientes cliente = null;
-        
+        Clientes cliente = null;        
         try {
             if (AbrirConexion.abrirConect()) {
                 smnt = AbrirConexion.getCone().createStatement();
@@ -102,7 +101,8 @@ public class QuerysMascotas {
     }
     
     
-
+    //Método que devuelve una lista de las Mascotas que contengan algún dato 
+    //igual al pasado como argumento
     public static ArrayList<Mascotas> consultaFiltro(String campo) {
         Mascotas mascota;
         ArrayList<Mascotas> lista = new ArrayList<>();
@@ -134,6 +134,7 @@ public class QuerysMascotas {
         return lista;
     }
 
+    //Método que crea una nueva Mascota
     public static void crear(Mascotas mascota) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -154,6 +155,7 @@ public class QuerysMascotas {
         }
     }
 
+    //Método que actualiza la Mascota pasada como argumento
     public static void actualizar(Mascotas mascota) {
         try {
             if (AbrirConexion.abrirConect()) {
@@ -174,6 +176,7 @@ public class QuerysMascotas {
         }
     }
 
+    //Método que elimina la Mascota con el id pasado como argumento
     public static void eliminar(int id) {
         try {
             if (AbrirConexion.abrirConect()) {
