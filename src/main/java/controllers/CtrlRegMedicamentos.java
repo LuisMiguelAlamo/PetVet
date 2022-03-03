@@ -45,8 +45,13 @@ public class CtrlRegMedicamentos implements MouseListener {
 
         //Comprueba si hay que cargar los datos en los campos
         if (opcion) {
+            //Si aún no se han seleccionado los campos su valor es 0 por lo tanto se muestran vacíos
+            if (CtrlPrincipal.medicamento.getPrecio() == 0) {
+                this.registro.getTxtPrecio().setText("");
+            }else{
+                this.registro.getTxtPrecio().setText(String.valueOf(CtrlPrincipal.medicamento.getPrecio()));
+            }
             this.registro.getTxtNombre().setText(CtrlPrincipal.medicamento.getNombre());
-            this.registro.getTxtPrecio().setText(String.valueOf(CtrlPrincipal.medicamento.getPrecio()));
             this.registro.getTxtProveedor().setText(CtrlPrincipal.proveedor.getNombre());
         }
     }
@@ -82,10 +87,6 @@ public class CtrlRegMedicamentos implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
-                CtrlPrincipal.mPrecio = CtrlPrincipal.pPrecio.matcher(this.registro.getTxtPrecio().getText());
-                if (!CtrlPrincipal.mPrecio.matches()) {
-                    JOptionPane.showMessageDialog(null, "El precio no es válido");
-                } else {
                     //Se comprueba que sea un nuevo medicamento
                     if (CtrlPrincipal.isNew) {
                         CtrlPrincipal.medicamento = setMedicamento();
@@ -101,17 +102,11 @@ public class CtrlRegMedicamentos implements MouseListener {
 
                     MedicamentosPanel cp = new MedicamentosPanel();
                     CtrlMedicamentos med = new CtrlMedicamentos(frm, cp, false);
-                }
             }
         }
         
         
         if (e.getSource().equals(this.registro.getBtnSeleccionar())) {
-            //Se comprueba la validez de los datos introducidos mediante las regex
-            CtrlPrincipal.mPrecio = CtrlPrincipal.pPrecio.matcher(this.registro.getTxtPrecio().getText());
-            if (!CtrlPrincipal.mPrecio.matches()) {
-                JOptionPane.showMessageDialog(null, "El precio no es válido");
-            } else {
 
                 if (CtrlPrincipal.isNew) {
                     CtrlPrincipal.medicamento = setMedicamento();
@@ -124,7 +119,6 @@ public class CtrlRegMedicamentos implements MouseListener {
                     ProveedoresPanel pp = new ProveedoresPanel();
                     CtrlProveedores pro = new CtrlProveedores(frm, pp, true);
                 }
-            }
         }
     }
 
