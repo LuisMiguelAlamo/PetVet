@@ -87,6 +87,11 @@ public class CtrlRegMedicamentos implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
             } else {
+                CtrlPrincipal.mPrecio = CtrlPrincipal.pDinero.matcher(this.registro.getTxtPrecio().getText());
+                if (!CtrlPrincipal.mPrecio.matches()) {
+                    JOptionPane.showMessageDialog(null, "El precio no es válido");
+                } else {
+
                     //Se comprueba que sea un nuevo medicamento
                     if (CtrlPrincipal.isNew) {
                         CtrlPrincipal.medicamento = setMedicamento();
@@ -102,11 +107,16 @@ public class CtrlRegMedicamentos implements MouseListener {
 
                     MedicamentosPanel cp = new MedicamentosPanel();
                     CtrlMedicamentos med = new CtrlMedicamentos(frm, cp, false);
+                }
             }
         }
         
         
         if (e.getSource().equals(this.registro.getBtnSeleccionar())) {
+            CtrlPrincipal.mPrecio = CtrlPrincipal.pDinero.matcher(this.registro.getTxtPrecio().getText());
+            if (!CtrlPrincipal.mPrecio.matches()) {
+                JOptionPane.showMessageDialog(null, "El precio no es válido");
+            } else {
 
                 if (CtrlPrincipal.isNew) {
                     CtrlPrincipal.medicamento = setMedicamento();
@@ -119,6 +129,7 @@ public class CtrlRegMedicamentos implements MouseListener {
                     ProveedoresPanel pp = new ProveedoresPanel();
                     CtrlProveedores pro = new CtrlProveedores(frm, pp, true);
                 }
+            }
         }
     }
 

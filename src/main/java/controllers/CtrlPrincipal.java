@@ -52,14 +52,14 @@ public class CtrlPrincipal implements MouseListener, MouseMotionListener{
     public static Pattern pEmail = Pattern.compile("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$");
     public static Pattern pTel = Pattern.compile("[0-9]{9}");
     public static Pattern pCP = Pattern.compile("0[1-9][0-9]{3}|[1-4][0-9]{4}|5[0-2][0-9]{3}");
-    public static Pattern pPrecio = Pattern.compile("[0-9]+[.]?[0-9]{1,2}");
-    public static Pattern pIGIC = Pattern.compile("[0-9]+[.]?[0-9]{1,2}");
+    public static Pattern pDinero = Pattern.compile("[0-9]+[.]?[0-9]?[0-9]?");
     public static Pattern pHora = Pattern.compile("^([01]?[0-9]|2[0-3]):[0-5][0-9]$");
     public static Matcher mEmail;
     public static Matcher mTel;
     public static Matcher mCP;
-    public static Matcher mPrecio;
+    public static Matcher mTotal;
     public static Matcher mIGIC;
+    public static Matcher mPrecio;
     public static Matcher mHora;
     //Variables para acumular los datos de los modelos
     public static boolean isAdmin = false;

@@ -79,11 +79,10 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
         double total;
         double IGIC;
         double totalIGIC;
-        
         if (this.registro.getTxtFecha().getDate() == null) {
             tiempo = 0;
             this.registro.getTxtFecha().setDate(null);
-        }else{
+        } else {
             tiempo = this.registro.getTxtFecha().getDate().getTime();
             fecha = new Date(tiempo);
         }
@@ -98,8 +97,8 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
             IGIC = Double.parseDouble(this.registro.getTxtIGIC().getText());
         }
         totalIGIC = devuelveTotalIGIC(total, IGIC);
-        
-        this.factura = new Facturas(0, fecha,total, IGIC, totalIGIC, 0);
+
+        this.factura = new Facturas(0, fecha, total, IGIC, totalIGIC, 0);
 
         return this.factura;
     }
@@ -108,14 +107,23 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
     public void mouseClicked(MouseEvent e) {
         if (e.getSource().equals(this.registro.getBtnGuardar())) {
             //Se comprueba que los demás campos no estén vacíos antes de guardar la nueva información
-            if (this.registro.getTxtTotal().getText().isEmpty()
+            if (this.registro.getTxtFecha().getDate() == null
+                    || this.registro.getTxtTotal().getText().isEmpty()
                     || this.registro.getTxtIGIC().getText().isEmpty()
                     || this.registro.getTxtTotalIGIC().getText().isEmpty()
                     || this.registro.getTxtCliente().getText().isEmpty()) {
 
                 JOptionPane.showMessageDialog(null, "Los campos no pueden estar vacíos");
 
-            } else {                
+            } else {
+                CtrlPrincipal.mTotal = CtrlPrincipal.pDinero.matcher(this.registro.getTxtTotal().getText());
+                CtrlPrincipal.mIGIC = CtrlPrincipal.pDinero.matcher(this.registro.getTxtIGIC().getText());
+                if (!CtrlPrincipal.mTotal.matches()) {
+                    JOptionPane.showMessageDialog(null, "El total no es válido");
+                }else if (!CtrlPrincipal.mIGIC.matches()) {
+                    JOptionPane.showMessageDialog(null, "El IGIC no es válido");
+                } else {
+
                     //Se comprueba que sea una nueva factura
                     if (CtrlPrincipal.isNew) {
                         CtrlPrincipal.factura = setFactura();
@@ -133,12 +141,20 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
                     //Abrimos en panel de facturas
                     FacturasPanel fp = new FacturasPanel();
                     CtrlFacturas fac = new CtrlFacturas(frm, fp);
+                }
             }
         }
         
         
-        if (e.getSource().equals(this.registro.getBtnSeleccionar())) {            
-                
+        if (e.getSource().equals(this.registro.getBtnSeleccionar())) {
+            CtrlPrincipal.mTotal = CtrlPrincipal.pDinero.matcher(this.registro.getTxtTotal().getText());
+            CtrlPrincipal.mIGIC = CtrlPrincipal.pDinero.matcher(this.registro.getTxtIGIC().getText());
+            if (!CtrlPrincipal.mTotal.matches()) {
+                JOptionPane.showMessageDialog(null, "El total no es válido");
+            }
+            if (!CtrlPrincipal.mIGIC.matches()) {
+                JOptionPane.showMessageDialog(null, "El IGIC no es válido");
+            } else {
                 CtrlPrincipal.eleccion = 4;
                 if (CtrlPrincipal.isNew) {
                     CtrlPrincipal.factura = setFactura();
@@ -152,8 +168,8 @@ public class CtrlRegFacturas implements MouseListener, KeyListener {
                     ClientePanel cp = new ClientePanel();
                     CtrlClientes cli = new CtrlClientes(frm, cp, true);
                 }
-                
-            //}
+
+            }
         }
     }
 
